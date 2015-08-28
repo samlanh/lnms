@@ -4,10 +4,6 @@ $frm = $this->frm_changeCollteral;
 echo $this->headTitle($tr->translate("CHANGE_COLLTERAL_INFO"));
 ?>
 <style>	
-.fullside {
-	width: 100%;
-	height: 30px;
-}
 .collteral{
 	color:blue;
 }
@@ -35,7 +31,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 				return false;
 			}
 </script>
-<table cellspacing="10" class='fullside'>
+<table width="100%" style="margin-top:-8px;">
 	<tr>
 		<td>
 				<fieldset>
@@ -46,19 +42,22 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td><?php echo $frm->getElement('branch_id');?></td>
 							<td><?php echo $tr->translate("CUSTOMER_CODE")?></td>
 							<td><input id="client_code" /><?php //echo $frm->getElement('client_code');?></td>
-							<td ><?php echo $tr->translate("OWNER_NAME")?></td>
-							<td><input id="client_name" /><?php //echo $frm->getElement('client_name');?></td>
+							<td ><?php echo $tr->translate("CUSTOMER_NAME")?></td>
+							<td><input id="client_name" /><?php //echo $frm->getElement('client_name');?>
+							<input dojoType="dijit.form.TextBox"  id="owner" name="owner" value="" type="hidden">
+							<input dojoType="dijit.form.TextBox"  id="client_coll" name="client_coll" value="" type="hidden">
+							</td>
 						</tr>
 						<tr>
 							<td valign="top" colspan="6"  style="border: 1px solid #ccc;width:65%;height:40px;font:12px;padding: 2px 5px;"><span id="display_info">&nbsp;</span></td>
 						</tr>
 						<tr>
-								<td><?php echo $tr->translate("DATE")?></td>
-								<td><?php echo $frm->getElement('date')?></td>
-								<td><?php echo $tr->translate("NOTE")?></td>
-								<td><?php echo $frm->getElement('note')?></td>
-								<td><?php echo $tr->translate("STATUS")?></td>
-								<td><?php echo $frm->getElement('Stutas')?></td>
+							<td><?php echo $tr->translate("DATE")?></td>
+							<td><?php echo $frm->getElement('date')?></td>
+							<td><?php echo $tr->translate("NOTE")?></td>
+							<td><?php echo $frm->getElement('note')?></td>
+							<td><?php //echo $tr->translate("STATUS")?></td>
+							<td><?php //echo $frm->getElement('Stutas')?></td>
 						</tr>
 						<tr>
 							<td colspan="6"><strong><?php echo $tr->translate("RETURN_COLLTERAL_INFO")?></strong></td>
@@ -78,9 +77,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 	<tr>
 		<td align="center">
 				<input type="hidden" dojoType="dijit.form.TextBox" id="record_row" name="record_row" />
-				<table id="t_amountmoneytype" width="100%" style="border-collapse: collapse; border:1px solid #ccc !important;">
-							<tr style="background:#eee; font-size: 12px; height: 30px;margin-bottom: 10px;" id="head_title" class="head-title" align="center"></tr>
-				</table>		
+				<div  id="showrecord"></div>
 		</td>
 	<tr>		
 	<tr>
@@ -231,6 +228,7 @@ function getClientInfomation(){
 		load: function(data) {	
 			dojo.byId('display_info').innerHTML="<span class='collteral'> ឈ្មោះអតិថជន​ ​:  </span>"+data.client_number+', '+data.name_kh+', '+data.name_en+",<span class='collteral'> នឹងឈ្មោះ : "+data.join_with+" ត្រូវជា  "+data.relate_with+
 			" អ្នកធានា ឈ្មោះ "+data.spouse_name+" ត្រូវជា"+data.guarantor_with+"</span>";
+			dijit.byId('owner').attr('value',data.spouse_name);
 		},
 		error: function(err) {
 				        
@@ -239,7 +237,11 @@ function getClientInfomation(){
 }
 var url_clientcall = '<?php echo $this->url(array('module'=>'group','controller'=>'index','action'=>'getclientcollateral')); ?>';
 function getClientCollateral(){
-	dojo.byId("t_amountmoneytype").innerHTML='';
+	dojo.query("#showrecord").append('');
+	tmp='<table id="t_amountmoneytype" width="100%" style="border-collapse: collapse; border:1px solid #ccc !important;">';
+	tmp+='<tr style="background:#eee; font-size: 12px; height: 30px;margin-bottom: 10px;" id="head_title" class="head-title" align="center"></tr>';
+	tmp+='</table>';
+	dojo.query("#showrecord").append(tmp);
 		dojo.xhrPost({
 	    url: url_clientcall,	
 		content:{ 
@@ -256,38 +258,38 @@ function getClientCollateral(){
 			if(fund_title!=1){
 				thead='<th><?php echo $tr->translate("DEL");?></th>';
 				thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
-				thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
+				thead+='<th><?php echo $tr->translate("OWNER_TYPE");?></th>';
 				thead+='<th><?php echo $tr->translate("OWNER_NAME");?></th>';
 				thead+='<th><?php echo $tr->translate("NUMBER_COLLTERAL");?></th>';
-
 				thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
-				thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
+				thead+='<th><?php echo $tr->translate("OWNER_TYPE");?></th>';
 				thead+='<th><?php echo $tr->translate("OWNER_NAME");?></th>';
 				thead+='<th><?php echo $tr->translate("NUMBER_COLLTERAL");?></th>';
+				thead+='<th><?php echo $tr->translate("SIGN_DATE");?></th>';
 				thead+='<th><?php echo $tr->translate("NOTE");?> </th>';
-				
 				fund_title=1;
 				dojo.query("#head_title").append(thead);
 	        }
 			temp='<td style="width:30px !important;text-align:center;" ><img style="cursor:pointer" onclick="deleteRecord('+r+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
-			temp+='<td><select style=" width:120px;background:#fff; padding-left:5px;" id="collect_type'+r+'" name="collect_type'+r+'" dojoType="dijit.form.FilteringSelect"  >'+collect_option+'</select></td>';
+			temp+='<td><select style=" width:120px;background:#fff; padding-left:5px;" readonly="true" id="collect_type'+r+'" name="collect_type'+r+'" dojoType="dijit.form.FilteringSelect"  >'+collect_option+'</select></td>';
 		    temp+='<td><select style=" width:110px; background:#fff; padding-left:5px;" readonly="true" id="owner_type'+r+'" name="owner_type'+r+'" dojoType="dijit.form.FilteringSelect" >'+owner_option+'</select></td>';
-			temp+='<td><input style=" width:130px" type="text" required="true"  readonly="true" name="owner_name'+r+'" id="owner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
+			temp+='<td><input style=" width:130px" type="text"  readonly="true" name="owner_name'+r+'" id="owner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
 			temp+='<td><input style=" width:100px" type="text" required="true" readonly="true" name="number_collteral'+r+'" id="number_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
 
 			temp+='<td><select style=" width:130px;background:#fff; padding-left:5px;"  id="tocollect_type'+r+'" name="tocollect_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="checkSelectOption(1,'+r+')"  >'+collect_option+'</select></td>';
 		    temp+='<td><select style=" width:90px; background:#fff; padding-left:5px;"  id="toowner_type'+r+'" name="toowner_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="setOwnerNameCollecteralById('+r+')">'+owner_option+'</select></td>';
 			temp+='<td><input style=" width:90%;" type="text" required="true"  name="toowner_name'+r+'" id="toowner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
-			temp+='<td><input type="text" style=" width:110px" required="true"  name="tonumber_collteral'+r+'" id="tonumber_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
+			temp+='<td><input type="text" style="width:110px" required="true"  name="tonumber_collteral'+r+'" id="tonumber_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
+			temp+='<td><input type="text" style="width:110px" required="true"  name="issue_date'+r+'" id="issue_date'+r+'" dojoType="dijit.form.DateTextBox"/></td>';
 			temp+='<td><input style=" width:110px" type="text" name="tonote'+r+'"  id="tonote'+r+'" dojoType="dijit.form.TextBox" /><input type="hidden" name="coid'+r+'" id="coid'+r+'" dojoType="dijit.form.TextBox" /> </td>';
 
 			
 			tmp='<tr style="border:1px solid #ccc;" id="row_capital'+r+'">'
 			tmp+="</tr>";
 				dojo.query("#t_amountmoneytype").append(tmp);
-				dojo.html.set(dojo.byId("row_capital"+r),temp, {
+				
+			dojo.html.set(dojo.byId("row_capital"+r),temp, {
 			    parseContent: true,
-			     
 			});
 			if(dijit.byId("record_row").get('value')!="") {
 				var ids = dijit.byId("record_row").value;
@@ -301,9 +303,8 @@ function getClientCollateral(){
 			
 			dijit.byId('number_collteral'+r).attr('value',data[i].number_collecteral);
 			dijit.byId('coid'+r).attr('value',data[i].id);
-			
+			dijit.byId('client_coll').attr('value',data[i].client_coll);
 			setOwnerNameCollecteralById(r);
-			
 			}
 		},
 		error: function(err) {
@@ -313,12 +314,15 @@ function getClientCollateral(){
 
 function setOwnerNameCollecteralById(index){
 	label='';
+	
 	owner_type = dijit.byId('toowner_type'+index).get('value');
 	if(owner_type==1){
 		label = dijit.byId('client_name').attr('displayedValue');
 	}else{
 		label = dijit.byId('owner').get('value');
 	}
-	dijit.byId('owner_name'+index).attr('value',label);
+	//dijit.byId('owner_name'+index).attr('value',label);
+	dijit.byId('toowner_name'+index).attr('value',label);
+	
 }
 </script>

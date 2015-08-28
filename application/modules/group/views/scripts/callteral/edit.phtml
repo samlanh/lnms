@@ -249,18 +249,20 @@ function addCollecteral(){
 		if(fund_title!=1){
 			thead='<th><?php echo $tr->translate("DEL");?></th>';
 			thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
-			thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
+			thead+='<th><?php echo $tr->translate("OWNER_TYPE");?></th>';
 			thead+='<th><?php echo $tr->translate("OWNER_NAME");?></th>';
 			thead+='<th><?php echo $tr->translate("NUMBER_COLLTERAL");?></th>';
+			thead+='<th><?php echo $tr->translate("SIGN_DATE");?></th>';
 			thead+='<th><?php echo $tr->translate("NOTE");?> </th>';
-			fund_title=1;
 			dojo.query("#head_title").append(thead);
-    }
+			fund_title=1;
+        }
 		temp='<td style="width:30px !important;text-align:center;" ><img style="cursor:pointer" onclick="deleteRecord('+r+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 		temp+='<td><select style=" width:90%;background:#fff; padding-left:5px;" id="collect_type'+r+'" name="collect_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="checkSelectOption(1,'+r+')"  >'+collect_option+'</select></td>';
 	    temp+='<td><select style=" width:90%; background:#fff; padding-left:5px;" id="owner_type'+r+'" name="owner_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="setOwnerNameCollecteralById('+r+')">'+owner_option+'</select></td>';
 		temp+='<td><input style=" width:90%;" type="text" required="true" name="owner_name'+r+'" id="owner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
 		temp+='<td><input style=" width:90%;" type="text" required="true" name="number_collteral'+r+'" id="number_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
+		temp+='<td><input style=" width:90%;" type="text"  name="issue_date'+r+'" id="issue_date'+r+'" dojoType="dijit.form.DateTextBox"/></td>';
 		temp+='<td><input type="text" name="note'+r+'" id="note'+r+'" dojoType="dijit.form.TextBox" /></td>';
 		tmp='<tr style="border:1px solid #ccc;" id="row_capital'+r+'">'
 		tmp+="</tr>";
@@ -287,9 +289,10 @@ function innitialize(){
 	if(fund_title!=1){
 		thead='<th><?php echo $tr->translate("DEL");?></th>';
 		thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
-		thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
+		thead+='<th><?php echo $tr->translate("OWNER_TYPE");?></th>';
 		thead+='<th><?php echo $tr->translate("OWNER_NAME");?></th>';
 		thead+='<th><?php echo $tr->translate("NUMBER_COLLTERAL");?></th>';
+		thead+='<th><?php echo $tr->translate("SIGN_DATE");?></th>';
 		thead+='<th><?php echo $tr->translate("NOTE");?> </th>';
 		fund_title=1;
 		dojo.query("#head_title").append(thead);
@@ -299,6 +302,7 @@ function innitialize(){
     temp+='<td><select style=" width:90%; background:#fff; padding-left:5px;" id="owner_type'+r+'" name="owner_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="setOwnerNameCollecteralById('+r+')">'+owner_option+'</select></td>';
 	temp+='<td><input style=" width:90%;" type="text" required="true" name="owner_name'+r+'" id="owner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
 	temp+='<td><input style=" width:90%;" type="text" required="true" name="number_collteral'+r+'" id="number_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
+	temp+='<td><input style=" width:90%;" type="text"  name="issue_date'+r+'" id="issue_date'+r+'" dojoType="dijit.form.DateTextBox"/></td>';
 	temp+='<td><input type="text" name="note'+r+'" id="note'+r+'" dojoType="dijit.form.TextBox" /></td>';
 	tmp='<tr style="border:1px solid #ccc;" id="row_capital'+r+'">'
 	tmp+="</tr>";
@@ -315,6 +319,7 @@ function innitialize(){
 	dijit.byId('owner_type'+r).attr('value',<?php echo $rs['owner_type'];?>);
 	dijit.byId('owner_name'+r).attr('value','<?php echo $rs['owner_name'];?>');
 	dijit.byId('number_collteral'+r).attr('value','<?php echo $rs['number_collecteral'];?>');
+	dijit.byId('issue_date'+r).attr('value','<?php echo $rs['issue_date'];?>');
 	dijit.byId('note'+r).attr('value','<?php echo $rs['note'];?>');
 	//label = dijit.byId('client_name').attr('displayedValue');
 	//dijit.byId('owner_name'+r).attr('value',label);

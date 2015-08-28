@@ -111,7 +111,7 @@ class Group_CallteralController extends Zend_Controller_Action {
 		$db = new Group_Model_DbTable_DbCallteral();
 		$row  = $db->getecallteralbyid($id);
 		if(empty($id) OR empty($row) ){
-			Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL);
+			Application_Form_FrmMessage::Sucessfull('RECORD_NOT_EXIST', self::REDIRECT_URL. '/Callteral/index');
 		}
 		
 		$this->view->client_id = $row['client_id'];

@@ -26,11 +26,12 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 	    	$this->_name='ln_client_callecteral_detail';
 	    	foreach ($ids as $i){
 	    		$array = array(
-	    				'client_coll_id'=> $id_call,
+	    				'client_coll_id'=> $data['client_coll'],
 	    				'collecteral_type'=>$data['collect_type'.$i],
 	    				'owner_type'=>$data['owner_type'.$i],
 	    				'owner_name'=>$data['owner_name'.$i],
 	    				'number_collecteral'=>$data['number_collteral'.$i],
+	    				'issue_date'=>$data['issue_date'.$i],
 	    				'note'=>$data['note'.$i],
 	    				);
 	    		$this->insert($array);
@@ -43,12 +44,9 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
     	}
 	}
 	function updatecallteral($format){
-//        print_r($format);exit();
-		
 		$db = $this->getAdapter();
 		$db->beginTransaction();
 		try{
-			
 			$arr = array(
 					'branch_id'=>$format['branch_id'],
 					'collecteral_code'=>$format['cod_cal'],
@@ -79,6 +77,7 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 						'owner_type'=>$format['owner_type'.$i],
 						'owner_name'=>$format['owner_name'.$i],
 						'number_collecteral'=>$format['number_collteral'.$i],
+						'issue_date'=>$format['issue_date'.$i],
 						'note'=>$format['note'.$i],
 				);
 				$this->insert($array);

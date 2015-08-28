@@ -162,11 +162,6 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 		));
-		
-// 		$opt_client_d_type = 
-		
-// 		);
-		//
 		$opt_client_d_type= $db->getVewOptoinTypeByType(23,1);
 		$client_d_type->setMultiOptions($opt_client_d_type);
 		
@@ -175,16 +170,14 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 		));
-		$opt_join_d_type= $db->getVewOptoinTypeByType(23,1);
-		$join_d_type->setMultiOptions($opt_join_d_type);
+		$join_d_type->setMultiOptions($opt_client_d_type);
 		
 		$guarantor_d_type = new Zend_Dojo_Form_Element_FilteringSelect('guarantor_d_type');
 		$guarantor_d_type->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 		));
-		$opt_guarantor_d_type= $db->getVewOptoinTypeByType(23,1);
-		$guarantor_d_type->setMultiOptions($opt_guarantor_d_type);
+		$guarantor_d_type->setMultiOptions($opt_client_d_type);
 		
 		$guarantor_address = new Zend_Dojo_Form_Element_TextBox('guarantor_address');
 		$guarantor_address->setAttribs(array(

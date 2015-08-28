@@ -13,7 +13,6 @@
 			<td><?php echo $frm->getElement('end_date');?></td>
 			<td><?php echo $frm->getElement('status_search');?></td>
 			<td><?php echo $frm->getElement('btn_search');?></td>
-		
 		</tr>
 </table>
 </form>
@@ -92,21 +91,20 @@ th{padding: 5px;}
                 <?php } ?>
              <?php ?>
                 <tr class="style">
-                	<td colspan="6">&nbsp;<span style="text-align:center; font-size:12px; font-family:'Khmer MEF2'"><?php echo $tr->translate("CUSTOMER_NAME");?> </span><?php  echo $row['client_code'].' , '.$row['name_kh'].' - '.$row['client_name']; ?></td>
+                	<td colspan="11" style="background:rgb(237, 237, 237) none repeat scroll 0% 0%">&nbsp;<span style="text-align:center; font-size:12px; font-family:'Khmer MEF2'"><?php echo $tr->translate("CUSTOMER_NAME");?> </span><?php  echo $row['client_code'].' , '.$row['name_kh'].' - '.$row['client_name']; ?></td>
                 </tr>
                  <tr class="style" align="center" style="font-weight:bold; line-height: 20px; font-size:9px; padding:5px 0px; ">
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("NUM");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("BRANCH_NAME");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COLLTERAL_CODE");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("STAFF_NAME");?> </td>
-                    <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("SPOUSE_NAME");?> </td>                    
+                    <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("OWNER_NAME");?> </td>                    
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COLETERAL_TYPE");?> </td>
-                    <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("OWNER_NAME");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("NUMBER_COLLTERAL");?> </td>
+                    <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("SIGN_DATE");?></td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("NOTE");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("DATE");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("STATUS");?> </td>
-                    
                 </tr>
                 <?php }
                 $id = $row['client_id'];
@@ -118,8 +116,8 @@ th{padding: 5px;}
 						<td>&nbsp;<?php echo $row['co_id']; ?>&nbsp;</td>						
 						<td style="white-space:nowrap;">&nbsp;<?php echo $row['collecteral_type']; ?>&nbsp;</td>
 						<td style="white-space:nowrap; text-align: left;">&nbsp;<?php echo $row['collecteral_title_en']." -  ".$row['collecteral_owner']; ?>&nbsp;</td>
-						<td style="white-space:nowrap;" >&nbsp;<?php echo $row['join_with']; ?>&nbsp;</td>
 						<td style="white-space:nowrap;" >&nbsp;<?php echo $row['number_collecteral']; ?>&nbsp;</td>
+						<td style="white-space:nowrap;" >&nbsp;<?php echo date("d-M-Y",strtotime($row['issue_date'])); ?>&nbsp;</td>
 						<td style="white-space:nowrap;" >&nbsp;<?php echo $row['note']; ?>&nbsp;</td>
 						<td>&nbsp;<?php echo date('d-M-Y',strtotime($row['date']));?>&nbsp;</td>
 						<td>&nbsp;<?php echo ($row['is_return']==1)?"Return":"Keeping";?>&nbsp;</td>

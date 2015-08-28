@@ -1,7 +1,6 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('ADD_CLIENT'));
-	//print_r($this->village_name);
 ?>	
 <?php  $frm = $this->frm_client;?>
 <script type="text/javascript">
@@ -30,7 +29,7 @@ dojo.require("dijit.form.Textarea");
 				return false;
 			}
 </script>
-<table cellspacing="10" width="100%" style="margin: 0 auto;">
+<table  width="100%" style="margin-top:-5px;">
 	<tr>
 		<td>
 		<fieldset>
@@ -183,7 +182,7 @@ dojo.require("dijit.form.ValidationTextBox");
 dojo.require("dijit.form.Textarea"); 
 //dojo.require("dojo.data.registry");
 var d_datastore  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->clienttype));?> );
-//var village_store  = getDataStorefromJSON('village','village', <?php print_r(Zend_Json::encode($this->village_name));?> );
+//var village_store  = getDataStorefromJSON('village','village', <?php //print_r(Zend_Json::encode($this->village_name));?> );
 
 dojo.ready(function(){
 	
@@ -473,7 +472,6 @@ function addNewDistrict(){
 }
 var document_type_url = '<?php echo $this->url(array('module'=>'group','controller'=>'index','action'=>'insert-document-type'));?>';
 function addNewDocumentType(){
-
 	dojo.xhrPost({
 		url:document_type_url,	
 		//form:dojo.byId('form_clienttype'),
@@ -481,7 +479,6 @@ function addNewDocumentType(){
 		    'title_en':dijit.byId('clienttype_nameen').get('value'),
 		    'title_kh':dijit.byId('clienttype_namekh').get('value'),
 		    'type':23,
-		    
 		},
 		handleAs:"json",
 		load: function(data) {	
