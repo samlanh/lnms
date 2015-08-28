@@ -184,10 +184,11 @@ class Tellerandexchange_Model_DbTable_DbxChangeMoney extends Zend_Db_Table_Abstr
     				$status = "out";
     		}
     		 
+    		
     		$user_id = $session_user->user_id;
     		$_data=array(
     				"changedAmount"=>$data["return_money"],
-    				"recieptNo"=>$data["inv_no"],
+//     				"recieptNo"=>$data["inv_no"],
     				"toAmount"=>$data["to_amount"],
     				"toAmountType"=>$to_type["symbol"],
     				"rate"=>$data["rate"],
@@ -202,11 +203,12 @@ class Tellerandexchange_Model_DbTable_DbxChangeMoney extends Zend_Db_Table_Abstr
     				"from_to"=>$from_type['curr_nameen'] . " - " . $to_type["curr_nameen"]
     		);
     		$where=$this->getAdapter()->quoteInto('id=?', $data['id']);
-    		$this->update($_data, $where);
+    		 $this->update($_data, $where);
+    		 return $db->commit();
     	} catch (Exception $e) {
     		$db->rollBack();
+    		echo $e->getMessage();
     	}
-    	
     }
     function updateExchange($data){
     	$session_user=new Zend_Session_Namespace('auth');

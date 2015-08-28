@@ -134,10 +134,8 @@ class Tellerandexchange_XchangesController extends Zend_Controller_Action
  		try {
  			$formdata['id']=$id;
  				$id = $db_exc->editExchange($formdata);
- 				Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL . '/index/add');
- 			
- 			
- 
+ 				Application_Form_FrmMessage::message("EDIT_SUCESS");
+ 				$this->_redirect('tellerandexchange/xchanges');
  		} catch (Exception $e) {
  			$this->view->msg = 'ការ​បញ្ចូល​មិន​ជោគ​ជ័យ';
  			echo $e->getMessage();exit();
@@ -159,7 +157,7 @@ class Tellerandexchange_XchangesController extends Zend_Controller_Action
  	$this->view->inv_no = Application_Model_GlobalClass::getInvoiceNo();
  	
  	$rs=$db_exc->getxchangById($id);
- 	print_r($rs);
+//  	print_r($rs);
 
  	$this->view->dataedit=$rs;
  }

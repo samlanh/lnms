@@ -1,10 +1,19 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+<style>
+#loadingOverlay {
+    background:  #fff url("<?php echo $this->baseUrl()?>"/images/loadingAnimation.gif) no-repeat 10px 23px;
+    padding:30px;
+}
+</style>
+<div id="loadingOverlay">Loading...</div>
 <?php 
-	$servername ='localhost';//$data['servername'];
-	$dbuser = 'root';//$data['dbuser'];
-	$dbpassword ='';//$data['dbpassword'];
-	$dbname = 'db_loan';//$data['dbname'];
+    $data = $this->data;
+	$servername =$data['servername'];
+	$dbuser = $data['dbuser'];
+	$dbpassword =$data['dbpassword'];
+	$dbname = $data['dbname'];
 
-	backup_tables($servername,$dbuser,$dbpassword,$dbname);
+	//backup_tables($servername,$dbuser,$dbpassword,$dbname);
 /* backup the db OR just a table */
 	function backup_tables($host,$user,$pass,$name,$tables = '*')
 	{
@@ -73,14 +82,25 @@
 	fwrite($handle,$return);
 	fclose($handle);
 	
-	$url = $_SERVER['REQUEST_URI'];
-	$new_url =  str_replace("add","backup",$url);
-	$redirect = 'http://' . $_SERVER['HTTP_HOST'].$new_url;
-	header("Location:$redirect");
+// 	$url = $_SERVER['REQUEST_URI'];
+// 	$new_url =  str_replace("add","backup",$url);
+// 	$redirect = 'http://' . $_SERVER['HTTP_HOST'].$new_url;
+// 	header("Location:$redirect");
 	die();			
 }
 ?>
+<form id="frm_backup" action="<?php echo $this->url(array('module'=>'setting','controller'=>'Database','action'=>'backup')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+		<input type="hidden" id="sucess" name="sucess" /> 
+</form>
 <script src="<?php echo $baseurl;?>/js/help.js"></script>
 <script type="text/javascript">
 	dojo.require('dijit.form.Button');	
+	require(["dojo/ready"], function(ready){
+		 ready(function(){
+			 alert(22);
+			<?php //backup_tables($servername,$dbuser,$dbpassword,$dbname); ?>
+			
+			dijit.byId('frm_backup').submit();
+		  });
+		});
 </script>
