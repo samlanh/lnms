@@ -118,7 +118,7 @@
 							<td valign="top"><?php echo $tr->translate("GUARANTOR_ADDRESS")?></td>
 							<td valign="top" class="border-cover "><?php  echo $rs['guarantor_address'];?></td>
 							<td valign="top"><?php echo $tr->translate("STATUS")?></td>
-							<td valign="top" class="border-cover "><?php  echo $rs['status'];?></td>
+							<td valign="top" class="border-cover "><?php  echo ($rs['status']==1)?"Active":"Deactive";?></td>
 						</tr>
 					</table>	
 				</div>

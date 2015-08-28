@@ -11,7 +11,6 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			$db = new Loan_Model_DbTable_DbGroupPayment();
 		if($this->getRequest()->isPost()){
 				$formdata=$this->getRequest()->getPost();
-				//print_r($formdata);
 				$search = array(
 						'advance_search' => $formdata['advance_search'],
 						'client_name'=>$formdata['client_name'],
@@ -21,7 +20,6 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 						'branch_id'		=>	$formdata['branch_id'],
 						'co_id'		=>	$formdata['co_id'],
 						);
-				//print_r($search);
 			}
 			else{
 				$search = array(
@@ -59,7 +57,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			$_data = $this->getRequest()->getPost();
 			$identify = $_data["identity"];
 			try {
-				if($identify=""){
+				if($identify==""){
 					Application_Form_FrmMessage::Sucessfull("Client is no loan to pay", "/loan/GroupPayment");
 				}else{
 					$db->addGroupPayment($_data);
@@ -76,8 +74,11 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 		$frm_loan=$frm->FrmGroupPayment();
 		Application_Model_Decorator::removeAllDecorator($frm_loan);
 		$this->view->frm_ilpayment = $frm_loan;
+		
 		$db_keycode = new Application_Model_DbTable_DbKeycode();
 		$this->view->keycode = $db_keycode->getKeyCodeMiniInv();
+		
+		$this->view->graiceperiod = $db_keycode->getSystemSetting(9);
 		
 		$this->view->client = $db->getAllClient();
 		$this->view->clientCode = $db->getAllClientCode();
@@ -103,11 +104,12 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				if($identity==""){
 					Application_Form_FrmMessage::Sucessfull("Group Client no loan to pay!", "/loan/GroupPayment");
 				}else{
-					$db->updateGroupPayment($_data);
+					$db->updateGroupPayment($_data,$id);
 					Application_Form_FrmMessage::Sucessfull("Update Success!", "/loan/GroupPayment");
 				}
 			}catch (Exception $e) {
-				echo $e->getMessage();
+				$err =$e->getMessage();
+				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
 		$rs = $db->getGroupPaymentById($id);
@@ -116,28 +118,23 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 		Application_Model_Decorator::removeAllDecorator($frm_loan);
 		$this->view->frm_ilpayment = $frm_loan;
 		
-		$this->view->row = $rs;
+		$this->view->reciept_money = $rs;
 		$this->view->client = $db->getAllClient();
 		$this->view->clientCode = $db->getAllClientCode();
 		
 		$db_keycode = new Application_Model_DbTable_DbKeycode();
 		$this->view->keycode = $db_keycode->getKeyCodeMiniInv();
 		
+		$this->view->graiceperiod = $db_keycode->getSystemSetting(9);
+		
 		$session_user=new Zend_Session_Namespace('auth');
 		$this->view->user_name = $session_user->last_name .' '. $session_user->first_name;
 	
 		$list = new Application_Form_Frmtable();
-		$collumns = array("ឈ្មោះមន្ត្រីឥណទាន","ថ្ងៃបង់ប្រាក់","ប្រាក់ត្រូវបង់","ប្រាក់ដើមត្រូវបង់","អាត្រាការប្រាក់","ប្រាក់ផាកពិន័យ","ប្រាក់បានបង់សរុប","សមតុល្យ","កំណត់សម្គាល់");
-		$link=array(
-				'module'=>'group','controller'=>'Client','action'=>'edit',
-		);
-		$this->view->list=$list->getCheckList(0, $collumns, array(),array('client_number'=>$link,'name_kh'=>$link,'name_en'=>$link));
 	
 		$rs_receipt_detail = $db->getGroupPaymentDetail($id);
-		$this->view->reciept_detail = $rs_receipt_detail;
+		$this->view->reciept_moneyDetail = $rs_receipt_detail;
 		$this->view->group_id = $rs["group_id"];
-		$this->view->client_code = $rs["client_code"];
-		$this->view->loan_number = $rs["loan_number"];
 	}
 	function getLoanDetailAction(){
 		if($this->getRequest()->isPost()){
@@ -157,6 +154,16 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			exit();
 		}
 	}
+	
+	function getLoanPaymentAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Loan_Model_DbTable_DbGroupPayment();
+			$row = $db->getLoanByLoanNimber($data);
+			print_r(Zend_Json::encode($row));
+			exit();
+		}
+	}
 	function getAllLoannumberAction(){
 		if($this->getRequest()->isPost()){
 			$data = $this->getRequest()->getPost();
@@ -172,6 +179,16 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			$branch = $data["branch_id"];
 			$db = new Loan_Model_DbTable_DbGroupPayment();
 			$row = $db->getClientByBranch($branch);
+			print_r(Zend_Json::encode($row));
+			exit();
+		}
+	}
+	
+	function getAllLoanHasPayedAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Loan_Model_DbTable_DbGroupPayment();
+			$row = $db->getAllLoanHasPayed($data);
 			print_r(Zend_Json::encode($row));
 			exit();
 		}
