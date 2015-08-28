@@ -38,7 +38,7 @@ class Group_indexController extends Zend_Controller_Action {
 			$glClass = new Application_Model_GlobalClass();
 			$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
 			$list = new Application_Form_Frmtable();
-			$collumns = array("CUSTOMER_CODE","CLIENTNAME_KH","CLIENTNAME_EN","SEX","PHONE","HOUSE","STREET","VILLAGE","SPOUSE_NAME",
+			$collumns = array("BRANCH_NAME","CUSTOMER_CODE","CLIENTNAME_KH","CLIENTNAME_EN","SEX","PHONE","HOUSE","STREET","VILLAGE","SPOUSE_NAME",
 					"DATE","BY_USER","STATUS");
 			$link=array(
 					'module'=>'group','controller'=>'index','action'=>'edit',
@@ -46,7 +46,7 @@ class Group_indexController extends Zend_Controller_Action {
 			$link1=array(
 					'module'=>'group','controller'=>'index','action'=>'view',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('client_number'=>$link1,'name_kh'=>$link,'name_en'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('branch_name'=>$link,'client_number'=>$link1,'name_kh'=>$link,'name_en'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -114,9 +114,7 @@ class Group_indexController extends Zend_Controller_Action {
 		'name' => '---Add New ---',
 		'pro_id' => -1 ) );
 		$this->view->district = $districts;
-		
-		
-		
+
 		$commune = $db->getCommune();
 		array_unshift($commune,array(
 		'id' => -1,
@@ -143,9 +141,6 @@ class Group_indexController extends Zend_Controller_Action {
 		$this->view->frm_popup_district = $dbpop->frmPopupDistrict();
 		$this->view->frm_popup_clienttype = $dbpop->frmPopupclienttype();
 		
-		
-		
-		
 	}
 	public function editAction(){
 		
@@ -158,11 +153,9 @@ class Group_indexController extends Zend_Controller_Action {
 				$id= $db->addClient($data);
 				if($data['chackcall']==1){
 					Application_Form_FrmMessage::message("វានឹងបន្ថែមទ្រព្យបញ្ចាំរបស់អតិថិជនដោយស្វ័យប្រវត្តិ!");
-				//	Application_Form_FrmMessage::redirectUrl("/group/Callteral/add/id/".$id);
+					Application_Form_FrmMessage::redirectUrl("/group/Callteral/add/id/".$id);
 				}
-				//Application_Form_FrmMessage::redirectUrl("/group/index");
-				//$db->addClient($data);
-				//Application_Form_FrmMessage::Sucessfull('EDIT_SUCCESS',"/group/index");
+				Application_Form_FrmMessage::Sucessfull('EDIT_SUCCESS',"/group/index");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message("EDIT_FAILE");
 				echo $e->getMessage();
@@ -307,6 +300,26 @@ class Group_indexController extends Zend_Controller_Action {
 			exit();
 		}
 	
+	}
+	function getGroupclientbybranchAction(){//At callecteral when click client
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Application_Model_DbTable_DbGlobal();
+			$dataclient=$db->getAllClientGroup($data['branch_id']);
+			array_unshift($dataclient, array('id' => "-1",'branch_id'=>$data['branch_id'],'name'=>'---Add New Client---') );
+			print_r(Zend_Json::encode($dataclient));
+			exit();
+		}
+	}
+	function getGoupCodebybranchAction(){//At callecteral when click client
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Application_Model_DbTable_DbGlobal();
+			$dataclient=$db->getAllClientGroupCode($data['branch_id']);
+			array_unshift($dataclient, array('id' => "-1",'branch_id'=>$data['branch_id'],'name'=>'---Add New Client---') );
+			print_r(Zend_Json::encode($dataclient));
+			exit();
+		}
 	}
 	
 }

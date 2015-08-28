@@ -143,6 +143,7 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 // 		$opt = array(1=>"Male",2=>"Femail");
 		$opt_status = $db->getVewOptoinTypeByType(11,1);
 		unset($opt_status[-1]);
+		unset($opt_status['']);
 		$_sex->setMultiOptions($opt_status);
 		
 		
@@ -152,6 +153,8 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 				'class'=>'fullside',
 		));
 		$opt_status = $db->getVewOptoinTypeByType(5,1);
+		unset($opt_status[-1]);
+		unset($opt_status['']);
 		$_situ_status->setMultiOptions($opt_status);
 		
 		$client_d_type = new Zend_Dojo_Form_Element_FilteringSelect('client_d_type');
@@ -305,7 +308,7 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 		$chackcall = new Zend_Dojo_Form_Element_CheckBox('chackcall');
 		$chackcall->setAttribs(array(
 				'dojoType'=>'dijit.form.CheckBox',
-				'checked'=>'checked'
+				//'checked'=>'checked'
 		));
 // 		$_id=new Zend_Form_Element_Hidden('id');
 		$_id = new Zend_Form_Element_Hidden("id");

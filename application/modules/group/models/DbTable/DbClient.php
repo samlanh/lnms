@@ -127,7 +127,9 @@ class Group_Model_DbTable_DbClient extends Zend_Db_Table_Abstract
 		$to_date = (empty($search['end_date']))? '1': "create_date <= '".$search['end_date']." 23:59:59'";
 		$where = " WHERE (name_kh!='' AND  name_en!='') AND ".$from_date." AND ".$to_date;		
 		$sql = "
-		SELECT client_id,client_number,name_kh,name_en,
+		SELECT client_id,
+		(SELECT branch_nameen FROM `ln_branch` WHERE br_id =branch_id LIMIT 1) AS branch_name ,
+		client_number,name_kh,name_en,
 		(SELECT name_en FROM `ln_view` WHERE TYPE =11 AND sex=key_code LIMIT 1) AS sex
 		,phone,house,street,
 			(SELECT village_name FROM `ln_village` WHERE vill_id= village_id) AS village_name
