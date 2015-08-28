@@ -57,8 +57,6 @@ class Group_CallteralController extends Zend_Controller_Action {
 		$row['collecteral_code']=$code;
 		
 		}
-		//$row = $db->addClient($id);
-		//print_r($row);
 		
 		if($this->getRequest()->isPost()){
 			$calldata=$this->getRequest()->getPost();
@@ -69,7 +67,7 @@ class Group_CallteralController extends Zend_Controller_Action {
 					Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
 					
 				}else{
-					Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL . '/Callteral/add');
+					Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL . '/Callteral/index');
 				}
 			} catch (Exception $e) { 
 				Application_Form_FrmMessage::message("Application Error");
