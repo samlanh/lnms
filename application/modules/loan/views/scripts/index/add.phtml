@@ -8,15 +8,14 @@
 	echo $this->frmPopupZone;
 	echo $this->frmPopupClient;
 	echo $this->frmpupopinfoclient;
-// 	$m = 1;//(integer) date('n');
-// 	//print_r($m);
-// 	$end   = date('d-m-Y',mktime(1,1,1,++$m,0,date('Y')));
-	
-// 	//Considering today is 2014-02-05
-// 	//echo $start; //2014-02-01
-// 	echo "<br />".$end;   //2014-02-28
-	
+	echo $this->frmPopupCO;	
 ?>
+<div class="overlay">
+	<div class="overlay-load">
+		<div class="overlay-msg">
+	    </div>
+	</div>
+</div>	
 <script src="<?php echo $baseurl;?>/js/help.js"></script>
 <form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'loan','controller'=>'index','action'=>'add')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
@@ -61,7 +60,7 @@
 				return false;
 			}
 </script>
-<table cellspacing="10" class='fullside'>
+<table width="100%" style="margin-top:-10px;">
 	<tr>
 		<td>
 				<fieldset>
@@ -81,7 +80,7 @@
 							<td><?php echo $tr->translate("CUSTOMER_NAME")?></td>
 							<td><input id="member" /> <?php //echo $frm->getElement('member');?></td>
 							<td><?php echo $tr->translate("CO_NAME")?></td>
-							<td><?php echo $frm->getElement('co_id');?></td>
+							<td><input id="co_id" /><?php //echo $frm->getElement('co_id');?></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("ZONE_NAME")?></td>
@@ -268,6 +267,7 @@ dojo.require("dojo.html");
 
 var client_store  = getDataStorefromJSON('id','name', [] );//getDataStorefromJSON('id','name', <?php //print_r(Zend_Json::encode($this->recieverlist));?> );
 var client_number_store  = getDataStorefromJSON('id','name', [] );//getDataStorefromJSON('id','name', <?php //print_r(Zend_Json::encode($this->recieverlist));?> );
+var co_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode($this->co_name));?> );
 
 
 require(["dojo/ready"], function(ready){
@@ -319,6 +319,23 @@ require(["dojo/ready"], function(ready){
 		}
     }
 	}, "customer_code");
+
+	new dijit.form.FilteringSelect({
+		store: co_store,//dojo.data.ObjectStore({objectStore: client_number}),
+		autoComplete: true,            
+		required: false,		           
+		name: "co_id",
+		id: "co_id",
+		searchAttr: "name",
+		class: 'fullside',
+		onChange: function() {
+			co_id = dijit.byId('co_id').get('value');
+			if(co_id==-1){
+				popupcreditofficer();
+			}else{
+			}
+	    }
+		}, "co_id");
 	 
 	});
 </script>
@@ -378,7 +395,8 @@ function getLoanByBranch(){
 	dojo.xhrPost({
 		url:url_getloan,	
 		content:{ 
-		    'branch_id':branch_id
+		    'branch_id':branch_id,
+		    'is_group':0
 		},		    
 		handleAs:"json",
 		load: function(data) {
@@ -506,20 +524,27 @@ function addNewClient(){
 		}
 	});
 }
-var url_submitco = '<?php echo $this->url(array('module'=>'other','controller'=>'co','action'=>'add-newco')); ?>';
+var url_submitco = '<?php echo $this->url(array('module'=>'payroll','controller'=>'co','action'=>'add-newco')); ?>';
 function AddNewCo(){
+	if(dijit.byId('form_co').validate()){
 		dojo.xhrPost({
 	    url: url_submitco,	
 		form: dojo.byId("form_co"),		    
 		handleAs:"json",
 		load: function(data) {	
+			var myNewItem1 = {					
+					id: data,
+					name: dijit.byId('first_name').get('value')+' - '+dijit.byId('last_name').get('value'),
+			};			
+			addDataToSelectbox(dijit.byId('co_id'), co_store, myNewItem1, data);		
 			dojo.byId('form_co').reset(); 
 			dijit.byId('frm_co').hide();
 		},
 		error: function(err) {
-		     alert("Your message could not be sent, please try again!.");
+		    alert("Can not insert credit officer");
 		}
-	});
+	 });
+  }
 }
 var url_submitzone = '<?php echo $this->url(array('module'=>'other','controller'=>'zone','action'=>'add-newzone')); ?>';
 function addNewZone(){
@@ -546,12 +571,10 @@ function addNewDistrict(){
 		form: dojo.byId("form_district"),		    
 		handleAs:"json",
 		load: function(data) {	
-			alert(data);
 			dojo.byId('form_district').reset(); 
 			dijit.byId('frm_district').hide();
 		},
 		error: function(err) {
-			alert(err);
 		alert("Your message could not be sent, please try again!.");
 				        
 		}
@@ -564,12 +587,10 @@ function addNewCommune(){
 		form: dojo.byId("form_commune"),		    
 		handleAs:"json",
 		load: function(data) {	
-			alert(data);
 			dojo.byId('form_commune').reset(); 
 			dijit.byId('frm_commune').hide();
 		},
 		error: function(err) {
-			alert(err);
 		alert("Your message could not be sent, please try again!.");
 				        
 		}
@@ -582,12 +603,10 @@ function addNewVillage(){
 		form: dojo.byId("form_village"),		    
 		handleAs:"json",
 		load: function(data) {	
-			alert(data);
 			dojo.byId('form_village').reset(); 
 			dijit.byId('frm_village').hide();
 		},
 		error: function(err) {
-			alert(err);
 		alert("Your message could not be sent, please try again!.");
 				        
 		}
@@ -596,12 +615,11 @@ function addNewVillage(){
 </script>
 <?php 
 // echo $this->frmpupopclient;
-// echo $this->frmPopupCO;
  //echo $this->frmPopupZone;
  //echo $this->frmPopupCommune;
  //echo $this->frmPopupDistrict;
  //echo $this->frmPopupVillage;
- echo $this->frmpupoploantype;
+echo $this->frmpupoploantype;
 ?>
 <script>
 function setFirstPaymentAndDateLine(pay_term,date_release,amount_date){
@@ -735,13 +753,13 @@ function addPreviewLoan(){
 		if(rs==false){
           return false;			
         }
-			
+		loading();
 		dojo.xhrPost({
 		    url: url_previewloan,	
 			form: dojo.byId("frm_add_tran"),		    
 			handleAs:"json", 
 			load: function(data) {
-				alert(33);
+				document.getElementsByClassName("overlay")[0].style.display="none";
 				temp='';	fund_title=0;thead='';fund_title=0;
 				 		temp='<table class="collape tablesorter" style="font-size:13px;" id="table" width="100%">'
 						temp+='<tr style="background:#ccc;"><th><?php echo $tr->translate("NUM");?></th>';
@@ -787,7 +805,8 @@ function loantype(){
 function zone(){
 	    if(dijit.byId('zone').get('value')==-1){
 	    	dijit.byId("frm_zone").show();
-		}
+        }
+ 
 		
 	
 }
@@ -853,6 +872,15 @@ function showPopupclient(){
 		dijit.byId('branch_id').focus();
 		}
 }
+function popupcreditofficer(){
+	branch_id = dijit.byId('branch_id').get('value');
+	if(branch_id==''){
+		alert('Please select branch first');
+		dijit.byId('branch_id').focus();
+	}else{
+		dijit.byId('frm_co').show();
+    }
+}
 var individual_client_url = '<?php echo $this->url(array('module'=>'group','controller'=>'index','action'=>'insert-client'));?>';
 function addNewindividual(){
 	if(dijit.byId('addclient').validate()){
@@ -889,4 +917,16 @@ function addNewindividual(){
 function popupCheckCO(){
   
 }
+function loading(){
+    document.getElementsByClassName("overlay")[0].style.display="block";
+}
 </script>
+<style>
+.overlay {display: none;position: absolute;width: 100%;height: 100%;top: 0px;left: 0px;background: #FCFCFC;z-index: 1001;opacity: .95;}
+.overlay-load {width: 350px;height: 100px;margin: auto;top: 0px;bottom: 0px;position: absolute;left: 0px;right: 0px;
+           border: solid 1px #060522;text-align: center;
+           background: #fff url("<?php echo $this->baseUrl()?>/images/loading.gif") 50% 25%;
+           background-repeat: no-repeat;          
+}
+.overlay-msg{margin-bottom: 10px;bottom: 0px;position: absolute;font-style: italic;color: rgb(19, 19, 19);} 
+</style>
