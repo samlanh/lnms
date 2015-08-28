@@ -162,6 +162,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	}
    	return $rows;
    }
+   public function getAllCoNameOnly(){
+   	$db= $this->getAdapter();
+   	$sql = " SELECT co_id AS id, CONCAT(co_firstname,' - ',co_khname,' - ',co_code) AS name
+   	  FROM ln_co WHERE STATUS=1 AND co_khname!='' AND `position_id`=1 ";
+   	return $db->fetchAll($sql);
+   }
    public function getAllCurrency($id,$opt = null){
 	   	$sql = "SELECT * FROM ln_currency WHERE status = 1 ";
 	   	if($id!=null){
@@ -233,14 +239,25 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	}
    	return $pre.$new_acc_no;
    }
-   public function getLoanNumber($data=array('branch_id'=>1)){
+   public function getLoanNumber($data=array('branch_id'=>1,'is_group'=>0)){
    	$this->_name='ln_loan_member';
    	$db = $this->getAdapter();
-   	$sql=" SELECT COUNT(member_id)  FROM $this->_name WHERE branch_id=".$data['branch_id']." LIMIT 1 ";
+   	if(empty($data['is_group'])){
+   		$data['is_group']=0;
+   	}
+   	if(($data['is_group'])!=0){
+   		$sql = "SELECT COUNT(g_id)  FROM `ln_loan_group` WHERE branch_id=".$data['branch_id']." AND loan_type=2 LIMIT 1 ";
+   		$pre = $this->getPrefixCode($data['branch_id'])."GL";
+   	}else{
+   		$sql=" SELECT COUNT(member_id)  FROM $this->_name WHERE branch_id=".$data['branch_id']." LIMIT 1 ";
+   		$pre = $this->getPrefixCode($data['branch_id'])."L";
+   	}
+   
    	$acc_no = $db->fetchOne($sql);
+   	
    	$new_acc_no= (int)$acc_no+1;
    	$acc_no= strlen((int)$acc_no+1);
-   	$pre = $this->getPrefixCode($data['branch_id'])."L";
+   	
    	for($i = $acc_no;$i<5;$i++){
    		$pre.='0';
    	}
@@ -408,6 +425,34 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	if(!empty($member_id)){
   		$sql.=" AND lm.member_id = $member_id";
   	}
+  	$db=$this->getAdapter();
+  	return $db->fetchRow($sql);
+  }
+  public function getClientGroupByMemberId($group_id){
+  	$sql="SELECT lg.level,lg.date_release,lg.total_duration,lg.first_payment,
+  	lg.pay_term,lg.payment_method,
+  	lg.loan_type,
+  	(SELECT branch_namekh FROM `ln_branch` WHERE br_id =lg.branch_id LIMIT 1) as branch_name,
+  	(SELECT co_khname FROM `ln_co` WHERE co_id =lg.co_id LIMIT 1) AS co_khname,
+  	(SELECT co_firstname FROM `ln_co` WHERE co_id =lg.co_id LIMIT 1) AS co_enname,
+  	(SELECT displayby FROM `ln_co` WHERE co_id =lg.co_id LIMIT 1) AS displayby,
+  	(SELECT tel FROM `ln_co` WHERE co_id =lg.co_id LIMIT 1) AS tel,
+  	(SELECT client_number FROM `ln_client` WHERE client_id = lm.client_id LIMIT 1) AS client_number,
+  	(SELECT name_kh FROM `ln_client` WHERE client_id = lm.client_id LIMIT 1) AS client_name_kh,
+  	(SELECT name_en FROM `ln_client` WHERE client_id = lm.client_id LIMIT 1) AS client_name_en,
+  	(SELECT displayby FROM `ln_client` WHERE client_id = lm.client_id LIMIT 1) AS displayclient,
+  	lm.client_id,
+  	(SELECT curr_namekh FROM `ln_currency` WHERE id = lm.currency_type limit 1) AS currency_type
+  	,SUM(lm.total_capital) AS total_capital,lm.loan_number,
+  	lm.interest_rate,lm.branch_id,
+  	(SELECT CONCAT(last_name ,' ',first_name)  FROM `rms_users` WHERE id = lg.user_id LIMIT 1) AS user_name
+  	FROM
+  	`ln_loan_group` AS lg,`ln_loan_member` AS lm WHERE
+  	lg.g_id =lm.group_id  ";
+  	if(!empty($group_id)){
+  		$sql.=" AND lm.group_id = $group_id";
+  	}
+  	$sql.=" GROUP BY lm.group_id";
   	$db=$this->getAdapter();
   	return $db->fetchRow($sql);
   }
@@ -654,12 +699,6 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	$m = (integer) date('m',strtotime($next_payment));
   	$end_date   = date('Y-m-d',mktime(1,1,1,++$m,0,date('Y',strtotime($next_payment))));
   	return $end_date;
-//   	if($default_day>=date("d",strtotime($end_date))){
-//   		return $end_date;
-//   	}else{
-//   		$next_payment = date("Y-m-$default_day", strtotime($payment_date));
-//   		return $next_payment; 
-//   	}
   	
   }
   public function getNextDateById($pay_term,$amount_next_day){
@@ -810,7 +849,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	if($opt!=null){
 		if(!empty($result))foreach($result AS $row){
 			if($group_type==1){
-				$label = ($diplayby==1)?$row['group_code']:$row['name_en'].','.$row['province_en_name'].','.$row['district_name'].','.$row['commune_name'].','.$row['village_name'];	
+				$label = ($diplayby==1)?$row['group_code']:$row['client_number'].','.$row['name_en'].','.$row['province_en_name'].','.$row['district_name'].','.$row['commune_name'].','.$row['village_name'];	
 			}else{
 				$label = ($diplayby==1)?$row['client_number']:$row['name_en'].','.$row['province_en_name'].','.$row['district_name'].','.$row['commune_name'].','.$row['village_name'];	
 			}
@@ -845,6 +884,31 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   		$sql.=" AND c.`branch_id`= $branch_id ";
   		
   	}
+  	$sql.=" ORDER BY id DESC";
+  	return $db->fetchAll($sql);
+  }
+  function getAllClientGroup($branch_id=null){
+  	$db = $this->getAdapter();
+  	$sql = " SELECT c.`client_id` AS id  ,c.`branch_id`,
+  	CONCAT(c.client_number ,'-',c.`name_en`,'-',c.`name_kh`) AS name , client_number
+  	FROM `ln_client` AS c WHERE c.`name_en`!='' AND c.status=1 AND c.is_group=1 " ;
+  	if($branch_id!=null){
+  		$sql.=" AND c.`branch_id`= $branch_id ";
+  
+  	}
+  	$sql.=" ORDER BY id DESC";
+  	return $db->fetchAll($sql);
+  }
+  function getAllClientGroupCode($branch_id=null){
+  	$db = $this->getAdapter();
+  	$sql = " SELECT c.`client_id` AS id  ,c.`branch_id`,
+  	group_code AS name
+  	FROM `ln_client` AS c WHERE c.`name_en`!='' AND c.status=1 AND c.is_group=1 " ;
+  	if($branch_id!=null){
+  		$sql.=" AND c.`branch_id`= $branch_id ";
+  
+  	}
+  	$sql.=" ORDER BY id DESC";
   	return $db->fetchAll($sql);
   }
   function getAllClientNumber($branch_id=null){
@@ -864,11 +928,25 @@ $sql = " SELECT g.co_id,m.client_id  FROM  `ln_loan_member` AS m , `ln_loan_grou
   	return $db->fetchRow($sql);
   }
 
-  function getAllLoanNumber(){
+  function getAllLoanNumber($type){//type ==1 is ilPayment, type==2 is group payment
   	$db = $this->getAdapter();
-  	$sql ="SELECT lm.`loan_number` FROM `ln_loan_member` AS lm WHERE lm.`is_completed`=0";
+  	$sql ="SELECT 
+			  lm.`loan_number` 
+			FROM
+			  `ln_loan_member` AS lm,
+			  `ln_loan_group` AS lg 
+			WHERE lm.`is_completed` = 0 
+			  AND lm.`group_id` = lg.`g_id`
+  			  AND lg.`is_reschedule`!=1
+  			";
+  	if($type==1){
+  		$sql.=" AND lg.`loan_type` = 1";
+  	}else{
+  		$sql.=" AND lg.`loan_type` =2";
+  	}
   	return $db->fetchAll($sql);
   }
+  
   function getAllViewType($opt=null){
   		$db = $this->getAdapter();
   	$sql ="SELECT * FROM `ln_view_type`";
