@@ -451,7 +451,15 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 // 				//'onKeyUp'=>'getLaonPayment(1);getAllLaonPayment(1);'
 // 				'required'=>true
 // 		));
-		$row_loan_number = $db->getAllLoanNumber(2);
+		$a = Application_Model_GlobalClass::getDefaultAdapter();
+		$sql = "SELECT 
+			  lm.`loan_number` 
+			FROM
+			  `ln_loan_member` AS lm,
+			  `ln_loan_group` AS lg 
+			WHERE lm.`group_id` = lg.`g_id`
+  			  AND lg.`is_reschedule`!=1 AND lg.`loan_type` =2 GROUP BY lm.`loan_number`";
+		$row_loan_number = $a->fetchAll($sql);
 		$options=array(''=>'');
 		if(!empty($row_loan_number))foreach($row_loan_number AS $row){
 			$options[$row['loan_number']]=$row['loan_number'];
@@ -643,7 +651,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 		$option_pay->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-				'OnChange'=>'getLaonPayment();'
+				'OnChange'=>'getPayOption();'
 		));
 		$option_status = array(1=>'បង់ធម្មតា',2=>'បង់មុន',3=>'បង់រំលោះប្រាក់ដើម',4=>'បង់ផ្តាច់');
 		$option_pay->setMultiOptions($option_status);
@@ -658,6 +666,10 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 // 		$id->setAttrib('dojoType', 'dijit.form.TextBox');
 		
 		$installment_date = new Zend_Form_Element_Hidden("installment_date");
+		$installment_date->setAttribs(array(
+				'dojoType'=>'dijit.form.TextBox',
+				'class'=>'fullside',
+		));
 		
 		$old_tota_pay = new Zend_Form_Element_Text("oldTotalPay");
 		$old_tota_pay->setAttribs(array('dojoType'=>'dijit.form.TextBox','class'=>'fullside',));

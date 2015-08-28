@@ -60,8 +60,13 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				if($identify==""){
 					Application_Form_FrmMessage::Sucessfull("Client is no loan to pay", "/loan/GroupPayment");
 				}else{
+					
 					$db->addGroupPayment($_data);
-					Application_Form_FrmMessage::Sucessfull("Client has pay sucessfull!", "/loan/GroupPayment");
+					if(isset($_data["save"])){
+						//Application_Form_FrmMessage::Sucessfull("Client has pay sucessfull!", "/loan/GroupPayment/add");
+					}elseif (isset($_data["save_close"])){
+						Application_Form_FrmMessage::Sucessfull("Client has pay sucessfull!", "/loan/GroupPayment");
+					}
 				}
 			}catch (Exception $e) {
 				echo $e->getMessage();
@@ -85,13 +90,6 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				
 		$session_user=new Zend_Session_Namespace('auth');
 		$this->view->user_name = $session_user->last_name .' '. $session_user->first_name;
-	
-		$list = new Application_Form_Frmtable();
-		$collumns = array("ឈ្មោះមន្ត្រីឥណទាន","ថ្ងៃបង់ប្រាក់","ប្រាក់ត្រូវបង់","ប្រាក់ដើមត្រូវបង់","អាត្រាការប្រាក់","ប្រាក់ផាកពិន័យ","ប្រាក់បានបង់សរុប","សមតុល្យ","កំណត់សម្គាល់");
-		$link=array(
-				'module'=>'group','controller'=>'Client','action'=>'edit',
-		);
-		$this->view->list=$list->getCheckList(0, $collumns, array(),array('client_number'=>$link,'name_kh'=>$link,'name_en'=>$link));
 	}
 	function editAction()
 	{
@@ -114,7 +112,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 		}
 		$rs = $db->getGroupPaymentById($id);
 		$frm = new Loan_Form_FrmIlPayment();
-		$frm_loan=$frm->FrmGroupPayment($rs);
+		$frm_loan=$frm->FrmGroupPayment();
 		Application_Model_Decorator::removeAllDecorator($frm_loan);
 		$this->view->frm_ilpayment = $frm_loan;
 		
@@ -135,6 +133,23 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 		$rs_receipt_detail = $db->getGroupPaymentDetail($id);
 		$this->view->reciept_moneyDetail = $rs_receipt_detail;
 		$this->view->group_id = $rs["group_id"];
+	}
+	
+	function cancelPaymentAction()
+	{
+		$id = $this->getRequest()->getParam("id");
+		$db = new Loan_Model_DbTable_DbGroupPayment();
+		if($this->getRequest()->isPost()){
+			$_data = $this->getRequest()->getPost();
+			$identity = $_data["identity"];
+			try {
+					$db->updateGroupPayment($_data,$id);
+					Application_Form_FrmMessage::Sucessfull("Payment Have been Success Canceled !", "/loan/GroupPayment");
+			}catch (Exception $e) {
+				$err =$e->getMessage();
+				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			}
+		}
 	}
 	function getLoanDetailAction(){
 		if($this->getRequest()->isPost()){
