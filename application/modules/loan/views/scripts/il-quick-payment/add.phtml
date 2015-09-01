@@ -138,8 +138,8 @@
 			</td>
 		</tr>
 		<tr>
-			<td>
-				<div id="mainTabContainer" style=" max-width:1135px;height: 394px;" dojoType="dijit.layout.TabContainer" region="center"  >
+			<td style="overflow: scroll;max-width:1200;">
+				<div id="mainTabContainer" style=" max-width:1110px;height: 394px;" dojoType="dijit.layout.TabContainer" region="center"  >
 						<div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="ការវិភាគបង់ប្រាក់" selected="true">
 								 <div id='data_table' name='data_table'></div>
 						</div>
@@ -298,13 +298,13 @@ function getLoan(type){
 					+'<th class="tdheader">ឈ្មោះអតិថិជន</th>'
 					+'<th class="tdheader" colspan="2">ថ្ងៃបង់ប្រាក់</th>'
 					+'<th class="tdheader">ប្រាក់ដើមគ្រា</th>'
-					+'<th class="tdheader">ប្រាក់ដើម ត្រូវបង់</th>'
+					+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
 					+'<th class="tdheader">ប្រាក់ការ</th>'
-					+'<th class="tdheader">មេគុណ ផាកពិន័យ</th>'
-					+'<th class="tdheader">ផាក ពិន័យ</th>'
-					+'<th class="tdheader">ប្រាក់ សេវាកម្ម</th>'
-					+'<th class="tdheader">ប្រាក់ត្រូវ បង់សរុប</th>'
-					+'<th class="tdheader">ប្រាក់ទទួល បាន</th></tr>'
+					+'<th class="tdheader">មេគុណផាកពិន័យ</th>'
+					+'<th class="tdheader">ផាកពិន័យ</th>'
+					+'<th class="tdheader">ប្រាក់សេវាកម្ម</th>'
+					+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
+					+'<th class="tdheader">ប្រាក់ទទួលបាន</th></tr>'
 				+'</thead>';
 				if(respone!=""){
 					is_set =0;
@@ -335,11 +335,11 @@ function getLoan(type){
 							tem += '<td style="width:3%;">&nbsp;<input type="checkbox" class="checkbox" name="mfdid_'+inx+'" id="mfdid_'+inx+'" value="'+id+'" OnClick="calculateTotal('+inx+');checkRow('+inx+');" checked="checked"/><input type="hidden" name="cu_id_'+inx+'" id="cu_id_'+inx+'" value="'+respone[i].currency_type+'" /></td>';
 						    tem += '<td style="width:4%;">&nbsp;'+respone[i].client_number+'&nbsp;<input type="hidden" name="client_id_'+inx+'" id="client_id_'+inx+'" value="'+client_id+'" /><input type="hidden" name="loan_number_'+inx+'" id="loan_number_'+inx+'" value="'+respone[i].loan_number+'" /></td>';
 						    tem += '<td style="width:4%;">&nbsp;'+respone[i].client+'&nbsp;</td>';
-						    tem += '<td style="white-space: nowrap; width:3%;">&nbsp;'+str_day+'&nbsp;</td>';
-						    tem += '<td style="white-space: nowrap; width:4%;">&nbsp;'+respone[i].date_payment+'&nbsp;<input type="hidden" name="date_payment_'+inx+'" id="date_payment_'+inx+'" value="'+date_pay+'" /><input type="hidden" name="last_paydate_'+inx+'" id="last_paydate_'+inx+'" value="'+respone[i].last_pay_date+'" /></td>';
-						    tem += '<td style="width:3%;">&nbsp;'+dojo.number.format(respone[i].total_principal)+' '+curr+'&nbsp;<input type="hidden" name="sub_total_priciple_'+inx+'" id="sub_total_priciple_'+inx+'" value="'+total_principal+'" /></td>';
-						    tem += '<td style="width:3%;">&nbsp;'+dojo.number.format(respone[i].principle_after)+' '+curr+'&nbsp;<input type="hidden" name="sub_principal_permonth_'+inx+'" id="sub_principal_permonth_'+inx+'" value="'+principal_permonth+'" /></td>';
-						    tem += '<td style="width:3%;">&nbsp;'+dojo.number.format(respone[i].total_interest_after)+' '+curr+'&nbsp;<input type="hidden" name="sub_interest_'+inx+'" id="sub_interest_'+inx+'" value="'+interest+'" /></td>';
+						    tem += '<td style="white-space: nowrap;">&nbsp;'+str_day+'&nbsp;</td>';
+						    tem += '<td style="white-space: nowrap;">&nbsp;'+respone[i].date_payment+'&nbsp;<input type="hidden" name="date_payment_'+inx+'" id="date_payment_'+inx+'" value="'+date_pay+'" /><input type="hidden" name="last_paydate_'+inx+'" id="last_paydate_'+inx+'" value="'+respone[i].last_pay_date+'" /></td>';
+						    tem += '<td style="white-space: nowrap;">&nbsp;'+dojo.number.format(respone[i].total_principal)+' '+curr+'&nbsp;<input type="hidden" name="sub_total_priciple_'+inx+'" id="sub_total_priciple_'+inx+'" value="'+total_principal+'" /></td>';
+						    tem += '<td style="white-space: nowrap;">&nbsp;'+dojo.number.format(respone[i].principle_after)+' '+curr+'&nbsp;<input type="hidden" name="sub_principal_permonth_'+inx+'" id="sub_principal_permonth_'+inx+'" value="'+principal_permonth+'" /></td>';
+						    tem += '<td style="white-space: nowrap;">&nbsp;'+dojo.number.format(respone[i].total_interest_after)+' '+curr+'&nbsp;<input type="hidden" name="sub_interest_'+inx+'" id="sub_interest_'+inx+'" value="'+interest+'" /></td>';
 						    tem += '<td style="width:4%;">&nbsp;'+respone[i].pay_after+'&nbsp;<input type="hidden" name="multiplier_'+inx+'" id="multiplier_'+inx+'" value="'+multiplier+'" /></td>';
 							tem += '<td>&nbsp;<input required ="true" class="fullside" type="text" id="sub_penelize_'+inx+'" name="sub_penelize_'+inx+'" value="'+respone[i].penelize+'" style="width:93%;margin:3px 0" onKeyUp="doPenelizeAmount('+inx+');"/><input type="hidden" id="old_sub_penelize_'+inx+'" name="old_sub_penelize_'+inx+'" value="'+respone[i].penelize+'" /></td>';
 							tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_service_charge_'+inx+'" name="sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'" style="width:93%;" onKeyUp="doServiceChargeAmount('+inx+');"/><input type="hidden" id="old_sub_service_charge_'+inx+'" name="old_sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'"/></td>';
