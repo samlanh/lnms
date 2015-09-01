@@ -9,10 +9,6 @@
 	$baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 	$graiceperiod = $this->graiceperiod;
-	
-	print_r($reciept_money);
-	//print_r($reciept_moneyDetail);
-	
 ?>
 <style>	
 	.dojoxGridSortNode{
@@ -28,22 +24,21 @@
 			if(this.validate()) {
 				//service_charge = dijit.byId('service_charge').get('value');
 				receive_amount = dijit.byId('amount_receive').get('value');
-				//option_pay = dijit.byId('option_pay').get('value');
+				option_pay = dijit.byId('option_pay').get('value');
 				//dijit.byId('total_payment').attr('value',total_amount);
 				total_payments = dijit.byId('total_payment').get('value');
-				
+				if(option_pay!=1){
 					if(receive_amount<total_payments){
 						alert('You Can not paymnet in this option! Please Input Recieve Amount more than or squar Total Paymnet!');
 						dijit.byId('amount_receive').focus();
 						return false;
 					}
-				
-				if(receive_amount<0){
+				}
+				if(receive_amount<0 || receive_amount==0 || receive_amount == ""){
 					alert('Please fill Recieve Amount');
 					dijit.byId('amount_receive').focus();
 					return false;
 				}
-			
 			co_id = dijit.byId('co_id').get('value');
 			client = dijit.byId('client_code').get('value');
            	branch_id = dijit.byId('branch_id').get('value');
@@ -71,6 +66,12 @@
 			return false;
 		}
 </script>
+<div class="overlay">
+	<div class="overlay-load">
+		<div class="overlay-msg">
+	    </div>
+	</div>
+</div>	
 <table style="width: 100%">
 	<tr>
 		<td>
@@ -81,7 +82,7 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td></td>
+							<td><?php echo $frm->getElement('id');?></td>
 							<td><?php echo $tr->translate("កម្រិតកម្ខី")?></td>
 							<td><?php echo $frm->getElement('load_level');?></td>
 						</tr>
@@ -89,7 +90,7 @@
 							<td><?php echo $tr->translate("សាខា")?></td>
 							<td><?php echo $frm->getElement('branch_id');?></td>
 							<td><?php echo $tr->translate("លេខកម្ចី")?></td>
-							<td><?php echo $frm->getElement('loan_number');?></td>
+							<td><?php echo $frm->getElement('loan_number'); echo $frm->getElement('old_loan_number');?></td>
 							<td><?php echo $tr->translate("កាលបរិច្ឆេទខ្ចីប្រាក់")?></td>
 							<td><?php echo $frm->getElement('release_date');echo $frm->getElement('old_release_date');?></td>
 						</tr>
@@ -175,13 +176,13 @@
 		<tr>
 			<td align="center">
 			   <input type="button" value="រក្សាទុក" label="<?php echo $tr->translate('SAVE');?>" id="submitButton" dojoType="dijit.form.Button"
-			   iconClass="dijitEditorIcon dijitEditorIconSave" OnClick="submitNew();"/>
+			   iconClass="dijitEditorIcon dijitEditorIconSave" OnClick="submitData();"/>
 			   <input type="button" value="រក្សាទុក & បិទ" label="<?php echo $tr->translate('SAVE_CLOSE');?>" id="submit_close" dojoType="dijit.form.Button"
-			   iconClass="dijitEditorIcon dijitEditorIconSave" OnClick="submitClose();"/>
+			   iconClass="dijitEditorIcon dijitEditorIconSave" OnClick="submitDataClose();"/>
 			   <input type="button" value="រក្សាទុក & បោះពុម្ព" label="<?php echo $tr->translate('SAVEPRINT');?>" id="saveprint" dojoType="dijit.form.Button" 
 			   iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="showReciept();"/>
 			   <input type="button" value="បោះបង់ការបង់ប្រាក់" label="<?php echo $tr->translate('CANCEL_PAYMENT');?>" id="cancel_payment" dojoType="dijit.form.Button" 
-			   iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="showReciept();"/>
+			   iconClass="dijitEditorIcon dijitEditorIconPrint" onClick="cancelPayment();"/>
 			</td>
 		</tr>
 		<tr>
@@ -201,8 +202,8 @@
 	</tr>		
 </table>
 
-<input type="text" dojoType="dijit.form.TextBox" name="identity" id="identity">
-<input type="text" dojoType="dijit.form.TextBox" name="record_id" id="record_id">
+<input type="hidden" dojoType="dijit.form.TextBox" name="identity" id="identity">
+<input type="hidden" dojoType="dijit.form.TextBox" name="record_id" id="record_id">
 <input type="hidden" dojoType="dijit.form.TextBox" name="curr" id="curr">
 <?php  echo $frm->getElement('reciever');?>
 </form>
@@ -330,14 +331,6 @@
 <?php $baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();?>
 <script src="<?php echo $baseurl;?>/js/help.js"></script>
 <script type="text/javascript">
-function submitNew(){
-	dijit.byId("frm_add_group_pay").submit();
-}
-
-function submitClose(){
-	dijit.byId("frm_add_group_pay").submit();
-	window.location.href ="<?php echo $this->baseUrl();?>/loan/il-payment";
-}
 function showReciept(){
 	var client_id = dijit.byId('client_code').get('value');
 	if(client_id==""){
@@ -449,20 +442,25 @@ function submitNew(){
 		});
 }
 function cancelPayment(){
-	var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'group-payment','action'=>'cancel-payment')); ?>';
-	loading();
-	dojo.xhrPost({
-		    url: url_submit,	
-			form: dojo.byId("frm_add_group_pay"),		    
-			load: function(data) {
-				document.getElementsByClassName("overlay")[0].style.display="none";	
-				alert('ប្រាក់ឥណទានត្រូវបានបញ្ចូលដោយជោគជ័យ !');
-				dijit.byId("frm_add_group_pay").reset();
-			},
-			error: function(e) {
-				//alert("Your message could not be sent, please try again!.");
-			}
-		});
+	var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'group-payment','action'=>'cancel-payment'), null, true); ?>';
+	 var r = confirm("Do you realy want to cancel this Payment !");
+	    if (r == true) {
+			loading();
+			dojo.xhrPost({
+			    url: url_submit,	
+				form: dojo.byId("frm_add_group_pay"),		    
+				load: function(data) {
+					document.getElementsByClassName("overlay")[0].style.display="none";	
+					alert('ប្រាក់ឥណទានត្រូវបានបោះបង់ដោយជោគជ័យ !');
+					dijit.byId("frm_add_group_pay").reset();
+					window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
+				},
+				error: function(e) {
+// 					alert(e);
+				}
+			});
+	    }else{
+	    }
 }
 function clearTextBox(){
 	dijit.byId('member').set('value','');
@@ -487,6 +485,16 @@ function AddNewCo(){
 	});
 }
 dojo.ready(function(){	
+	date_pay = new Date('<?php echo $reciept_money["date_input"];?>');
+	loan_number = '<?php echo $reciept_money["loan_numbers"];?>';
+	new_loanNumber = dijit.byId('loan_number').get('value');
+	dijit.byId('collect_date').attr('value','<?php echo $reciept_money["date_input"];?>');
+	new_date_pay = dijit.byId('collect_date').get('value');
+	if(date_pay!=new_date_pay){
+		dijit.byId('collect_date').attr('onchange',"calculateTotal();");
+	}else{
+		dijit.byId('collect_date').attr('onchange',"");
+	}
 	getGroupPayment();
 });
 function filterClient(){
@@ -496,10 +504,9 @@ function filterClient(){
 }
 function getGroupPayment(){
 	try{
-	var total_pay = <?php echo $reciept_money["total_payment"];?>;
-	var recieve_amount =<?php echo $reciept_money["recieve_amount"];?>;
-	var return_amount = <?php echo $reciept_money["return_amount"];?>;
+		dijit.byId('id').attr('value','<?php echo $reciept_money["id"];?>');
 	dijit.byId('loan_number').attr('value','<?php echo $reciept_money["loan_numbers"];?>');
+	dijit.byId('old_loan_number').attr('value','<?php echo $reciept_money["loan_numbers"];?>');
 	dijit.byId('branch_id').attr('value','<?php echo $reciept_money["branch_id"];?>');
 	dijit.byId('client_code').attr('value','<?php echo $reciept_money["group_id"];?>');
 	dijit.byId('old_penelize').attr('value','<?php echo $reciept_money["penalize_amount"];?>');
@@ -510,15 +517,15 @@ function getGroupPayment(){
 	dijit.byId('priciple_amount').attr('value','<?php echo number_format($reciept_money["principal_amount"],2);?>');
 	dijit.byId('os_amount').attr('value','<?php echo number_format($reciept_money["total_principal_permonth"],2);?>');
 	dijit.byId('total_payment').attr('value','<?php echo number_format($reciept_money["total_payment"],2);?>');
-	dijit.byId('amount_receive').attr('value',parseFloat(recieve_amount));
+	dijit.byId('amount_receive').attr('value','<?php echo number_format($reciept_money["recieve_amount"],2);?>');
 	dijit.byId('total_interest').attr('value','<?php echo number_format($reciept_money["total_interest"],2);?>');
-	dijit.byId('amount_return').attr('value',parseFloat(return_amount));
+	dijit.byId('amount_return').attr('value','<?php echo number_format($reciept_money["return_amount"],2);?>');
 	dijit.byId('currency_type').attr('value','<?php echo $reciept_money["currency_type"];?>');
 	dijit.byId('oldTotalPay').attr('value','<?php echo $reciept_money["total_payment"]-$reciept_money["penalize_amount"]-$reciept_money["service_charge"];?>');
 	dijit.byId('option_pay').attr('value','<?php echo $reciept_money["payment_option"];?>');
 	dijit.byId('payment_term').attr('value','<?php echo $reciept_money["collect_typeterm"];?>');
 	dijit.byId('amount_payment_term').attr('value','<?php echo $reciept_money["amount_term"];?>');
-	dijit.byId('collect_date').attr('value','<?php echo $reciept_money["date_input"];?>');
+	//dijit.byId('collect_date').attr('value','<?php //echo $reciept_money["date_input"];?>');
 	dijit.byId('penalize_amount').attr('value','<?php echo number_format($reciept_money["penalize_amount"],2);?>');
 	dijit.byId('service_charge').attr('value','<?php echo number_format($reciept_money["service_charge"],2);?>');
 	dijit.byId('load_level').attr('value','<?php echo $reciept_money["level"];?>');
@@ -532,11 +539,9 @@ function getGroupPayment(){
 	dijit.byId('reciept_no').attr('value','<?php echo $reciept_money["receipt_no"];?>');
 	dijit.byId('reciever').attr('value','<?php echo $reciept_money["receiver_id"];?>');
 	}catch(err){
-		alert(err);
+// 		alert(err);
 	}
 	getGroupPaymentDetail();
-	doTotalBypene();
-	doTotalByServ();
 }
 function getLaonPayment(){
 	var old_loan_number = '<?php echo $reciept_money["loan_numbers"];?>';
@@ -613,7 +618,6 @@ function getGroupPaymentDetail(){
 	tem+='</table>';
 	dojo.byId('data_table').innerHTML = tem;
 	payOption();
-	calculateTotal();
 }
 
 function getLaonPaymentDetail(){
@@ -704,7 +708,7 @@ function getLaonPaymentDetail(){
 				payOption();
 			},
 			error: function(e) {
-				alert(e);
+// 				alert(e);
 			}
 		});
 }
@@ -766,7 +770,7 @@ function getAllLaonPayment(){
 			dojo.byId('data_table1').innerHTML = tem;
 		},
 		error: function(e) {
-			alert(e);
+// 			alert(e);
 		}
 	});
 }
@@ -1105,7 +1109,6 @@ function calculateTotal(index){
 								  	
 									 total_interest = ((os_amounts*interest_rate/100)/30)*practical_date;
 						  	  		totalAmount = os_amounts+total_interest+penelize+service_charge+total_interest_late;
-						  	  	alert($('#old_release_date').val());
 			  	  	  			}
 		  	  			}
 					}
@@ -1136,7 +1139,7 @@ function calculateTotal(index){
 			$('#check_all').attr('checked');
 		}
 	}catch(err){
-		alert(err);
+// 		alert(err);
 	}
 }
 

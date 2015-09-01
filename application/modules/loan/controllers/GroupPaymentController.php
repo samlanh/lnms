@@ -102,8 +102,8 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				if($identity==""){
 					Application_Form_FrmMessage::Sucessfull("Group Client no loan to pay!", "/loan/GroupPayment");
 				}else{
-					$db->updateGroupPayment($_data,$id);
-					Application_Form_FrmMessage::Sucessfull("Update Success!", "/loan/GroupPayment");
+					$db->updateGroupPayment($_data);
+// 					Application_Form_FrmMessage::Sucessfull("Update Success!", "/loan/GroupPayment");
 				}
 			}catch (Exception $e) {
 				$err =$e->getMessage();
@@ -137,14 +137,14 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 	
 	function cancelPaymentAction()
 	{
-		$id = $this->getRequest()->getParam("id");
 		$db = new Loan_Model_DbTable_DbGroupPayment();
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$identity = $_data["identity"];
 			try {
-					$db->updateGroupPayment($_data,$id);
-					Application_Form_FrmMessage::Sucessfull("Payment Have been Success Canceled !", "/loan/GroupPayment");
+				$db->cancelPaymnet($_data);
+// 				print_r(Zend_Json::encode($row));
+// 				exit();
 			}catch (Exception $e) {
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
@@ -198,7 +198,6 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			exit();
 		}
 	}
-	
 	function getAllLoanHasPayedAction(){
 		if($this->getRequest()->isPost()){
 			$data = $this->getRequest()->getPost();

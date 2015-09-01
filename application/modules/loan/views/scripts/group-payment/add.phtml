@@ -1161,7 +1161,6 @@ function netRecieveAmount(index){
 	var total_pay = dijit.byId('amount_receive').get('value');
 
 	new_total_pay = (parseFloat(total_pay)-parseFloat(old_sub_recieve_amount))+parseFloat(sub_recieve_amount);
-	alert(total_pay+"-"+old_sub_recieve_amount+"+"+sub_recieve_amount);
 	//dijit.byId('total_payment').attr('value',new_total_pay);
 
 	$('#old_recieve_amount_'+index).val(sub_recieve_amount);
