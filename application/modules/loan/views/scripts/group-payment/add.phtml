@@ -585,71 +585,71 @@ function getLaonPayment(){
 }
 function getAllLaonPayment(){
 	
-		var loan_number = dijit.byId('loan_number').get('value');
-		var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'group-payment','action'=>'get-all-loannumber')); ?>';
-		dojo.xhrPost({
-		    url: url_submit,
-		    content : { 
-			    'loan_number':loan_number,
-			},	
-			handleAs:"json",
-			load: function(respone) {
-				status='<label style="color:red;">នៅឡើយ</lable>';
-				tem='';	is_set=0;
-				tem='<table class="collape tablesorter" style="font-size:12px;" id="table" width="100%">'
-					+'<thead><tr><th class="tdheader">ល.រ</th>'
-// 					+'<th class="tdheader">កូដអតិថិជន</th>'
-					+'<th class="tdheader">ឈ្មោះអតិថិជន</th>'
-					+'<th class="tdheader" colspan="2">ថ្ងៃបង់ប្រាក់</th>'
-// 					+'<th class="tdheader">ប្រាក់ដើមគ្រា</th>'
-					+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
-					+'<th class="tdheader">ប្រាក់ការ</th>'
-					+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
-					+'<th class="tdheader">ប្រាក់ផាកពិន័យ</th>'
-					+'<th class="tdheader">សេវាកម្ម</th>'
-					+'<th class="tdheader">ស្ថានភាព</th>'
-					+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
-				+'</thead>';
-				num=0;
-				
-				if(respone!=""){
-					for(i=0;i<respone.length;i++){
-						inx = i+1;
-						status='<label style="color:red;">នៅឡើយ</lable>';
-						++num;
-						d = new Date(respone[i].date_payment);
-						str_day = getDayString(d.getDay());
-						 tem+= '<tr>';
-						    tem += '<td>&nbsp;'+num+'</td>';
-// 						    tem += '<td>&nbsp;'+respone[i].client_number+'&nbsp;</td>';
-						    tem += '<td>&nbsp;'+respone[i].client_name+'&nbsp;</td>';
-						    tem += '<td style="white-space: nowrap;">&nbsp;'+str_day+'&nbsp;</td>';
-						    tem += '<td style="white-space: nowrap;">&nbsp;'+respone[i].date_payment+'&nbsp;</td>';
-// 						    tem += '<td>&nbsp;'+dojo.number.format(respone[i].total_principal)+' '+respone[i].currency_type+'&nbsp;</td>';
-						    tem += '<td>&nbsp;'+dojo.number.format(respone[i].principle_after)+' '+respone[i].currency_type+'&nbsp;</td>';
-						    tem += '<td>&nbsp;'+dojo.number.format(respone[i].total_interest_after)+' '+respone[i].currency_type+'&nbsp;</td>';
-						    tem += '<td>&nbsp;'+dojo.number.format(respone[i].total_payment_after)+' '+respone[i].currency_type+'&nbsp;</td>';
-						    tem += '<td>&nbsp;'+respone[i].penelize+' '+respone[i].currency_type+'&nbsp;</td>';
-						    tem += '<td>&nbsp;'+respone[i].service_charge+' '+respone[i].currency_type+'&nbsp;</td>';
-							if(respone[i].is_completed==1){
-								status = '<label style="color:blue;">បង់រួច</label>';
-								if(respone[i].is_approved==1){is_appr='<label style="color:blue;">Approved</label>';}
-							}else{
-								is_appr='';
-							}
-							tem += '<td>&nbsp;<label style="font-size:10px;">'+status+'</label></td>';
-							tem += '<td>&nbsp;<label style="font-size:10px;">'+is_appr+'</label></td>';
-						    tem += '</tr>';
-	 					    
-					}
+	var loan_number = dijit.byId('loan_number').get('value');
+	var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'group-payment','action'=>'get-all-loannumber')); ?>';
+	dojo.xhrPost({
+	    url: url_submit,
+	    content : { 
+		    'loan_number':loan_number,
+		},	
+		handleAs:"json",
+		load: function(respone) {
+			status='<label style="color:red;">នៅឡើយ</lable>';
+			tep='';	is_set=0;
+			tep='<table class="collape tablesorter" style="font-size:12px;" id="table" width="100%">'
+				+'<thead><tr><th class="tdheader">ល.រ</th>'
+//					+'<th class="tdheader">កូដអតិថិជន</th>'
+				+'<th class="tdheader">ឈ្មោះអតិថិជន</th>'
+				+'<th class="tdheader" colspan="2">ថ្ងៃបង់ប្រាក់</th>'
+//					+'<th class="tdheader">ប្រាក់ដើមគ្រា</th>'
+				+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
+				+'<th class="tdheader">ប្រាក់ការ</th>'
+				+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
+				+'<th class="tdheader">ប្រាក់ផាកពិន័យ</th>'
+				+'<th class="tdheader">សេវាកម្ម</th>'
+				+'<th class="tdheader">ស្ថានភាព</th>'
+				+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
+			+'</thead>';
+			num=0;
+			
+			if(respone!=""){
+				for(i=0;i<respone.length;i++){
+					inx = i+1;
+					status='<label style="color:red;">នៅឡើយ</lable>';
+					++num;
+					d = new Date(respone[i].date_payment);
+					str_day = getDayString(d.getDay());
+					 tep+= '<tr>';
+					    tep += '<td>&nbsp;'+num+'</td>';
+//						    tep += '<td>&nbsp;'+respone[i].client_number+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+respone[i].client_name+'&nbsp;</td>';
+					    tep += '<td style="white-space: nowrap;">&nbsp;'+str_day+'&nbsp;</td>';
+					    tep += '<td style="white-space: nowrap;">&nbsp;'+respone[i].date_payment+'&nbsp;</td>';
+//						    tep += '<td>&nbsp;'+dojo.number.format(respone[i].total_principal)+' '+respone[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+dojo.number.format(respone[i].principle_after)+' '+respone[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+dojo.number.format(respone[i].total_interest_after)+' '+respone[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+dojo.number.format(respone[i].total_payment_after)+' '+respone[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+respone[i].penelize+' '+respone[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+respone[i].service_charge+' '+respone[i].currency_type+'&nbsp;</td>';
+						if(respone[i].is_completed==1){
+							status = '<label style="color:blue;">បង់រួច</label>';
+							if(respone[i].is_approved==1){is_appr='<label style="color:blue;">Approved</label>';}
+						}else{
+							is_appr='';
+						}
+						tep += '<td>&nbsp;<label style="font-size:10px;">'+status+'</label></td>';
+						tep += '<td>&nbsp;<label style="font-size:10px;">'+is_appr+'</label></td>';
+					    tep += '</tr>';
+ 					    
 				}
-				tem+='</table>';
-				dojo.byId('data_table1').innerHTML = tem;
-			},
-			error: function(e) {
-				//alert(e);
 			}
-		});
+			tep+='</table>';
+			dojo.byId('data_table1').innerHTML = tep;
+		},
+		error: function(e) {
+			//alert(e);
+		}
+	});
 }
 function getPaymentHasByLoan(){
 	var loan_number = dijit.byId('loan_number').get('value');
@@ -677,7 +677,7 @@ function getPaymentHasByLoan(){
 				+'<th class="tdheader">សេវាកម្ម</th>'
 				+'<th class="tdheader">ប្រាក់ទទួលបាន</th>'
 // 				+'<th class="tdheader">ស្ថានភាព</th>'
-				+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
+// 				+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
 			+'</thead>';
 			num=0;
 			if(data!=""){
@@ -700,12 +700,9 @@ function getPaymentHasByLoan(){
 					    temp += '<td>&nbsp;'+data[i].total_recieve+' '+data[i].currency_type+'&nbsp;</td>';
 						if(data[i].is_completed==1){
 							status = '<label style="color:blue;">បង់រួច</label>';
-							if(data[i].is_approved==1){is_appr='<label style="color:blue;">Approved</label>';}
-						}else{
-							is_appr='';
 						}
 // 						temp += '<td>&nbsp;<label style="font-size:10px;">'+status+'</label></td>';
-						temp += '<td>&nbsp;<label style="font-size:10px;">'+is_appr+'</label></td>';
+// 						temp += '<td>&nbsp;<label style="font-size:10px;">'+is_appr+'</label></td>';
 					    temp += '</tr>';
  					    
 				}

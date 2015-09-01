@@ -770,77 +770,73 @@ function getAllLaonPayment(){
 			dojo.byId('data_table1').innerHTML = tem;
 		},
 		error: function(e) {
-// 			alert(e);
+			alert(e);
 		}
 	});
 }
 function getPaymentHasByLoan(){
-var loan_number = dijit.byId('loan_number').get('value');
-var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'group-payment','action'=>'get-all-loan-has-payed')); ?>';
-dojo.xhrPost({
-    url: url_submit,
-    content : { 
-	    'loan_number':loan_number,
-	},	
-	handleAs:"json",
-	load: function(data) {
-		status='<label style="color:red;">នៅឡើយ</lable>';
-		temp='';	is_set=0;
-		temp='<table class="collape tablesorter" style="font-size:12px;" id="table" width="100%">'
-			+'<thead><tr><th class="tdheader">ល.រ</th>'
-			+'<th class="tdheader">លេខវិក័យបត្រ</th>'
-			+'<th class="tdheader">លេខកូដកម្ចី</th>'
-			+'<th class="tdheader">ថ្ងៃត្រូវបង់ប្រាក់</th>'
-			+'<th class="tdheader">ថ្ងៃបង់ប្រាក់</th>'
-			+'<th class="tdheader">ប្រាក់ដើមនៅសល់</th>'
-			+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
-			+'<th class="tdheader">ប្រាក់ការ</th>'
-			+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
-			+'<th class="tdheader">ប្រាក់ផាកពិន័យ</th>'
-			+'<th class="tdheader">សេវាកម្ម</th>'
-			+'<th class="tdheader">ប្រាក់ទទួលបាន</th>'
-//				+'<th class="tdheader">ស្ថានភាព</th>'
-			+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
-		+'</thead>';
-		num=0;
-		if(data!=""){
-			for(i=0;i<data.length;i++){
-				inx = i+1;
-				status='<label style="color:red;">នៅឡើយ</lable>';
-				++num;
-				 temp+= '<tr>';
-				    temp += '<td>&nbsp;'+num+'</td>';
-				    temp += '<td>&nbsp;'+data[i].receipt_no+'&nbsp;</td>';
-				    temp += '<td>&nbsp;'+data[i].loan_number+'&nbsp;</td>';
-				    temp += '<td style="white-space: nowrap;">&nbsp;'+data[i].date_payment+'&nbsp;</td>';
-				    temp += '<td style="white-space: nowrap;">&nbsp;'+data[i].date_input+'&nbsp;</td>';
-				    temp += '<td style="white-space: nowrap;">&nbsp;'+data[i].remain_capital+'&nbsp;</td>';
-				    temp += '<td>&nbsp;'+dojo.number.format(data[i].principal_permonth)+' '+data[i].currency_type+'&nbsp;</td>';
-				    temp += '<td>&nbsp;'+dojo.number.format(data[i].total_interest)+' '+data[i].currency_type+'&nbsp;</td>';
-				    temp += '<td>&nbsp;'+dojo.number.format(data[i].total_payment)+' '+data[i].currency_type+'&nbsp;</td>';
-				    temp += '<td>&nbsp;'+data[i].penelize_amount+' '+data[i].currency_type+'&nbsp;</td>';
-				    temp += '<td>&nbsp;'+data[i].service_charge+' '+data[i].currency_type+'&nbsp;</td>';
-				    temp += '<td>&nbsp;'+data[i].total_recieve+' '+data[i].currency_type+'&nbsp;</td>';
-					if(data[i].is_completed==1){
-						status = '<label style="color:blue;">បង់រួច</label>';
-						if(data[i].is_approved==1){is_appr='<label style="color:blue;">Approved</label>';}
-					}else{
-						is_appr='';
-					}
-//						temp += '<td>&nbsp;<label style="font-size:10px;">'+status+'</label></td>';
-					temp += '<td>&nbsp;<label style="font-size:10px;">'+is_appr+'</label></td>';
-				 temp += '</tr>';
+	var loan_number = dijit.byId('loan_number').get('value');
+	var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'group-payment','action'=>'get-all-loan-has-payed')); ?>';
+	dojo.xhrPost({
+	    url: url_submit,
+	    content : { 
+		    'loan_number':loan_number,
+		},	
+		handleAs:"json",
+		load: function(data_payed) {
+			status='<label style="color:red;">នៅឡើយ</lable>';
+			tep='';	is_set=0;
+			tep='<table class="collape tablesorter" style="font-size:12px;" id="table" width="100%">'
+				+'<thead><tr><th class="tdheader">ល.រ</th>'
+				+'<th class="tdheader">លេខវិក័យបត្រ</th>'
+				+'<th class="tdheader">លេខកូដកម្ចី</th>'
+				+'<th class="tdheader">ថ្ងៃត្រូវបង់ប្រាក់</th>'
+				+'<th class="tdheader">ថ្ងៃបង់ប្រាក់</th>'
+				+'<th class="tdheader">ប្រាក់ដើមនៅសល់</th>'
+				+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
+				+'<th class="tdheader">ប្រាក់ការ</th>'
+				+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
+				+'<th class="tdheader">ប្រាក់ផាកពិន័យ</th>'
+				+'<th class="tdheader">សេវាកម្ម</th>'
+				+'<th class="tdheader">ប្រាក់ទទួលបាន</th>'
+//					+'<th class="tdheader">ស្ថានភាព</th>'
+// 				+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
+			+'</thead>';
+			num=0;
+			if(data_payed!=""){
+				for(i=0;i<data_payed.length;i++){
+					inx = i+1;
+					status='<label style="color:red;">នៅឡើយ</lable>';
+					++num;
+					 tep+= '<tr>';
+					    tep += '<td>&nbsp;'+num+'</td>';
+					    tep += '<td>&nbsp;'+data_payed[i].receipt_no+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+data_payed[i].loan_number+'&nbsp;</td>';
+					    tep += '<td style="white-space: nowrap;">&nbsp;'+data_payed[i].date_payment+'&nbsp;</td>';
+					    tep += '<td style="white-space: nowrap;">&nbsp;'+data_payed[i].date_input+'&nbsp;</td>';
+					    tep += '<td style="white-space: nowrap;">&nbsp;'+data_payed[i].remain_capital+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+dojo.number.format(data_payed[i].principal_permonth)+' '+data_payed[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+dojo.number.format(data_payed[i].total_interest)+' '+data_payed[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+dojo.number.format(data_payed[i].total_payment)+' '+data_payed[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+data_payed[i].penelize_amount+' '+data_payed[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+data_payed[i].service_charge+' '+data_payed[i].currency_type+'&nbsp;</td>';
+					    tep += '<td>&nbsp;'+data_payed[i].total_recieve+' '+data_payed[i].currency_type+'&nbsp;</td>';
+						if(data_payed[i].is_completed==1){
+							status = '<label style="color:blue;">បង់រួច</label>';
+						}
+//							tep += '<td>&nbsp;<label style="font-size:10px;">'+status+'</label></td>';
+// 						tep += '<td>&nbsp;<label style="font-size:10px;">'+is_appr+'</label></td>';
+					 tep += '</tr>';
+				}
 			}
+			tep+='</table>';
+			dojo.byId('data_table_loan_haspay').innerHTML = tep;
+		},
+		error: function(e) {
+			alert(e);
 		}
-		temp+='</table>';
-		dojo.byId('data_table_loan_haspay').innerHTML = temp;
-	},
-	error: function(e) {
-		//alert(e);
+	});
 	}
-});
-}
-
 function getdataPaymentToForm(data){//use
 	is_change = 1;
 	dijit.byId('client_code').attr('value',data.client_id);
