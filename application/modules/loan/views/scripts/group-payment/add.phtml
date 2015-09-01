@@ -789,7 +789,7 @@ function calculateTotal(index){
 			
 		   var arrays = ids.split(',');
 		   graice_period = '<?php echo $graiceperiod["value"]?>';
-		   
+		   principle=0;
 			if(arrays!=""){
 				for(var i=0;i<arrays.length;i++) {
 					last_payment_date=0;
@@ -797,7 +797,9 @@ function calculateTotal(index){
 					if($('#mfdid_'+arrays[i]).attr('checked')){
 						var ps = $('#multiplier_'+arrays[i]).val();
 			          	var os_amount = os_amount+parseFloat($('#sub_principal_permonth_'+arrays[i]).val());
-			          	var priciple_amount = parseFloat($('#sub_total_priciple_'+arrays[i]).val()) - parseFloat($('#sub_principal_permonth_'+arrays[i]).val());
+			          	principle = principle+parseFloat($('#sub_total_priciple_'+arrays[i]).val());
+			          	priciple_amount = principle-os_amount;
+// 			          	var priciple_amount = parseFloat($('#sub_total_priciple_'+arrays[i]).val()) - parseFloat($('#sub_principal_permonth_'+arrays[i]).val());
 			          	var total_interest = total_interest+parseFloat($('#sub_interest_'+arrays[i]).val());
 			          	var totalPayment = parseFloat($('#sub_payment_'+arrays[i]).val());
 			          	var principlePerMonth = $('#sub_principal_permonth_'+arrays[i]).val();
@@ -1001,7 +1003,6 @@ function calculateTotal(index){
 					total_interest=0;
 					priciple_amount=0;
 				}
-			sub_penelize = 
 			dijit.byId('oldTotalPay').attr('value',totalAmount.toFixed(2));
 			dijit.byId('amount_receive').attr('value',totalAmount.toFixed(2));
 			dijit.byId('amount_return').attr('value',0);

@@ -456,7 +456,7 @@ function cancelPayment(){
 					window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
 				},
 				error: function(e) {
-// 					alert(e);
+					alert(e);
 				}
 			});
 	    }else{
@@ -873,6 +873,7 @@ function calculateTotal(index){
 		var total_interest_late = 0;
 		var after_discount = 0;
 		var totalAmount = 0;
+		var principle = 0;
 		var payOption = dijit.byId('option_pay').get('value');
 		var payment_term = dijit.byId('payment_term').get('value');
 		var interest_rate = dijit.byId('interest_rate').get('value');
@@ -919,7 +920,8 @@ function calculateTotal(index){
 				if($('#mfdid_'+arrays[i]).attr('checked')){
 					var ps = $('#multiplier_'+arrays[i]).val();
 		          	var os_amount = os_amount+parseFloat($('#sub_principal_permonth_'+arrays[i]).val());
-		          	var priciple_amount = parseFloat($('#sub_total_priciple_'+arrays[i]).val()) - parseFloat($('#sub_principal_permonth_'+arrays[i]).val());
+		          	priciple_amount = principle-os_amount;
+// 		          	var priciple_amount = parseFloat($('#sub_total_priciple_'+arrays[i]).val()) - parseFloat($('#sub_principal_permonth_'+arrays[i]).val());
 		          	var total_interest = total_interest+parseFloat($('#sub_interest_'+arrays[i]).val());
 		          	var totalPayment = parseFloat($('#sub_payment_'+arrays[i]).val());
 		          	var principlePerMonth = $('#sub_principal_permonth_'+arrays[i]).val();

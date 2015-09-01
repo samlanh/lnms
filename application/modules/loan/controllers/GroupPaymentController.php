@@ -104,6 +104,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				}else{
 					$db->updateGroupPayment($_data);
 // 					Application_Form_FrmMessage::Sucessfull("Update Success!", "/loan/GroupPayment");
+					exit();
 				}
 			}catch (Exception $e) {
 				$err =$e->getMessage();
@@ -142,9 +143,9 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			$_data = $this->getRequest()->getPost();
 			$identity = $_data["identity"];
 			try {
-				$db->cancelPaymnet($_data);
-// 				print_r(Zend_Json::encode($row));
-// 				exit();
+				$row = $db->cancelPaymnet($_data);
+				print_r(Zend_Json::encode($row));
+				exit();
 			}catch (Exception $e) {
 				$err =$e->getMessage();
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
