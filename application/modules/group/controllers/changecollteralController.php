@@ -44,12 +44,8 @@ class Group_ChangecollteralController extends Zend_Controller_Action {
 					$from_array.=$row['from_collateral']. ' ,';
 					$to_array.=$row['collateral']. ' ,';
 				}
-				
 				$arr[$index]['from']=$from_array;
 				$arr[$index]['to']=$to_array;
-				
-				
-				
 			}
 			
 			$glClass = new Application_Model_GlobalClass();
@@ -62,7 +58,6 @@ class Group_ChangecollteralController extends Zend_Controller_Action {
 			$this->view->list=$list->getCheckList(0, $collumns,$rs_rows,array('branch_id'=>$link,'owner_code_id'=>$link,'owner_id'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
-			echo $e->getMessage();
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 		$fm = new Group_Form_Frmchangecollteral();
@@ -102,7 +97,7 @@ class Group_ChangecollteralController extends Zend_Controller_Action {
 	}
 	public function editAction()
 	{
-		$db = new Group_Model_DbTable_DbChangeCollteral();
+			$db = new Group_Model_DbTable_DbChangeCollteral();
 		if($this->getRequest()->isPost()){
 			$data=$this->getRequest()->getPost();
 			$db = new Group_Model_DbTable_DbChangeCollteral();
@@ -113,15 +108,16 @@ class Group_ChangecollteralController extends Zend_Controller_Action {
 				$this->view->msg = 'ការ​បញ្ចូល​មិន​ជោគ​ជ័យ';
 			}
 		}
-		
 		$id = $this->getRequest()->getParam('id');
 		if(empty($id)){
-			Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'), self::REDIRECT_URL);
+			Application_Form_FrmMessage::Sucessfull($this->tr->translate('RECORD_NOT_EXIST'), self::REDIRECT_URL. '/changecollteral/index');
 		}
 		$row  = $db->getChangeCollteralbyid($id);
+		if(empty($row)){
+			Application_Form_FrmMessage::Sucessfull($this->tr->translate('RECORD_NOT_EXIST'), self::REDIRECT_URL. '/changecollteral/index');
+		}
 		$this->view->row = $row;
 		$this->view->rows = $db->getAllCollateralDetailById($id);
-		
 		
 		$fm = new Group_Form_Frmchangecollteral();
 		$frm = $fm->FrmChangeCollteral($row);

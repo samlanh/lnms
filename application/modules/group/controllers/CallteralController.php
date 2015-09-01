@@ -54,10 +54,8 @@ class Group_CallteralController extends Zend_Controller_Action {
 		$row['note']=$row['remark']; 
 		$row['id']='';
 		$code = Group_Model_DbTable_DbCallteral::getCallteralCode();
-		$row['collecteral_code']=$code;
-		
+			$row['collecteral_code']=$code;
 		}
-		
 		if($this->getRequest()->isPost()){
 			$calldata=$this->getRequest()->getPost();
 			$db_call = new Group_Model_DbTable_DbCallteral();
@@ -80,11 +78,6 @@ class Group_CallteralController extends Zend_Controller_Action {
 		$this->view->frm_callteral = $frm;
 		$this->view->row=$row;
 		
-// 		$frmpopup = new Application_Form_FrmPopupGlobal();
-// 		$this->view->frmpupopclient = $frmpopup->frmPopupClient();
-// 		$this->view->frmPopupCO = $frmpopup->frmPopupCO();
-// 		$this->view->frmPopupZone = $frmpopup->frmPopupZone();
-		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$this->view->allclient = $db->getAllClient();
 		$this->view->allclient_number = $db->getAllClientNumber();
@@ -102,7 +95,7 @@ class Group_CallteralController extends Zend_Controller_Action {
 					$db = $db_call->updatecallteral($calldata);
 					Application_Form_FrmMessage::Sucessfull('EDIT_SUCCESS', self::REDIRECT_URL. '/Callteral/index');
 				} catch (Exception $e) {
-					Application_Form_FrmMessage::message("Application Error");
+					Application_Form_FrmMessage::message("INSERT_FAIL");
 				    Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 				}
 		}

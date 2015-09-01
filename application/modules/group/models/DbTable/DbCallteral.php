@@ -26,12 +26,13 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 	    	$this->_name='ln_client_callecteral_detail';
 	    	foreach ($ids as $i){
 	    		$array = array(
-	    				'client_coll_id'=> $data['client_coll'],
+	    				'client_coll_id'=> $id_call,//$data['client_coll'],
 	    				'collecteral_type'=>$data['collect_type'.$i],
 	    				'owner_type'=>$data['owner_type'.$i],
 	    				'owner_name'=>$data['owner_name'.$i],
 	    				'number_collecteral'=>$data['number_collteral'.$i],
 	    				'issue_date'=>$data['issue_date'.$i],
+	    				'status'=>$data['Stutas'],
 	    				'note'=>$data['note'.$i],
 	    				);
 	    		$this->insert($array);
@@ -65,7 +66,7 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 			$this->update($arr, $where);
 			
 			$this->_name='ln_client_callecteral_detail';
-			$where  = 'client_coll_id = '.$format['id'];
+			$where  = 'is_return =0 AND client_coll_id = '.$format['id'];
 			$this->delete($where);
 
 			$ids = explode(",",$format['record_row']);
@@ -78,6 +79,7 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 						'owner_name'=>$format['owner_name'.$i],
 						'number_collecteral'=>$format['number_collteral'.$i],
 						'issue_date'=>$format['issue_date'.$i],
+						'status'=>$format['Stutas'],
 						'note'=>$format['note'.$i],
 				);
 				$this->insert($array);
@@ -97,7 +99,7 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 	}
 	function getCallecteralDetailById($id){
 		$db = $this->getAdapter();
-		$sql = "SELECT * FROM `ln_client_callecteral_detail` WHERE client_coll_id =$id AND is_changed=0 ";
+		$sql = "SELECT * FROM `ln_client_callecteral_detail` WHERE client_coll_id =$id AND is_changed=0 AND is_return =0 ";
 		return $db->fetchAll($sql);
 	}
 	function geteAllcallteral($search=null){

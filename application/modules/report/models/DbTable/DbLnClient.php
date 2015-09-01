@@ -99,7 +99,8 @@ class Report_Model_DbTable_DbLnClient extends Zend_Db_Table_Abstract
     	$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
     	$where = " AND ".$from_date." AND ".$to_date;
 		$sql =" SELECT id ,branch_name ,co_id ,collecteral_code,client_code ,client_id,client_name,name_kh, join_with , relative , 
-		collecteral_type,collecteral_owner,number_collecteral,issue_date,collecteral_title_en,date ,note ,status ,is_return FROM `v_getallcallateral` WHERE 1";
+		collecteral_type,collecteral_owner,number_collecteral,issue_date,collecteral_title_en,date ,note ,status ,is_return FROM 
+		`v_getallcallateral` WHERE 1";
 		if($search['status_search']>-1){
  			$where.=" AND status=".$search['status_search'];
  		}

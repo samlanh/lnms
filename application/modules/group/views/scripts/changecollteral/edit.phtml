@@ -47,8 +47,8 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 							<td><input id="client_code" /><?php //echo $frm->getElement('client_code');?></td>
 							<td ><?php echo $tr->translate("OWNER_NAME")?></td>
 							<td><input id="client_name" /><?php //echo $frm->getElement('client_name');?>
-								<input dojoType="dijit.form.TextBox"  id="owner" name="owner" value="" type="text">
-							    <input dojoType="dijit.form.TextBox"  id="client_coll" name="client_coll" value="" type="text">
+								<input dojoType="dijit.form.TextBox"  id="owner" name="owner" value="" type="hidden">
+							    <input dojoType="dijit.form.TextBox"  id="client_coll" name="client_coll" value="" type="hidden">
 							</td>
 						</tr>
 						<tr>
@@ -170,22 +170,6 @@ function getClientInfo(type){
 	}
 	getClientInfomation();
 }
-function deleteRecord(index){
-	var ids =dijit.byId('record_row').value;
-	if(ids.length=='' || ids.length==null){
-		dijit.byId('record_row').attr('value','');
-		dojo.query("#row_capital"+ids).remove();
-	}else{
-		var arrays = ids.split(',');
-		for(var i=0;i<arrays.length;i++) {
-			if(arrays[i] == index) arrays.splice(i,1);
-		}
-		var strings = arrays.join(',');
-		dijit.byId('record_row').attr('value',strings);
-		dojo.query("#row_capital"+index).remove();
-	}
-}
-	
 var url_submitco = '<?php echo $this->url(array('module'=>'other','controller'=>'co','action'=>'add-newco')); ?>';
 function AddNewCo(){
 		dojo.xhrPost({
@@ -197,13 +181,11 @@ function AddNewCo(){
 			dijit.byId('frm_co').hide();
 		},
 		error: function(err) {
-			alert(err);
 		alert("Your message could not be sent, please try again!.");
 				        
 		}
 	});
 }
-
 function popupCheckCO(){
 	if(dijit.byId('co_name').get('value')==-1){
 		 dijit.byId('frm_co').show();
@@ -254,7 +236,7 @@ function innitialize(){
 				fund_title=1;
 				dojo.query("#head_title").append(thead);
 	        }
-			temp='<td style="width:30px !important;text-align:center;" ><img style="cursor:pointer" >'+r+'</td>';
+			temp='<td style="width:30px !important;text-align:center;" ><img style="cursor:pointer" >'+r+'<input type="hidden" name="de_id'+r+'" id="de_id'+r+'" dojoType="dijit.form.TextBox"/></td>';
 			temp+='<td><select style=" width:120px;background:#fff; padding-left:5px;" readonly="true" id="collect_type'+r+'" name="collect_type'+r+'" dojoType="dijit.form.FilteringSelect"  >'+collect_option+'</select></td>';
 		    temp+='<td><select style=" width:110px; background:#fff; padding-left:5px;" readonly="true" id="owner_type'+r+'" name="owner_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="setOwnerNameCollecteralById('+r+')">'+owner_option+'</select></td>';
 			temp+='<td><input style=" width:130px" type="text" required="true"  readonly="true" name="owner_name'+r+'" id="owner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
@@ -264,9 +246,9 @@ function innitialize(){
 		    temp+='<td><select style=" width:90px; background:#fff; padding-left:5px;" id="toowner_type'+r+'" name="toowner_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="setOwnerNameCollecteralById('+r+')">'+owner_option+'</select></td>';
 			temp+='<td><input style=" width:90%;" type="text" required="true" name="toowner_name'+r+'" id="toowner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
 			temp+='<td><input type="text" style=" width:110px" required="true" name="tonumber_collteral'+r+'" id="tonumber_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
-			temp+='<td><input type="text" style="width:110px" required="true"  name="issue_date'+r+'" id="issue_date'+r+'" dojoType="dijit.form.DateTextBox"/></td>';
+			temp+='<td><input type="text" style="width:110px" name="issue_date'+r+'" id="issue_date'+r+'" value="<?php echo date("Y-m-d",strtotime($rs['issue_date']));?>" dojoType="dijit.form.DateTextBox"/></td>';
 			temp+='<td><input style=" width:110px" type="text" name="tonote'+r+'" id="tonote'+r+'" dojoType="dijit.form.TextBox" /><input type="hidden" name="coid'+r+'" id="coid'+r+'" dojoType="dijit.form.TextBox" /> </td>';
-			tmp='<tr style="border:1px solid #ccc;" id="row_capital'+r+'">'
+			tmp='<tr style="border:1px solid #ccc; font-size:11px !important" id="row_capital'+r+'">'
 			tmp+="</tr>";
 				dojo.query("#t_amountmoneytype").append(tmp);
 				dojo.html.set(dojo.byId("row_capital"+r),temp, {
@@ -288,12 +270,10 @@ function innitialize(){
 			dijit.byId('toowner_name'+r).attr('value','<?php echo $rs['toowner_name'];?>');
 			dijit.byId('tonumber_collteral'+r).attr('value','<?php echo $rs['number_collateral'];?>');
 			dijit.byId('tonote'+r).attr('value','<?php echo $rs['note'];?>');
+			dijit.byId('de_id'+r).attr('value','<?php echo $rs['id'];?>');
+			dijit.byId('coid'+r).attr('value',<?php echo $rs['client_coll_id'];?>);
 			
-			
-			
-			//dijit.byId('number_collteral'+r).attr('value',data[i].number_collecteral);
-			dijit.byId('coid'+r).attr('value',<?php echo $rs['change_id'];?>);
-			//dijit.byId('client_coll').attr('value',data[i].client_coll);
+			//dijit.byId('client_coll').attr('value',<?php //echo $rs['client_coll_id'];?>);
 			//setOwnerNameCollecteralById(r);
 			
 		<?php }}?>

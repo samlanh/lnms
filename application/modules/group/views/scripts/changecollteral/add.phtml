@@ -280,11 +280,11 @@ function getClientCollateral(){
 		    temp+='<td><select style=" width:90px; background:#fff; padding-left:5px;"  id="toowner_type'+r+'" name="toowner_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="setOwnerNameCollecteralById('+r+')">'+owner_option+'</select></td>';
 			temp+='<td><input style=" width:90%;" type="text" required="true"  name="toowner_name'+r+'" id="toowner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
 			temp+='<td><input type="text" style="width:110px" required="true"  name="tonumber_collteral'+r+'" id="tonumber_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
-			temp+='<td><input type="text" style="width:110px" required="true"  name="issue_date'+r+'" id="issue_date'+r+'" dojoType="dijit.form.DateTextBox"/></td>';
+			temp+='<td><input type="text" style="width:110px"  name="issue_date'+r+'" id="issue_date'+r+'" dojoType="dijit.form.DateTextBox"/></td>';
 			temp+='<td><input style=" width:110px" type="text" name="tonote'+r+'"  id="tonote'+r+'" dojoType="dijit.form.TextBox" /><input type="hidden" name="coid'+r+'" id="coid'+r+'" dojoType="dijit.form.TextBox" /> </td>';
 
 			
-			tmp='<tr style="border:1px solid #ccc;" id="row_capital'+r+'">'
+			tmp='<tr style="border:1px solid #ccc; font-size:11px !important" id="row_capital'+r+'">'
 			tmp+="</tr>";
 				dojo.query("#t_amountmoneytype").append(tmp);
 				
@@ -296,15 +296,15 @@ function getClientCollateral(){
 				dijit.byId("record_row").attr('value',ids+','+r);
 			} else { dijit.byId("record_row").attr('value',r);}
 			
-			dijit.byId('collect_type'+r).attr('value',data[i].collecteral_type);
-			dijit.byId('owner_type'+r).attr('value',data[i].owner_type);
-			dijit.byId('owner_name'+r).attr('value',data[i].owner_name);
-			dijit.byId('toowner_name'+r).attr('value',data[i].owner_name);
-			
-			dijit.byId('number_collteral'+r).attr('value',data[i].number_collecteral);
-			dijit.byId('coid'+r).attr('value',data[i].id);
-			dijit.byId('client_coll').attr('value',data[i].client_coll);
-			setOwnerNameCollecteralById(r);
+				dijit.byId('collect_type'+r).attr('value',data[i].collecteral_type);
+				dijit.byId('owner_type'+r).attr('value',data[i].owner_type);
+				dijit.byId('owner_name'+r).attr('value',data[i].owner_name);
+				dijit.byId('toowner_name'+r).attr('value',data[i].owner_name);
+				
+				dijit.byId('number_collteral'+r).attr('value',data[i].number_collecteral);
+				dijit.byId('coid'+r).attr('value',data[i].id);
+				dijit.byId('client_coll').attr('value',data[i].client_coll);
+				setOwnerNameCollecteralById(r);
 			}
 		},
 		error: function(err) {

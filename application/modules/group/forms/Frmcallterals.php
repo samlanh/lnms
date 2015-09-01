@@ -143,7 +143,7 @@ Class Group_Form_Frmcallterals extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 				));
-		$options= array(1=>"ប្រើប្រាស់",2=>"មិនប្រើប្រាស់");
+		$options= array(1=>"ប្រើប្រាស់",0=>"មិនប្រើប្រាស់");
 		$stutas->setMultiOptions($options);
 		
 		$cod_cal = new Zend_Dojo_Form_Element_TextBox('cod_cal');
@@ -157,7 +157,7 @@ Class Group_Form_Frmcallterals extends Zend_Dojo_Form {
 		$cod_cal->setValue($code);
 		
 		$from_date = new Zend_Dojo_Form_Element_DateTextBox('start_date');
-		$from_date->setAttribs(array('dojoType'=>'dijit.form.DateTextBox','required'=>'true',
+		$from_date->setAttribs(array('dojoType'=>'dijit.form.DateTextBox',
 				'class'=>'fullside'));
 		$_date = $request->getParam("start_date");
 		

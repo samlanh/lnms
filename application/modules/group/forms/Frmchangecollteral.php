@@ -148,7 +148,7 @@ Class Group_Form_Frmchangecollteral extends Zend_Dojo_Form {
 		$stutas ->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				));
-		$options= array(1=>"ប្រើប្រាស់",2=>"មិនប្រើប្រាស់");
+		$options= array(1=>"ប្រើប្រាស់",0=>"មិនប្រើប្រាស់");
 		$stutas->setMultiOptions($options);
 		
 		$cod_cal = new Zend_Dojo_Form_Element_TextBox('cod_cal');

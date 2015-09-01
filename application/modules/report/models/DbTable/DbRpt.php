@@ -15,10 +15,10 @@ class Report_Model_DbTable_DbRpt extends Zend_Db_Table_Abstract
 			$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
 			$where = " AND ".$from_date." AND ".$to_date;
 				
-			$sql="SELECT * FROM `v_getreturncalleral` WHERE 1";
-			if($search['status_search']>-1){
-				$where.=" AND status=".$search['status_search'];
-			}
+			$sql="SELECT * FROM `v_getreturncalleral` WHERE status = 1";
+// 			if($search['status_search']>-1){
+// 				$where.=" AND status=".$search['status_search'];
+// 			}
 			if(!empty($search['branch_id'])){
 				$where.=" AND branch_id =".$search['branch_id'];
 			}
