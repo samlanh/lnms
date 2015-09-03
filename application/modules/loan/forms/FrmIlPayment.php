@@ -97,6 +97,11 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 		));
 		$_loan_number->setMultiOptions($options);
 		
+		$old_loan_number = new Zend_Form_Element_Hidden("old_loan_number");
+		$old_loan_number->setAttribs(array(
+				'dojoType'	=>	'dijit.form.TextBox',
+		));
+		
 		
 		$_amount_receive = new Zend_Dojo_Form_Element_NumberTextBox('amount_receive');
 		$_amount_receive->setAttribs(array(
@@ -361,7 +366,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 // 			$_collect_date->setValue($data["date_pay"]);
 // 			$old_tota_pay->setValue($data["total_payment"]-$data["service_charge"]);
 		}
-		$this->addElements(array($old_release_date,$old_service_charge,$old_penelize,$_cocode,$_last_payment_date,$using_date,$total_amount_loan,$loan_period,$candition_payment,$payment_method,$release_date,$loan_level,$remain,$old_tota_pay,$installment_date,$amount_payment_term,$_interest_rate,$_payterm,$_currency_type,$id,$option_pay,$date_input,$reciept_no,$reciever,$discount,$id,$_groupid,$_coid,$_priciple_amount,$_loan_fee,$_os_amount,$_rate,
+		$this->addElements(array($old_loan_number,$old_release_date,$old_service_charge,$old_penelize,$_cocode,$_last_payment_date,$using_date,$total_amount_loan,$loan_period,$candition_payment,$payment_method,$release_date,$loan_level,$remain,$old_tota_pay,$installment_date,$amount_payment_term,$_interest_rate,$_payterm,$_currency_type,$id,$option_pay,$date_input,$reciept_no,$reciever,$discount,$id,$_groupid,$_coid,$_priciple_amount,$_loan_fee,$_os_amount,$_rate,
 				$_penalize_amount,$_collect_date,$_total_payment,$_note,$_service_charge,$_amount_return,
 				$_amount_receive,$_client_code,$_loan_number,$_branch_id,$_hide_total_payment));
 		return $this;

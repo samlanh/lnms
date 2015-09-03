@@ -592,96 +592,170 @@ public function addILPayment($data){
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
     	}
     }
-   function cancelPayment($id){
+   function cancelPayment($data){
    	$db = $this->getAdapter();
+   	$db_recipt= new Loan_Model_DbTable_DbLoanILPayment();
    	$db->beginTransaction();
-   	$session_user=new Zend_Session_Namespace('auth');
-   	$user_id = $session_user->user_id;
-   	$data = $this->getIlPaymentByID($id);
-   //	print_r($data);exit();
    	try{
-   		if($data){
-   			$principle_be = $data["total_principal_permonth"];
-   			$total_payment_be = $data["total_payment"];
-   			$interest_be = $data["total_interest"];
-   			$penelize_be = $data["penalize_amount"];
-   			$service_charge_be = $data["service_charge"];
-   			$receive_amount_be = $data["recieve_amount"];
-   			$option_pay = $data["payment_option"];
-   			$sql = "SELECT lfd_id FROM ln_client_receipt_money_detail WHERE crm_id = $id";
-   			$payment_detail = $db->fetchOne($sql);
-   			
-//    			$lfd_id = $payment_detail['lfd_id'];
-//    			$sql_fun_detail = "SELECT * FROM ln_loanmember_funddetail WHERE id = $lfd_id";
-//    			$fun_detail = $db->fetchRow($sql_fun_detail);
-   			
-//    			$principle_af = $fun_detail["principal_permonth"];
-//    			$interest_af = $fun_detail["total_interest"];
-//    			$total_payment_af = $fun_detail["total_payment"];
-   			
-//    			if($interest_be>0){
-//    				$principe = $principle_af;
-//    			}else{
-//    				$principe = $principle_af + ($receive_amount_be-($service_charge_be+$penelize_be+$interest_be));
-//    			}
-   			
-//    			$amount_remain = $receive_amount_be-$service_charge_be;
-   			
-//    			if($amount_remain>0){
-//    				if($amount_remain>$penelize_be){
-// 	   				$amount_remain_pene = $amount_remain - $penelize_be;
-// 	   				if($amount_remain_pene>0){
-// 		   				if($amount_remain_pene>$interest_be){
-// 		   					$amount_remain_int = $amount_remain_pene - $interest_be;
-// 		   					if($amount_remain_int>0){
-// 		   						$interest = $total_payment_be-$principle_be-($service_charge_be+$penelize_be);
-// 		   						$principe = $principle_af + ($receive_amount_be-($service_charge_be+$penelize_be+$interest_be));
-// 		   					}else{
-// 		   						$principe = $principle_af + ($receive_amount_be-($service_charge_be+$penelize_be));
-// 		   						$interest = $total_payment_be-$principle_be-($service_charge_be+$penelize_be);
-// 		   					}
-// 		   				}else{
-// 		   					$amount_remain_int = $interest_be - $amount_remain_pene;
-// 		   					$principe = $principle_af + ($receive_amount_be-($service_charge_be+$penelize_be+$interest_be+$amount_remain_int));
-// 		   				}
-// 	   				}else{
-// 	   					$principe = $principle_af + ($receive_amount_be-($service_charge_be+$penelize_be));
-// 	   				}
-//    				}else{
-//    					$amount_remain_pene = $penelize_be - $amount_remain;
-//    					$principe = $principle_af + ($receive_amount_be-($service_charge_be+$amount_remain_pene));
-//    				}
-//    			}else{
-//    				$interest = $interest_be;
-//    				$principe = $principle_af + ($receive_amount_be-($service_charge_be));
-//    			}
-//    			$interest = $total_payment_be-$principle_be-($service_charge_be+$penelize_be);
-//    			$payment = $principle_be+($service_charge_be+$penelize_be+$interest_be);
-   			
-   			
-//    			print_r("- principle :".$principe."<br> - interest :".$interest."<br> - payment :".$payment);exit();
-   			
-   			$arr_crm = array(
-   				'status'		=> 0,
-   				'is_completed'	=> 0
+   		$id = $data["id"];
+   		$loan_number = $data["old_loan_number"];
+   		 
+   		$sql_option = "SELECT cr.`payment_option`,cr.`recieve_amount`,cr.`total_payment` FROM `ln_client_receipt_money` AS cr WHERE cr.`id`=$id";
+   		$rs = $db->fetchRow($sql_option);
+   		$rs_fun = $db_recipt->getFunDetailByLoanNumber($loan_number);
+   		$rs_recipt = $db_recipt->getReciptDetailById($id);
+   		if($rs_fun=="" or $rs_fun==null){
+   			 
+   			$arr_member = array(
+   					'is_completed'		=> 0,
    			);
-   			$this->_name = "ln_client_receipt_money";
-   			$where = $db->quoteInto("id=?", $id);
-   			$this->update($arr_crm, $where);
-   			
-   			$arr = array(
-   				'principal_permonth'	=>$principle_be,
-   				'total_interest'		=>$interest_be,
-   				'total_payment'			=>$total_payment_be-($service_charge_be+$penelize_be),
-   				'is_completed'			=>0
+   			$this->_name = "ln_loan_member";
+   			$where = $db->quoteInto("loan_number=?", $loan_number);
+   			 
+   			$db->getProfiler()->setEnabled(true);
+   			 
+   			$this->update($arr_member, $where);
+   			 
+   			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+   			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+   			$db->getProfiler()->setEnabled(false);
+   			 
+   			$sql_group = "SELECT m.`group_id` FROM `ln_loan_member` AS m WHERE m.`loan_number`='$loan_number' LIMIT 1";
+   			$rs_group = $db->fetchOne($sql);
+   			 
+   			$arr_group = array(
+   					'status'	=> 1,
    			);
-   			$this->_name = "ln_loanmember_funddetail";
-   			$where = $db->quoteInto("id=?", $payment_detail["lfd_id"]);
+   			$this->_name = "ln_loan_group";
+   			$where = $db->quoteInto("g_id=?", $rs_group["group_id"]);
+   			 
+   			$db->getProfiler()->setEnabled(true);
+   			 
+   			$this->update($arr_group, $where);
+   			 
+   			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+   			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+   			$db->getProfiler()->setEnabled(false);
+   			 
+   			foreach ($rs_recipt as $row_recipt){
+   				$arr_fun = array(
+   						'is_completed'	=>0,
+   				);
+   				$this->_name="`ln_loanmember_funddetail`";
+   				$where = $db->quoteInto("id=?", $row_recipt["lfd_id"]);
+   	
+   				$db->getProfiler()->setEnabled(true);
+   	
+   				$this->update($arr_fun, $where);
+   	
+   				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+   				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+   				$db->getProfiler()->setEnabled(false);
+   			}
+   		}else{
+   			if($rs["payment_option"]==1){
+   				foreach ($rs_recipt as $row_recipt){
+   					$fun = $db_recipt->getFunHasPayedByLoanNumber($row_recipt["lfd_id"]);
+   					if($fun["is_completed"]==0){
+   						foreach ($rs_recipt as $row_recipt){
+   							$total_pay = $row_recipt["total_payment"];
+   							$principle = $row_recipt["principal_permonth"];
+   							$interest = $row_recipt["total_interest"];
+   							$penelize = $row_recipt["penelize_amount"];
+   							$service =$row_recipt["service_charge"];
+   	
+   							$old_penelize = $total_pay-($principle+$interest+$service);
+   							$old_service = $total_pay-($principle+$interest+$penelize);
+   	
+   							$arr_fun = array(
+   									"principle_after" 		=> $principle,
+   									'total_interest_after'	=>	$interest,
+   									'penelize'				=> $old_penelize,
+   									'service_charge'		=>	$old_service,
+   									'total_payment_after'	=> $principle+$interest+$old_penelize+$old_service
+   							);
+   							$this->_name = "ln_loanmember_funddetail";
+   							$where = $db->quoteInto("id=?", $row_recipt["lfd_id"]);
+   	
+   							$db->getProfiler()->setEnabled(true);
+   	
+   							$this->update($arr_fun, $where);
+   	
+   							Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+   							Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+   							$db->getProfiler()->setEnabled(false);
+   						}
+   					}else{
+   						foreach ($rs_recipt as $row_recipt){
+   							$total_pay = $row_recipt["total_payment"];
+   							$principle = $row_recipt["principal_permonth"];
+   							$interest = $row_recipt["total_interest"];
+   							$penelize = $row_recipt["penelize_amount"];
+   							$service =$row_recipt["service_charge"];
+   		    		
+   							$arr_fun = array(
+   									"principle_after" 		=> $principle,
+   									'total_interest_after'	=>	$interest,
+   									'penelize'				=> $penelize,
+   									'service_charge'		=>	$service,
+   									'total_payment_after'	=> $total_pay,
+   									'is_completed'			=>	0,
+   							);
+   							$this->_name = "ln_loanmember_funddetail";
+   							$where = $db->quoteInto("id=?", $row_recipt["lfd_id"]);
+   	
+   							$db->getProfiler()->setEnabled(true);
+   	
+   							$this->update($arr_fun, $where);
+   	
+   							Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+   							Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+   							$db->getProfiler()->setEnabled(false);
+   						}
+   					}
+   				}
+   			}else{
+   				foreach ($rs_recipt as $row_recipt){
+   					$arr_fun = array(
+   							'is_completed'	=>	0,
+   					);
+   					$this->_name="ln_loanmember_funddetail";
+   					$where = $db->quoteInto("id=?", $row_recipt["lfd_id"]);
+   			   
+   					$db->getProfiler()->setEnabled(true);
+   			   
+   					$this->update($arr_fun, $where);
+   			   
+   					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+   					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+   					$db->getProfiler()->setEnabled(false);
+   				}
+   			}
    		}
-   		//$db->commit();
+   		$sql = "DELETE FROM `ln_client_receipt_money` WHERE `id`=$id";
+   	
+   		$db->getProfiler()->setEnabled(true);
+   	
+   		$db->query($sql);
+   	
+   		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+   		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+   		$db->getProfiler()->setEnabled(false);
+   	
+   		$sql_cmd = "DELETE FROM `ln_client_receipt_money_detail` WHERE `crm_id` = $id";
+   	
+   		$db->getProfiler()->setEnabled(true);
+   	
+   		$db->query($sql_cmd);
+   	
+   		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+   		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+   		$db->getProfiler()->setEnabled(false);
+   		//     		exit();
+   		$db->commit();
    	}catch (Exception $e){
    		$db->rollBack();
-   		echo $e->getMessage();exit();
+   		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
    	}
    	
    }

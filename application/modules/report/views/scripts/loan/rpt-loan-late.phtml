@@ -123,10 +123,11 @@ $free_day=$key_code['value'];
 	               			//echo $total_pay;
 	               			if ($rs['last_pay_date']==null or $rs['last_pay_date']==""){
 	               				$total_day=strtotime($end_dat)-strtotime($rs['date_payment']);
-// 	               				$amount_lateday=$total_day/(60*60*24)-$free_day;
-	               				$amount_lateday=$total_day/(60*60*24);
+	               				$amount_lateday=$total_day/(60*60*24)-$free_day;
+	               				$total_late_day=$total_day/(60*60*24);
 	               			}else {
 	               				$total_day=strtotime($end_dat)-strtotime($rs['last_pay_date']);
+	               				$total_late_day=$total_day/(60*60*24);
 	               				$amount_lateday=$total_day/(60*60*24);
 	               			}
 	               			$pay_term=$rs['collect_typeterm'];
@@ -157,7 +158,7 @@ $free_day=$key_code['value'];
                		</td>
                		<td style="white-space: nowrap;">&nbsp;<?php echo number_format($rs["service_charge"],2).' '.$rs['currency_type'];?>&nbsp;</td>
                		<td style="white-space: nowrap;">&nbsp;<?php echo number_format($total_payment,2).' '.$rs['currency_type'];?>&nbsp;</td>
-               		<td align="center">&nbsp;&nbsp;<?php echo ($amount_lateday>0)?$amount_lateday." Days":"-";?> &nbsp;</td>
+               		<td align="center">&nbsp;&nbsp;<?php echo $total_late_day." Days";?> &nbsp;</td>
                		<td align="center">&nbsp;&nbsp;<?php echo date_format(date_create($rs["date_payment"]),'d-m-Y');?>&nbsp;</td>
                		<td align="center" style="width:100px;">&nbsp;<?php echo  str_replace(' ', '', $rs["time_collect"]);?>&nbsp;</td>
                 </tr>

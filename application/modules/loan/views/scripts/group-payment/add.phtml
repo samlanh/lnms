@@ -82,39 +82,39 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><?php echo $tr->translate("កម្រិតកម្ខី")?></td>
+							<td><?php echo $tr->translate("LOAN_LEVEL")?></td>
 							<td><?php echo $frm->getElement('load_level');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("សាខា")?></td>
+							<td><?php echo $tr->translate("BRANCH_NAME")?></td>
 							<td><?php echo $frm->getElement('branch_id');?></td>
-							<td><?php echo $tr->translate("លេខកម្ចី")?></td>
+							<td><?php echo $tr->translate("LOAN_NO")?></td>
 							<td><?php echo $frm->getElement('loan_number');?></td>
-							<td><?php echo $tr->translate("កាលបរិច្ឆេទខ្ចីប្រាក់")?></td>
+							<td><?php echo $tr->translate("LOAN_DATE")?></td>
 							<td><?php echo $frm->getElement('release_date');echo $frm->getElement('old_release_date');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("លេខកូដប្រធានក្រុម")?></td>
+							<td><?php echo $tr->translate("GROUP_NAME")?></td>
 							<td><?php echo $frm->getElement('client_code');?><!-- <input id="client_code"> --></td>
-							<td><?php echo $tr->translate("ឈ្មោះ មន្ត្រីឥណទាន")?></td>
+							<td><?php echo $tr->translate("CO")?></td>
 							<td><?php echo $frm->getElement('co_id');?></td>
-							<td><?php echo $tr->translate("លក្ខខណ្ឌបង់ប្រាក់")?></td>
+							<td><?php echo $tr->translate("TERM_CODITION")?></td>
 							<td><?php echo $frm->getElement('payment_term');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("ចំនួនប្រាក់ខ្ចីសរុប")?></td>
+							<td><?php echo $tr->translate("TOTAL_AMOUNT")?></td>
 							<td><?php echo $frm->getElement('total_amount_loan');?></td>
-							<td><?php echo $tr->translate("រយៈពេលខ្ចី")?></td>
+							<td><?php echo $tr->translate("LOAN_PERIOD")?></td>
 							<td><?php echo $frm->getElement('loan_period');?></td>
-							<td><?php echo $tr->translate("អត្រាការប្រាក់")?></td>
+							<td><?php echo $tr->translate("INTEREST_RATE")?></td>
 							<td><?php  echo $frm->getElement('interest_rate');?></td>
 						</tr>
 						<tr>
 							<td></td>
 							<td></td>
-							<td><?php echo $tr->translate("វិធីសាស្រ្តបង់ប្រាក់")?></td>
+							<td><?php echo $tr->translate("PAMENT_METHOD")?></td>
 							<td><?php  echo $frm->getElement('payment_method');?></td>
-							<td><?php echo $tr->translate("ប្រភេទរូបិយបណ្ណ")?></td>
+							<td><?php echo $tr->translate("CURRENCY")?></td>
 							<td><?php echo $frm->getElement('currency_type');?></td>
 						</tr>
 						<tr>
@@ -125,39 +125,39 @@
 							<td></td>
 							<td></td>
 							<td></td>
-							<td><?php echo $tr->translate("វិក័យបត្រ")?></td>
+							<td><?php echo $tr->translate("RECIEPT_NO")?></td>
 							<td><?php echo $frm->getElement('reciept_no');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("ប្រាក់ដើមនៅសល់")?></td>
+							<td><?php echo $tr->translate("PRINCIPLE")?></td>
 							<td align="left"><?php echo $frm->getElement('priciple_amount');?></td>
-							<td><?php echo $tr->translate("ប្រាក់ដើមត្រូវសង")?></td>
+							<td><?php echo $tr->translate("TOTAL_PRINCIPLE")?></td>
 							<td><?php echo $frm->getElement('os_amount');?></td>
-							<td><?php echo $tr->translate("ការប្រាក់ត្រូវសង")?></td>
+							<td><?php echo $tr->translate("TOTAL_INTEREST")?></td>
 							<td><?php echo $frm->getElement('total_interest');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("ប្រភេទបង់ប្រាក់")?></td>
+							<td><?php echo $tr->translate("PAYMENT_OPTION")?></td>
 							<td><?php  echo $frm->getElement('option_pay');?></td>
-							<td><?php echo $tr->translate("បង់ថ្លៃសេវា")?></td>
+							<td><?php echo $tr->translate("TOTAL_SERVICE_CHARGE")?></td>
 							<td><?php echo $frm->getElement('service_charge');echo $frm->getElement('old_service_charge');?></td>
-							<td><?php echo $tr->translate("ប្រាក់ផាកពិន័យ")?></td>
+							<td><?php echo $tr->translate("TOTAL_PENELIZE")?></td>
 							<td><?php echo $frm->getElement('penalize_amount');?><?php echo $frm->getElement('old_penelize');?></td>
 						</tr>
 						<tr>
-							<td><?php echo $tr->translate("ថ្ងៃទទួលប្រាក់");?></td>
+							<td><?php echo $tr->translate("COLLECT_DATE");?></td>
 							<td><?php echo $frm->getElement('collect_date');?></td>
-							<td><?php echo $tr->translate("ប្រាក់ត្រូវបង់សរុប")?></td>
+							<td><?php echo $tr->translate("TOTAL_AMOUNT_PAYMENT")?></td>
 							<td><?php echo $frm->getElement('total_payment');?><input type="hidden" dojoType="dijit.form.TextBox" name="oldTotalPay" id="oldTotalPay" /></td>
-							<td><?php echo $tr->translate("ប្រាក់ទទួលបាន")?></td>
+							<td><?php echo $tr->translate("TOTAL_RECIEPT")?></td>
 							<td><?php echo $frm->getElement('amount_receive');?></td>
 						</tr>
 						<tr>
 							<td><?php //echo $tr->translate("ថ្ងៃទទួលប្រាក់"); //echo $tr->translate("ថ្ងៃប្រមូលប្រាក់")?></td>
 							<td><?php echo $frm->getElement('date_input'); //echo $frm->getElement('collect_date');?></td>
-							<td><?php echo $tr->translate("ប្រាក់អាប់")?></td>
+							<td><?php echo $tr->translate("RETURN_AMOUNT")?></td>
 							<td><?php  echo $frm->getElement('amount_return');?></td>
-							<td><?php echo $tr->translate("ប្រាក់នៅសល់")?></td>
+							<td><?php echo $tr->translate("REMAIN")?></td>
 							<td><?php echo $frm->getElement('remain');?></td>
 						</tr>
 						<tr>
@@ -165,7 +165,7 @@
 							<td><?php echo $frm->getElement('last_payment_date'); ?></td>
 							<td><?php echo $frm->getElement('installment_date');?></td>
 							<td><?php echo $frm->getElement('amount_payment_term');?></td>
-							<td><?php echo $tr->translate("កំណត់សម្គាល់")?></td>
+							<td><?php echo $tr->translate("NOTE")?></td>
 							<td><?php echo $frm->getElement('note');?></td>
 						</tr>
 					</table>
@@ -174,9 +174,9 @@
 		</tr>
 		<tr>
 			<td align="center">
-			   <input type="button" value="រក្សាទុក" name="save" label="<?php echo $tr->translate('SAVE');?>" id="submitButton" dojoType="dijit.form.Button"
+			   <input type="button" value="រក្សាទុក" name="save" label="<?php echo $tr->translate('SAVENEW');?>" id="submitButton" dojoType="dijit.form.Button"
 			   iconClass="dijitEditorIcon dijitEditorIconSave" onClick="submitData();" />
-			   <input type="button" value="រក្សាទុក & បិទ" name="save_close" label="<?php echo $tr->translate('SAVE_CLOSE');?>" id="submit_close" dojoType="dijit.form.Button"
+			   <input type="button" value="រក្សាទុក & បិទ" name="save_close" label="<?php echo $tr->translate('SAVECLOSE');?>" id="submit_close" dojoType="dijit.form.Button"
 			   iconClass="dijitEditorIcon dijitEditorIconSave" Onclick="submitDataClose();"/>
 			   <input type="button" value="រក្សាទុក & បោះពុម្ព" label="<?php echo $tr->translate('SAVEPRINT');?>" id="saveprint" dojoType="dijit.form.Button" 
 			   iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="showReciept();"/>
@@ -185,13 +185,13 @@
 		<tr>
 			<td style="overflow: scroll;max-width:1200;">
 				<div id="mainTabContainer" style=" max-width:1110px;height: 394px;" dojoType="dijit.layout.TabContainer" region="center"  >
-						<div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="ការវិភាគបង់ប្រាក់" selected="true">
+						<div class="tabContentSection" dojoType="dijit.layout.ContentPane" title="<?php echo $tr->translate('SCHEDULE_PAYMENT');?>" selected="true">
 								 <div id='data_table' name='data_table'></div>
 						</div>
-						<div class="tabContentSection" dojoType="dijit.layout.ContentPane"  title="ប្រវត្តិនៃការបង់ប្រាក់" selected="false">
+						<div class="tabContentSection" dojoType="dijit.layout.ContentPane"  title="<?php echo $tr->translate('HISTORY_SCHEDULE_PAYMENT');?>" selected="false">
 							 <div id='data_table1' name='data_table1'></div>
 						</div>
-						<div class="tabContentSection" dojoType="dijit.layout.ContentPane"  title="ប្រវត្តិនៃការបង់ប្រាក់លម្អិត" selected="false">
+						<div class="tabContentSection" dojoType="dijit.layout.ContentPane"  title="<?php echo $tr->translate('HISTORY_SCHEDULE_PAYMENTED');?>" selected="false">
 							 <div id='data_table_loan_haspay' name='data_table_loan_haspay'></div>
 						</div>
 				 </div>
@@ -211,90 +211,110 @@
 	<style type="text/css">
 		td.border {
 			border-bottom: 1px dashed cadetblue;
+			border-top: none;
+			border-left: none;
+			border-right: none;
 		}
 		div #rpt_print{font-size:12px !important; margin:0 auto;}
 		 
 		 .fontsize{ font-size:10px !important; margin:0 auto;}
+		 
+		.style{
+				line-height: 20px;font-size: 11px !important;
+				font-family: 'Khmer OS Battambang';
+			}
+			th{padding: 5px;}
 	</style>
 		<table cellspacing="10" class='fullside fontsize'>
 				   <tr>
-					   	<td align="center" colspan="3">	
-					   <table  width="100%" cellspacing="0" cellpadding="0">
+					   	<td align="center" colspan="6">	
+					   <table  width="100%" style="font-family: 'Khmer OS Battambang';" style="margin:0; padding:0;border:none;">
 					   		<tr style="line-height:10px;">
-					   			<td width="25%" rowspan="2" style="valign:top;"><img style="margin-top: 1px;" src="<?php echo $base_url;?>images/logobrand.jpg" height="34px;"/></td>
-						   		<td colspan="2" align="right"><strong style="font-family:'KH Koulen';white-space: nowrap;font-size:11px;font-weight:bold; text-align:center;"><?php echo $this->keycode['group_payment_title'];?></strong></td>
+					   			<td width="20%"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px"></td>
+					   			<td valign="top" colspan="6">
+				                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer MEF2'; line-height:40px;"><label><?php echo $tr->translate("BRAND_TITLE");?></label></h2>
+				                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><label></label></h2>
+				                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2';line-height:40px; "><?php echo $tr->translate("GROUP_PAYMENT");?></h2>
+				               </td>
 							</tr>
+							 <tr>
+                	<td colspan="3">
+                		<table width="100%">
+                			<tr class='style'>
+                				<td class="style" style="font-size: 10px;" colspan="2">
+                					<?php echo $tr->translate("ADDRESS_COMPANY");?>
+									<br /><?php echo $tr->translate("TEL_COMPANY");?>
+                				</td>
+                				<td width="50%"></td>
+                			</tr>
+			               
+		                </table>
+		              </td>
+		           </tr>  
 					   	</table>
 			            </td>	   	        
 				   </tr> 
 				   <tr>
-					   	<td align="center" colspan="6" style="font-family:'KH Koulen'; border-bottom:1px solid #000"><?php echo $this->keycode['group_payment_recipt'];?></td>	   	        
+					   	<td align="center" colspan="6" style="font-family:'KH Koulen'; border-bottom:1px solid #000"><?php //echo $this->keycode['group_payment_recipt'];?></td>	   	        
 					</tr> 
 				   <tr>
 					    <td></td>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td>កាលបរិច្ឆេទ :</td>
+						<td><?php echo $tr->translate("DATE");?> :</td>
 						<td align="right" style="font-size: 8pt;" >
 							 <?php echo date('d-m-Y H:i:s');?><br/>
 						</td>
 				   </tr>
 				  
 			<tr class="fontsize">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>ឈ្មោះបុគ្គលិក :</td>
+					<td><?php echo $tr->translate("LOAN_NO");?> :</td>
+					<td class="border">
+						<strong class="fonttel" style="font-size:10px;"><label style="color:blue" id="lbl_loan_number"></label></strong>
+					</td>
+					<td><?php echo $tr->translate("RECIEPT_NO");?> :</td>
+					<td class="border">
+						<strong class="fonttel" style="font-size:10px;"><label style="color:blue" id="lbl_reciept_no"></label></strong>
+					</td>
+					<td><?php echo $tr->translate("USE_BY");?> :</td>
 					<td class="border">
 						<strong class="fonttel" style="font-size:10px;"><label id="lblinvioice"><?php print($this->user_name);?></label></strong>
 					</td>
 					
 			</tr>
 			<tr class="fontsize">
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td>វិក័យបត្រ :</td>
-					<td class="border">
-								<strong class="fonttel" style="font-size:10px;"><label style="color:blue" id="lbl_reciept_no"></label></strong>
-					</td>
-					
-			</tr>
-			<tr class="fontsize">
-					<td class="fontsize">សាខា :</td>
+					<td class="fontsize"><?php echo $tr->translate("BRANCH_NAME");?> :</td>
 					<td class="border"><lable id="lbl_branch_id"></lable></td>
-					<td>ឈ្មោះប្រធានក្រុម :</td>
+					<td><?php echo $tr->translate("GROUP_NAME");?> :</td>
 					<td class="border"><lable id="lbl_group_code"></lable></td>
-					<td>ឈ្មោះ CO :</td>
+					<td><?php echo $tr->translate("CO");?> :</td>
 					<td class="border"><lable id="lbl_co_id"></lable></td>
 					
 			</tr>
 			<tr class="fontsize">
-					<td>ប្រាក់ដើមនៅសល់ :</td>
-					<td class="border"><lable id="lbl_priciple_amount"></lable></td>
-					<td>ប្រាក់ដើមត្រូវសង :</td>
-					<td class="border"><lable id="lbl_os_amount"></lable></td>
-					<td>អាត្រាការប្រាក់ :</td>
+					<td><?php echo $tr->translate("PRINCIPLE");?> :</td>
+					<td class="border"><lable style="color:red" id="lbl_priciple_amount"></lable></td>
+					<td><?php echo $tr->translate("PRINCIPLE_PERMONTH");?> :</td>
+					<td class="border"><lable style="color:red" id="lbl_os_amount"></lable></td>
+					<td><?php echo $tr->translate("INTEREST_RATE");?> :</td>
 					<td class="border"><lable id="lbl_total_interest"></lable></td>
 			</tr>
 			<tr class="fontsize">
-					<td>ប្រាក់ផាកពិន័យ :</td>
+					<td><?php echo $tr->translate("PENALIZE AMOUNT");?> :</td>
 					<td class="border"><lable style="color:red" id="lbl_penalize_amount"></lable></td>
-					<td>បង់ថ្លៃសេវា :</td>
-					<td class="border"><lable id="lbl_service_charge"></lable></td>
-					<td>ប្រាក់ត្រូវបង់សរុប :</td>
-					<td class="border"><lable id="lbl_total_payment"></lable></td>
+					<td><?php echo $tr->translate("SERVICE_CHARGE");?> :</td>
+					<td class="border"><lable style="color:red" id="lbl_service_charge"></lable></td>
+					<td><?php echo $tr->translate("TOTAL_AMOUNT_PAYMENT");?> :</td>
+					<td class="border"><lable style="color:red" id="lbl_total_payment"></lable></td>
 			</tr>
 			<tr class="fontsize">
 					
-					<td>ថ្ងៃទទួលប្រាក់ :</td>
-					<td class="border"><lable id="lbl_collect_date"></lable></td>					
-					<td>ប្រាក់ទទួលបាន :</td>
+					<td><?php echo $tr->translate("DATE_INPUT");?> :</td>
+					<td class="border"><lable style="color:red" id="lbl_collect_date"></lable></td>					
+					<td><?php echo $tr->translate("RECEIVE_AMOUNT");?> :</td>
 					<td class="border"><lable style="color:red" id="lbl_amount_receive"></lable></td>
-					<td>ប្រាក់អាប់ :</td>
+					<td><?php echo $tr->translate("RETURN_AMOUNT");?> :</td>
 					<td class="border"><lable style="color:red" id="lbl_amount_return"></lable></td>
 			</tr>
 			<tr class="fontsize">
@@ -302,14 +322,14 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td>កំណត់សម្គាល់ :</td>
+					<td><?php echo $tr->translate("NOTE");?> :</td>
 					<td class="border"><lable id="lbl_note"></lable></td>
 			</tr>
 			<tr class="fontsize" style="margin-top:20px;line-height: 60px">
 					<td></td>
 					<td></td>
-					<td colspan="2" align="center">ហត្ថលេខាអ្នកទទួល </td>
-					<td colspan="2" align="center">ហត្ថលេខាអ្នកបង់ </td>
+					<td colspan="2" align="center"><?php echo $tr->translate("USE_SIGNETURE");?> </td>
+					<td colspan="2" align="center"><?php echo $tr->translate("CLIENT_SIGNETURE");?> </td>
 			</tr>
 			<tr class="fontsize" style="margin-top:20px;line-height: 20px">
 					<td></td>
@@ -336,6 +356,7 @@ function showReciept(){
 		dijit.byId('branch_id').focus();
 		//dijit.byId('loan_number').focus();
 	}else{
+		document.getElementById('lbl_loan_number').innerHTML = dijit.byId('loan_number').attr('displayedValue');
 		document.getElementById('lbl_reciept_no').innerHTML = dijit.byId('reciept_no').attr('displayedValue');
 		//document.getElementById('lbl_group_member').innerHTML = dijit.byId('client_code').attr('displayedValue');
 		document.getElementById('lbl_group_code').innerHTML = dijit.byId('client_code').attr('displayedValue');
@@ -400,7 +421,7 @@ function submitDataClose(){
 			form: dojo.byId("frm_add_group_pay"),		    
 			load: function(data) {
 				document.getElementsByClassName("overlay")[0].style.display="none";		
-				alert('ប្រាក់ឥណទានត្រូវបានបញ្ចូលដោយជោគជ័យ !');
+				alert('<?php echo $tr->translate('INSERT_SUCCESS');?> !');
 				window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
 			},
 			error: function(e) {
@@ -416,7 +437,7 @@ function submitData(){
 			form: dojo.byId("frm_add_group_pay"),		    
 			load: function(data) {
 				document.getElementsByClassName("overlay")[0].style.display="none";	
-				alert('ប្រាក់ឥណទានត្រូវបានបញ្ចូលដោយជោគជ័យ !');
+				alert('<?php echo $tr->translate('INSERT_SUCCESS');?> !');
 				dijit.byId("frm_add_group_pay").reset();
 			},
 			error: function(e) {
@@ -503,35 +524,34 @@ function getLaonPayment(){
 			},	
 			handleAs:"json",
 			load: function(respone) {
-				status='<label style="color:red;">នៅឡើយ</lable>';
 				tem='';	is_set=0;
 				tem='<table class="collape tablesorter" style="font-size:12px;" id="table" width="100%">'
-					+'<thead><tr><th class="tdheader">ល.រ</th>'
+					+'<thead><tr><th class="tdheader"><?php echo $tr->translate('NO');?></th>'
 					+'<th class="tdheader"><input type="checkbox" OnChange="checkAll();" name="check_all" id="check_all" checked="checked" /></th>'
-					+'<th class="tdheader">កូដអតិថិជន</th>'
-					+'<th class="tdheader">ឈ្មោះអតិថិជន</th>'
-					+'<th class="tdheader" colspan="2">ថ្ងៃបង់ប្រាក់</th>'
-					+'<th class="tdheader">ប្រាក់ដើមគ្រា</th>'
-					+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
-					+'<th class="tdheader">ប្រាក់ការ</th>'
-					+'<th class="tdheader">មេគុណផាកពិន័យ</th>'
-					+'<th class="tdheader">ប្រាក់ផាកពិន័យ</th>'
-					+'<th class="tdheader">សេវាកម្ម</th>'
-					+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
-					+'<th class="tdheader">ប្រាក់ទទួលបាន</th>'
-					+'<th class="tdheader">ស្ថានភាព</th>'
-					+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
+					+'<th class="tdheader"><?php echo $tr->translate('CLIENT_NO');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('CUSTOMER_NAME');?></th>'
+					+'<th class="tdheader" colspan="2"><?php echo $tr->translate('PAY_DATE');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('PRINCIPLE');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('PRINCIPAL_PERMONTH');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('INTEREST');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('PAY_AFTER');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('PENALIZE');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('SERVICE_CHARGE');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('AMOUNT_PAYMENT');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('RECEIVE_AMOUNT');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('STATUS');?></th>'
+					+'<th class="tdheader"><?php echo $tr->translate('NOTE');?></th></tr>'
 				+'</thead>';
 				num=0;
 				if(respone!="" || respone!=null){
 					for(i=0;i<respone.length;i++){
+						status='<label style="color:red;"><?php echo $tr->translate('NOT_COMPLETED');?></lable>';
 						inx = i+1;
 						++num;
 						if(is_set!=1){
 							getdataPaymentToForm(respone[i]);
 							is_set=1;
 						}
-						status='<label style="color:red;">នៅឡើយ</lable>';
 						var total_pay =parseFloat(respone[i].principle_after)+parseFloat(respone[i].total_interest_after)+parseFloat(respone[i].penelize)+parseFloat(respone[i].service_charge)
 						d = new Date(respone[i].date_payment);
 						str_day = getDayString(d.getDay());
@@ -552,7 +572,7 @@ function getLaonPayment(){
 						    tem += '<td>&nbsp;<label id="lb_subpayment_'+inx+'">'+dojo.number.format(total_pay,2)+'</label>&nbsp;<input type="hidden" name="sub_payment_'+inx+'" id="sub_payment_'+inx+'" value="'+dojo.number.format(total_pay)+'" /><input type="hidden" name="old_sub_payment_'+inx+'" id="old_sub_payment_'+inx+'" value="'+dojo.number.format(total_pay,2)+'" /></td>';
 						    tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_recive_amount_'+inx+'" name="sub_recive_amount_'+inx+'" style="width:93%;" OnChange="netRecieveAmount('+inx+');"/><input type="hidden" name="old_recieve_amount_'+inx+'" id="old_recieve_amount_'+inx+'" /></td>';
 							if(respone[i].is_completed==1){
-								status = '<label style="color:blue;">បង់រួច</label>';
+								status = '<label style="color:blue;"><?php echo $tr->translate('COMPLETED');?></label>';
 								if(respone[i].is_approved==1){is_appr='<label style="color:blue;">Approved</label>';}
 							}else{
 								is_appr='';
@@ -594,28 +614,28 @@ function getAllLaonPayment(){
 		},	
 		handleAs:"json",
 		load: function(respone) {
-			status='<label style="color:red;">នៅឡើយ</lable>';
+			status='<label style="color:red;"><?php echo $tr->translate('NOT_COMPLETED');?></lable>';
 			tep='';	is_set=0;
 			tep='<table class="collape tablesorter" style="font-size:12px;" id="table" width="100%">'
-				+'<thead><tr><th class="tdheader">ល.រ</th>'
+				+'<thead><tr><th class="tdheader"><?php echo $tr->translate('NO');?></th>'
 //					+'<th class="tdheader">កូដអតិថិជន</th>'
-				+'<th class="tdheader">ឈ្មោះអតិថិជន</th>'
-				+'<th class="tdheader" colspan="2">ថ្ងៃបង់ប្រាក់</th>'
+				+'<th class="tdheader"><?php echo $tr->translate('CUSTOMER_NAME');?></th>'
+				+'<th class="tdheader" colspan="2"><?php echo $tr->translate('PAY_DATE');?></th>'
 //					+'<th class="tdheader">ប្រាក់ដើមគ្រា</th>'
-				+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
-				+'<th class="tdheader">ប្រាក់ការ</th>'
-				+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
-				+'<th class="tdheader">ប្រាក់ផាកពិន័យ</th>'
-				+'<th class="tdheader">សេវាកម្ម</th>'
-				+'<th class="tdheader">ស្ថានភាព</th>'
-				+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
+				+'<th class="tdheader"><?php echo $tr->translate('PRINCIPAL_PERMONTH');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('INTEREST');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('AMOUNT_PAYMENT');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('PENALIZE');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('SERVICE_CHARGE');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('STATUS');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('NOTE');?></th></tr>'
 			+'</thead>';
 			num=0;
 			
 			if(respone!=""){
 				for(i=0;i<respone.length;i++){
 					inx = i+1;
-					status='<label style="color:red;">នៅឡើយ</lable>';
+					status='<label style="color:red;"><?php echo $tr->translate('NOT_COMPLETED');?></lable>';
 					++num;
 					d = new Date(respone[i].date_payment);
 					str_day = getDayString(d.getDay());
@@ -632,10 +652,7 @@ function getAllLaonPayment(){
 					    tep += '<td>&nbsp;'+respone[i].penelize+' '+respone[i].currency_type+'&nbsp;</td>';
 					    tep += '<td>&nbsp;'+respone[i].service_charge+' '+respone[i].currency_type+'&nbsp;</td>';
 						if(respone[i].is_completed==1){
-							status = '<label style="color:blue;">បង់រួច</label>';
-							if(respone[i].is_approved==1){is_appr='<label style="color:blue;">Approved</label>';}
-						}else{
-							is_appr='';
+							status = '<label style="color:blue;"><?php echo $tr->translate('COMPLETED');?></label>';
 						}
 						tep += '<td>&nbsp;<label style="font-size:10px;">'+status+'</label></td>';
 						tep += '<td>&nbsp;<label style="font-size:10px;">'+is_appr+'</label></td>';
@@ -661,21 +678,21 @@ function getPaymentHasByLoan(){
 		},	
 		handleAs:"json",
 		load: function(data) {
-			status='<label style="color:red;">នៅឡើយ</lable>';
+			status='<label style="color:red;"><?php echo $tr->translate('NOT_COMPLETED');?></lable>';
 			temp='';	is_set=0;
 			temp='<table class="collape tablesorter" style="font-size:12px;" id="table" width="100%">'
-				+'<thead><tr><th class="tdheader">ល.រ</th>'
-				+'<th class="tdheader">លេខវិក័យបត្រ</th>'
-				+'<th class="tdheader">លេខកូដកម្ចី</th>'
-				+'<th class="tdheader">ថ្ងៃត្រូវបង់ប្រាក់</th>'
-				+'<th class="tdheader">ថ្ងៃបង់ប្រាក់</th>'
-				+'<th class="tdheader">ប្រាក់ដើមនៅសល់</th>'
-				+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
-				+'<th class="tdheader">ប្រាក់ការ</th>'
-				+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
-				+'<th class="tdheader">ប្រាក់ផាកពិន័យ</th>'
-				+'<th class="tdheader">សេវាកម្ម</th>'
-				+'<th class="tdheader">ប្រាក់ទទួលបាន</th>'
+				+'<thead><tr><th class="tdheader"><?php echo $tr->translate('NO');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('NOT_COMPLETED');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('LOAN_NO');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('PAY_DATE');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('DATE_INPUT');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('PRINCIPLE');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('PRINCIPAL_PERMONTH');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('INTEREST');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('AMOUNT_PAYMENT');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('PENALIZE');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('SERVICE_CHARGE');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('RECEIVE_AMOUNT');?></th>'
 // 				+'<th class="tdheader">ស្ថានភាព</th>'
 // 				+'<th class="tdheader">កំណត់សម្គាល់</th></tr>'
 			+'</thead>';
@@ -683,7 +700,6 @@ function getPaymentHasByLoan(){
 			if(data!=""){
 				for(i=0;i<data.length;i++){
 					inx = i+1;
-					status='<label style="color:red;">នៅឡើយ</lable>';
 					++num;
 					 temp+= '<tr>';
 					    temp += '<td>&nbsp;'+num+'</td>';
@@ -699,7 +715,7 @@ function getPaymentHasByLoan(){
 					    temp += '<td>&nbsp;'+data[i].service_charge+' '+data[i].currency_type+'&nbsp;</td>';
 					    temp += '<td>&nbsp;'+data[i].total_recieve+' '+data[i].currency_type+'&nbsp;</td>';
 						if(data[i].is_completed==1){
-							status = '<label style="color:blue;">បង់រួច</label>';
+							status = '<label style="color:blue;"><?php echo $tr->translate('COMPLETED');?></label>';
 						}
 // 						temp += '<td>&nbsp;<label style="font-size:10px;">'+status+'</label></td>';
 // 						temp += '<td>&nbsp;<label style="font-size:10px;">'+is_appr+'</label></td>';

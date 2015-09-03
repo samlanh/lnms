@@ -103,6 +103,7 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 	{
 		$id = $this->getRequest()->getParam("id");
 		$db = new Loan_Model_DbTable_DbLoanILPayment();
+		$db1 = new Loan_Model_DbTable_DbGroupPayment();
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$identify = $_data["identity"];
@@ -110,13 +111,9 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 				if($identify==""){
 					Application_Form_FrmMessage::Sucessfull("Client no laon to pay!","/loan/il-payment/");
 				}else{
-					//if(isset($_data["save"])){
-						//print_r($_data);exit();
 						$db->updateIlPayment($_data);
-						Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/loan/il-payment/");
-// 					}elseif(isset($_data["cancel"])){
-// 						//$db->cancelPayment($id);
-// 					}
+// 					$db1->cancelPaymnet($_data);
+					Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/loan/il-payment/");
 				}
 			}catch (Exception $e) {
 				//echo $e->getMessage();
@@ -143,8 +140,6 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 		$this->view->client = $db->getAllClient();
 		$this->view->clientCode = $db->getAllClientCode();
 		
-		
-		
 		$db_keycode = new Application_Model_DbTable_DbKeycode();
 		$this->view->keycode = $db_keycode->getKeyCodeMiniInv();
 		
@@ -152,7 +147,22 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 		
 		$session_user=new Zend_Session_Namespace('auth');
 		$this->view->user_name = $session_user->last_name .' '. $session_user->first_name;
-	
+	}
+	function cancelPayment(){
+// 		$db = new Loan_Model_DbTable_DbLoanILPayment();
+		$db = new Loan_Model_DbTable_DbGroupPayment();
+		if($this->getRequest()->isPost()){
+			$_data = $this->getRequest()->getPost();
+			$identity = $_data["identity"];
+			try {
+				$row = $db->cancelPaymnet($_data);
+				print_r(Zend_Json::encode($row));
+				exit();
+			}catch (Exception $e) {
+				$err =$e->getMessage();
+				Application_Model_DbTable_DbUserLog::writeMessageError($err);
+			}
+		}
 	}
 	function ilQuickPaymentAction(){
 		$db = new Loan_Model_DbTable_DbLoanILPayment();
