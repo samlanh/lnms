@@ -947,19 +947,20 @@ function getLoanPaymentByLoanNumber($data){
     		$rs = $db->fetchRow($sql_option);
     		$rs_fun = $db_recipt->getFunDetailByLoanNumber($loan_number);
     		$rs_recipt = $db_recipt->getReciptDetailById($id);
+    		print_r($rs_recipt);
     		if($rs_fun=="" or $rs_fun==null){
-    			echo 1;exit();
-    			
     			$loan_number = $data["old_loan_number"];
     			$arr_member = array(
-    					'is_completed'		=> 0,
+    					'is_completed'	=> 0,
     			);
     			$this->_name = "ln_loan_member";
     			$where = $db->quoteInto("loan_number=?", $loan_number);
     			
-    			
+    			$db->getProfiler()->setEnabled(true);
     			$this->update($arr_member, $where);
-    			
+    			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+    			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+    			$db->getProfiler()->setEnabled(false);
     			
     			$sql_group = "SELECT m.`group_id` FROM `ln_loan_member` AS m WHERE m.`loan_number`='$loan_number' LIMIT 1";
     			$rs_group = $db->fetchOne($sql);
@@ -970,9 +971,11 @@ function getLoanPaymentByLoanNumber($data){
     			$this->_name = "ln_loan_group";
     			$where = $db->quoteInto("g_id=?", $rs_group["group_id"]);
     			
-    			
+    			$db->getProfiler()->setEnabled(true);
     			$this->update($arr_group, $where);
-    			
+    			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+    			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+    			$db->getProfiler()->setEnabled(false);
     			
 	    		foreach ($rs_recipt as $row_recipt){
 	    			$arr_fun = array(
@@ -981,34 +984,64 @@ function getLoanPaymentByLoanNumber($data){
 	    			$this->_name="`ln_loanmember_funddetail`";
 	    			$where = $db->quoteInto("id=?", $row_recipt["lfd_id"]);
 	    			
-	    			
+	    			$db->getProfiler()->setEnabled(true);
 	    			$this->update($arr_fun, $where);
-	    			
+	    			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+	    			Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+	    			$db->getProfiler()->setEnabled(false);
 	    		}
     		}else{
-    			
     			if($rs["payment_option"]==1){
-    				print_r($rs_recipt);
     				foreach ($rs_recipt as $row_recipt){
+    					$fun_id = $row_recipt['lfd_id'];
+    					$sql = "SELECT * FROM ln_loanmember_funddetail WHERE id= $fun_id";
+    					$result_fun = $db->fetchAll($sql);
+//     					print_r($result_fun);
     					$fun = $db_recipt->getFunHasPayedByLoanNumber($row_recipt["lfd_id"]);
+    					foreach ($result_fun as $result_row){
+    						$fun_penelize = $result_row["penelize"];
+    						$fun_service = $result_row["service_charge"];
 	    					if($fun["is_completed"]==0){
-	    						echo(float)$row_recipt['total_payment']-(float)($row_recipt['total_interest']+$row_recipt['principal_permonth']);
-	    						exit();
 	    							$total_pay = $row_recipt["total_payment"]; 
+	    							$total_recieve = $row_recipt["total_recieve"];
 	    							$principle = $row_recipt["principal_permonth"];
 	    							$interest = $row_recipt["total_interest"];
 	    							$penelize = $row_recipt["penelize_amount"];
 	    							$service =$row_recipt["service_charge"];
-	    							$old_penelize = $total_pay-($principle+$interest+$service);
-	    							$old_service = $total_pay-($principle+$interest+$penelize);
-	    							echo $old_penelize;exit();
 	    							
+	    							$new_recieve = $total_recieve-$service;
+	    							if($new_recieve>0){
+	    								$old_service =0;
+	    								$new_recieve = $new_recieve-$penelize;
+	    								if($new_recieve>0){
+	    									$old_penelize =0;
+// 	    									$new_recieve = $new_recieve - $interest;
+// 	    									if($new_recieve>0){
+// 	    										$old_interest = 0;
+// 	    										$new_recieve = $new_recieve - $penelize;
+// 	    										if($new_recieve>0){
+// 	    											$old_principle = 0;
+// 	    										}
+// 	    									}else{
+// 	    										$old_interest = abs($new_recieve);
+// 	    									}
+	    								}else{
+	    									$old_penelize = abs($new_recieve);
+	    								}
+	    							}else{
+	    								$old_service = abs($new_recieve);
+	    								
+	    							}
+// 	    							$old_penelize = round($total_pay,2)-(round($principle,2)+round($interest,2)+round($penelize,2));
+// 	    							$old_service = round($total_pay,2)-(round($principle,2)+round($interest,2)+round($penelize,2));
+// 	    							echo $a= $principle+$penelize+$interest+$service;
+// 	    							echo $old_penelize."=".$total_pay."-".$principle."+".$interest."+".$service;
 	    							$arr_fun = array(
 	    								"principle_after" 		=> $principle,
 	    								'total_interest_after'	=>	$interest,
-	    								'penelize'				=> $old_penelize,
-	    								'service_charge'		=>	$old_service,
-	    								'total_payment_after'	=> $principle+$interest+$old_penelize+$old_service
+	    								'penelize'				=> $fun_penelize-$old_penelize,
+	    								'service_charge'		=> $fun_service-$old_service,
+	    								'total_payment_after'	=> $principle+$interest+($fun_penelize-$old_penelize)+($fun_service-$old_service),
 	    							);
 	    							$this->_name = "ln_loanmember_funddetail";
 	    							$where = $db->quoteInto("id=?", $row_recipt["lfd_id"]);
@@ -1051,8 +1084,8 @@ function getLoanPaymentByLoanNumber($data){
 	    						}
 	    					}
 	    				}
+    				}
     			}else{
-    				echo 1;exit();
     				foreach ($rs_recipt as $row_recipt){
 		    			$arr_fun = array(
 		    				'is_completed'	=>	0, 
@@ -1089,8 +1122,8 @@ function getLoanPaymentByLoanNumber($data){
     		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
     		Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
     		$db->getProfiler()->setEnabled(false);
-    		exit();
-//     		$db->commit();
+//     		exit();
+    		$db->commit();
     	}catch (Exception $e){
     		$db->rollBack();
     		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -1282,7 +1315,9 @@ function getLoanPaymentByLoanNumber($data){
 				  lc.`total_payment`,
 				  lc.`total_recieve`,
 				  lc.`loan_number`,
-				  c.`payment_option`
+				  c.`payment_option`,
+				  c.`recieve_amount`,
+				  c.`service_charge`,
 				FROM
 				  `ln_client_receipt_money_detail` AS lc ,
 				 `ln_client_receipt_money` AS c

@@ -1,9 +1,4 @@
 <?php
-$a = 129.33;
-$b = 100.00;
-$c = 29.33;
-$d = $a-($b+$c);
-echo $d;
 	$this->headTitle('Add IL Payment'); 
 	echo $this->headTitle();
 	$frm = $this->frm_ilpayment;
@@ -156,7 +151,7 @@ echo $d;
 							<td><?php echo $tr->translate("TOTAL_AMOUNT_PAYMENT")?></td>
 							<td><?php echo $frm->getElement('total_payment');?><input type="hidden" dojoType="dijit.form.TextBox" name="oldTotalPay" id="oldTotalPay" /></td>
 							<td><?php echo $tr->translate("TOTAL_RECIEPT")?></td>
-							<td><?php echo $frm->getElement('amount_receive');?></td>
+							<td><?php echo $frm->getElement('amount_receive');echo $frm->getElement('old_amount_receive');?></td>
 						</tr>
 						<tr>
 							<td><?php //echo $tr->translate("ថ្ងៃទទួលប្រាក់"); //echo $tr->translate("ថ្ងៃប្រមូលប្រាក់")?></td>
@@ -348,13 +343,47 @@ echo $d;
 <script src="<?php echo $baseurl;?>/js/help.js"></script>
 <script type="text/javascript">
 function showReciept(){
-	var client_id = dijit.byId('client_code').get('value');
-	if(client_id==""){
-		alert("No Result To Show! Please Choose Client and Try again");
-		dijit.byId('client_code').focus();
-		dijit.byId('branch_id').focus();
-		//dijit.byId('loan_number').focus();
-	}else{
+	if(dijit.byId("frm_add_group_pay").validate()){
+		//service_charge = dijit.byId('service_charge').get('value');
+		receive_amount = dijit.byId('amount_receive').get('value');
+		option_pay = dijit.byId('option_pay').get('value');
+		//dijit.byId('total_payment').attr('value',total_amount);
+		total_payments = dijit.byId('total_payment').get('value');
+		if(option_pay!=1){
+			if(receive_amount<total_payments){
+				alert('Please Fill the recieve payment large than or esqal total payment !');
+				dijit.byId('amount_receive').focus();
+				return false;
+			}
+		}
+		if(receive_amount<0 || receive_amount==0 || receive_amount == ""){
+			alert('Please fill Recieve Amount');
+			dijit.byId('amount_receive').focus();
+			return false;
+		}
+		co_id = dijit.byId('co_id').get('value');
+		client = dijit.byId('client_code').get('value');
+	   	branch_id = dijit.byId('branch_id').get('value');
+		loan_number=dijit.byId('loan_number').get('value');
+		if (loan_number=='' || branch_id==-1){
+	  	   alert('Please Select Loan Number!');
+		   dijit.byId('loan_number').focus();
+		   return false;
+	    }
+	    if (branch_id=='' || branch_id==-1){
+	  	   alert('Please Select Branch Name!');
+		   dijit.byId('branch_id').focus();
+		   return false;
+	    }
+		if (client=='' || client==-1){
+			alert('Please Select Client Name !');
+			dijit.byId('client_id').focus();
+			return false;
+		}if(co_id=='' || co_id==-1){
+			alert('Please Select CO Name !');
+			dijit.byId('co_id').focus();
+			return false;
+		}
 		document.getElementById('lbl_reciept_no').innerHTML = dijit.byId('reciept_no').attr('displayedValue');
 		//document.getElementById('lbl_group_member').innerHTML = dijit.byId('client_code').attr('displayedValue');
 		document.getElementById('lbl_group_code').innerHTML = dijit.byId('client_code').attr('displayedValue');
@@ -411,22 +440,70 @@ dojo.require("dojo.data.ObjectStore");
 var graice_period = <?php echo $graiceperiod["value"] ?>;
 function submitData(){
 	var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'group-payment','action'=>'edit')); ?>';
-	loading();
-	dojo.xhrPost({
-		    url: url_submit,	
-			form: dojo.byId("frm_add_group_pay"),		    
-			load: function(data) {
-				document.getElementsByClassName("overlay")[0].style.display="none";	
-				alert('<?php echo $tr->translate('UPDATE_SUCCESS');?> !');
-				dijit.byId("frm_add_group_pay").reset();
-				window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
-			},
-			error: function(e) {
-				//alert("Your message could not be sent, please try again!.");
+	if(dijit.byId("frm_add_group_pay").validate()){
+		//service_charge = dijit.byId('service_charge').get('value');
+		receive_amount = dijit.byId('amount_receive').get('value');
+		option_pay = dijit.byId('option_pay').get('value');
+		//dijit.byId('total_payment').attr('value',total_amount);
+		total_payments = dijit.byId('total_payment').get('value');
+		old_receive_amount = dijit.byId('old_amount_receive').get('value');
+		if(option_pay==1){
+			if(receive_amount<old_receive_amount){
+				alert('<?php echo $tr->translate("MSS_ALERT_INVALID_AMOUNT");?> !');
+				dijit.byId('amount_receive').focus();
+				return false;
 			}
-		});
+		}else{
+			if(receive_amount<total_payments){
+				alert('<?php echo $tr->translate("MSS_ALERT_INVALID_AMOUNT");?> !');
+				dijit.byId('amount_receive').focus();
+				return false;
+			}
+		}
+		if(receive_amount<0 || receive_amount==0 || receive_amount == ""){
+			alert('Please fill Recieve Amount');
+			dijit.byId('amount_receive').focus();
+			return false;
+		}
+		co_id = dijit.byId('co_id').get('value');
+		client = dijit.byId('client_code').get('value');
+	   	branch_id = dijit.byId('branch_id').get('value');
+		loan_number=dijit.byId('loan_number').get('value');
+		if (loan_number=='' || branch_id==-1){
+	  	   alert('Please Select Loan Number!');
+		   dijit.byId('loan_number').focus();
+		   return false;
+	    }
+	    if (branch_id=='' || branch_id==-1){
+	  	   alert('Please Select Branch Name!');
+		   dijit.byId('branch_id').focus();
+		   return false;
+	    }
+		if (client=='' || client==-1){
+			alert('Please Select Client Name !');
+			dijit.byId('client_id').focus();
+			return false;
+		}if(co_id=='' || co_id==-1){
+			alert('Please Select CO Name !');
+			dijit.byId('co_id').focus();
+			return false;
+		} 
+		loading();
+		dojo.xhrPost({
+			    url: url_submit,	
+				form: dojo.byId("frm_add_group_pay"),		    
+				load: function(data) {
+					document.getElementsByClassName("overlay")[0].style.display="none";	
+					alert('<?php echo $tr->translate('UPDATE_SUCCESS');?> !');
+					dijit.byId("frm_add_group_pay").reset();
+					window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
+				},
+				error: function(e) {
+					//alert("Your message could not be sent, please try again!.");
+				}
+			});
+		}
 }
-
 function submitDataClose(){
 	var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'group-payment','action'=>'edit')); ?>';
 		loading();
@@ -503,13 +580,17 @@ function AddNewCo(){
 		}
 	});
 }
+function formatDate(value)
+{
+   return value.getMonth()+1 + "/" + value.getDate() + "/" + value.getYear();
+}
 dojo.ready(function(){	
 	date_pay = new Date('<?php echo $reciept_money["date_input"];?>');
 	loan_number = '<?php echo $reciept_money["loan_numbers"];?>';
 	new_loanNumber = dijit.byId('loan_number').get('value');
 	dijit.byId('collect_date').attr('value','<?php echo $reciept_money["date_input"];?>');
 	new_date_pay = dijit.byId('collect_date').get('value');
-	if(date_pay!=new_date_pay){
+	if(formatDate(date_pay)!=formatDate(new_date_pay)){
 		dijit.byId('collect_date').attr('onchange',"calculateTotal();");
 	}else{
 		dijit.byId('collect_date').attr('onchange',"");
@@ -558,7 +639,7 @@ function getGroupPayment(){
 	dijit.byId('reciept_no').attr('value','<?php echo $reciept_money["receipt_no"];?>');
 	dijit.byId('reciever').attr('value','<?php echo $reciept_money["receiver_id"];?>');
 	}catch(err){
-		alert(err);
+// 		alert(err);
 	}
 	getGroupPaymentDetail();
 }
@@ -790,7 +871,7 @@ function getAllLaonPayment(){
 			dojo.byId('data_table1').innerHTML = tem;
 		},
 		error: function(e) {
-			alert(e);
+// 			alert(e);
 		}
 	});
 }
@@ -853,7 +934,7 @@ function getPaymentHasByLoan(){
 			dojo.byId('data_table_loan_haspay').innerHTML = tep;
 		},
 		error: function(e) {
-			alert(e);
+// 			alert(e);
 		}
 	});
 	}
@@ -1235,7 +1316,6 @@ function doServiceChargeAmount(index){
 	dijit.byId('service_charge').attr('value',new_service_charge);
 	netTotal();
 }
-
 function doTotalBypene(){
 	old_penelize = dijit.byId('old_penelize').get('value');
 	old_penelize = old_penelize==""?0:old_penelize;

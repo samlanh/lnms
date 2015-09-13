@@ -319,6 +319,7 @@ function getLoan(type){
 						principal_permonth = respone[i].principle_after;
 						interest = respone[i].total_interest_after;
 						payment = respone[i].total_payment_after;
+						alert(payment);
 						multiplier = respone[i].pay_after;
 						pay_before = respone[i].pay_before;
 						date_pay = respone[i].date_payment;
@@ -343,7 +344,7 @@ function getLoan(type){
 						    tem += '<td style="width:4%;">&nbsp;'+respone[i].pay_after+'&nbsp;<input type="hidden" name="multiplier_'+inx+'" id="multiplier_'+inx+'" value="'+multiplier+'" /></td>';
 							tem += '<td>&nbsp;<input required ="true" class="fullside" type="text" id="sub_penelize_'+inx+'" name="sub_penelize_'+inx+'" value="'+respone[i].penelize+'" style="width:93%;margin:3px 0" onKeyUp="doPenelizeAmount('+inx+');"/><input type="hidden" id="old_sub_penelize_'+inx+'" name="old_sub_penelize_'+inx+'" value="'+respone[i].penelize+'" /></td>';
 							tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_service_charge_'+inx+'" name="sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'" style="width:93%;" onKeyUp="doServiceChargeAmount('+inx+');"/><input type="hidden" id="old_sub_service_charge_'+inx+'" name="old_sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'"/></td>';
-							tem += '<td>&nbsp;<label id="lb_subpayment_'+inx+'">'+payment+'</label><input type="hidden" name="sub_payment_'+inx+'" id="sub_payment_'+inx+'" value="'+payment+'" style="width:93%;margin:3px 0"/><input type="hidden" name="old_sub_payment_'+inx+'" id="old_sub_payment_'+inx+'" value="'+payment+'" /></td>';
+							tem += '<td>&nbsp;<label id="lb_subpayment_'+inx+'">'+payment+'</label><input type="hidden" name="sub_payment_'+inx+'" id="sub_payment_'+inx+'" value="'+parseFloat(payment)+'" style="width:93%;margin:3px 0"/><input type="hidden" name="old_sub_payment_'+inx+'" id="old_sub_payment_'+inx+'" value="'+parseFloat(payment)+'" /></td>';
 							tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_recive_amount_'+inx+'" name="sub_recive_amount_'+inx+'" style="width:93%;" OnChange="netRecieveAmount('+inx+');"/><input type="hidden" name="old_recieve_amount_'+inx+'" id="old_recieve_amount_'+inx+'" /></td>';
 						    tem += '</tr>';
 	 					    if(inx!=1) {

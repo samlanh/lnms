@@ -113,6 +113,14 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 				
 		));
 		
+		$old_amount_receive = new Zend_Form_Element_Text('old_amount_receive');
+		$old_amount_receive->setAttribs(array(
+				'dojoType'	=>	'dijit.form.TextBox',
+				'style'		=>	'color:red;',
+				//'required'	=>	true,
+		
+		));
+		
 		$_amount_return = new Zend_Dojo_Form_Element_NumberTextBox('amount_return');
 		$_amount_return->setAttribs(array(
 				'dojoType'=>'dijit.form.NumberTextBox',
@@ -366,7 +374,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 // 			$_collect_date->setValue($data["date_pay"]);
 // 			$old_tota_pay->setValue($data["total_payment"]-$data["service_charge"]);
 		}
-		$this->addElements(array($old_loan_number,$old_release_date,$old_service_charge,$old_penelize,$_cocode,$_last_payment_date,$using_date,$total_amount_loan,$loan_period,$candition_payment,$payment_method,$release_date,$loan_level,$remain,$old_tota_pay,$installment_date,$amount_payment_term,$_interest_rate,$_payterm,$_currency_type,$id,$option_pay,$date_input,$reciept_no,$reciever,$discount,$id,$_groupid,$_coid,$_priciple_amount,$_loan_fee,$_os_amount,$_rate,
+		$this->addElements(array($old_amount_receive,$old_loan_number,$old_release_date,$old_service_charge,$old_penelize,$_cocode,$_last_payment_date,$using_date,$total_amount_loan,$loan_period,$candition_payment,$payment_method,$release_date,$loan_level,$remain,$old_tota_pay,$installment_date,$amount_payment_term,$_interest_rate,$_payterm,$_currency_type,$id,$option_pay,$date_input,$reciept_no,$reciever,$discount,$id,$_groupid,$_coid,$_priciple_amount,$_loan_fee,$_os_amount,$_rate,
 				$_penalize_amount,$_collect_date,$_total_payment,$_note,$_service_charge,$_amount_return,
 				$_amount_receive,$_client_code,$_loan_number,$_branch_id,$_hide_total_payment));
 		return $this;
@@ -478,7 +486,9 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 		$_loan_number->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-				'onChange'=>'getLaonPayment(1);',
+				'onChange'=>'getLaonPayment();
+							 getAllLaonPayment();
+							 getPaymentHasByLoan();',
 				'required'=>true
 		));
 		$_loan_number->setMultiOptions($options);
@@ -492,6 +502,14 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 				'style'		=>	'color:red;',
 				'required'	=>	true,
 				
+		));
+		
+		$old_amount_receive = new Zend_Form_Element_Hidden('old_amount_receive');
+		$old_amount_receive->setAttribs(array(
+				'dojoType'	=>	'dijit.form.TextBox',
+				'style'		=>	'color:red;',
+				//'required'	=>	true,
+		
 		));
 		
 		$_amount_return = new Zend_Dojo_Form_Element_NumberTextBox('amount_return');
@@ -753,7 +771,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 // 			$_collect_date->setValue($data["date_pay"]);
 // 			$old_tota_pay->setValue($data["total_payment"]-$data["service_charge"]);
 		}
-		$this->addElements(array($old_loan_number,$_client_code,$_loan_number,$old_release_date,$old_service_charge,$old_penelize,$_cocode,$_last_payment_date,$using_date,
+		$this->addElements(array($old_amount_receive,$old_loan_number,$_client_code,$_loan_number,$old_release_date,$old_service_charge,$old_penelize,$_cocode,$_last_payment_date,$using_date,
 				$total_amount_loan,$loan_period,$candition_payment,$payment_method,$release_date,$loan_level,$remain,$old_tota_pay,
 				$installment_date,$amount_payment_term,$_interest_rate,$_payterm,$_currency_type,$id,$option_pay,$date_input,$reciept_no,
 				$reciever,$discount,$id,$_coid,$_priciple_amount,$_loan_fee,$_os_amount,$_rate,
@@ -946,7 +964,10 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 		$reciever = new Zend_Form_Element_Hidden("reciever");
 		$reciever->setAttribs(array('dojoType'=>'dijit.form.TextBox'));
 		
-		$this->addElements(array($reciever,$_currency_type,$date_input,$_note,$_amount_receive,$_rate,$_amount_return,$_service_charge,$branch_id,$_cocode,$_coid,$_collect_date,$_os_amount,$_penalize_amount,$_priciple_amount,$_total_payment));
+		$id = new Zend_Form_Element_Hidden("id");
+		$id->setAttribs(array('dojoType'=>'dijit.form.TextBox'));
+		
+		$this->addElements(array($id,$reciever,$_currency_type,$date_input,$_note,$_amount_receive,$_rate,$_amount_return,$_service_charge,$branch_id,$_cocode,$_coid,$_collect_date,$_os_amount,$_penalize_amount,$_priciple_amount,$_total_payment));
 		return $this;
 	}
 }

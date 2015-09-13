@@ -65,7 +65,7 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 					Application_Form_FrmMessage::Sucessfull("Client no laon to pay!","/loan/il-payment/");
 				}else {
 					$db->addILPayment($_data);
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/il-payment/");
+// 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/il-payment/");
 				}
 			}catch (Exception $e) {
 				//echo $e->getMessage();
@@ -111,9 +111,9 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 				if($identify==""){
 					Application_Form_FrmMessage::Sucessfull("Client no laon to pay!","/loan/il-payment/");
 				}else{
-						$db->updateIlPayment($_data);
-// 					$db1->cancelPaymnet($_data);
-					Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/loan/il-payment/");
+					$db->updateIlPayment($_data);
+// 					$db->cancelIlPayment($_data);
+// 					Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/loan/il-payment/");
 				}
 			}catch (Exception $e) {
 				//echo $e->getMessage();
@@ -148,14 +148,14 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 		$session_user=new Zend_Session_Namespace('auth');
 		$this->view->user_name = $session_user->last_name .' '. $session_user->first_name;
 	}
-	function cancelPayment(){
+	function cancelIlPayment(){
 // 		$db = new Loan_Model_DbTable_DbLoanILPayment();
 		$db = new Loan_Model_DbTable_DbGroupPayment();
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$identity = $_data["identity"];
 			try {
-				$row = $db->cancelPaymnet($_data);
+				$row = $db->cancelIlPayment($_data);
 				print_r(Zend_Json::encode($row));
 				exit();
 			}catch (Exception $e) {

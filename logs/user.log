@@ -1,1 +1,3 @@
-﻿
+﻿[2015-09-11 08:49:14] user name=>channy module=>loancontroller name=>:il-payment action =>edit error name=>SQLSTATE[42000]: Syntax error or access violation: 1064 Erreur de syntaxe près de 'FROM
+				  `ln_client_receipt_money_detail` AS lc ,
+				 `ln_client_receipt_mone' à la ligne 13
