@@ -17,7 +17,7 @@
       $setting=$this->url(array('module'=>'setting','controller'=>'index','action'=>'index'), null, true);
 	  $module=Zend_Controller_Front::getInstance()->getRequest()->getModuleName();
 	  $item_arr=array(
-		'index'=>'<li class="link">
+		'home'=>'<li class="link">
 							<a title="ទំព័រដើម" href="'.$home.'">
 								<span>'.$tr->translate("HOME_PAGE").'</span>
 							</a>
@@ -73,12 +73,22 @@
 <div id="menu">
 	<ul>
 		<?php
+		
+		
+		$session_user=new Zend_Session_Namespace('auth');
+		$modules_access = $session_user->arr_module;
+// 		print_r($modules_access);exit();
 			foreach($item_arr as $key=>$value){
-				if($module==$key){
-					echo str_replace('class="link"', 'class="current"', $value);
-				}
-				else{
-					echo $value;
+// 				echo $key ;exit();
+				$access = array_search($key,$modules_access);
+// 				echo $access;exit();
+				if($access!=''){
+					if($module==$key){
+						echo str_replace('class="link"', 'class="current"', $value);
+					}
+					else{
+						echo $value;
+					}
 				}
 			} 
 		?>

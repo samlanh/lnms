@@ -80,7 +80,7 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 	</tr>	
 	<tr>
 		<td align="center">
-				<input type="text" dojoType="dijit.form.TextBox" id="record_row" name="record_row" />
+				<input type="hidden" dojoType="dijit.form.TextBox" id="record_row" name="record_row" />
 				<table id="t_amountmoneytype" width="100%" style="border-collapse: collapse; border:1px solid #ccc !important;">
 							<tr style="background:#eee; font-size: 12px; height: 30px;margin-bottom: 10px;" id="head_title" class="head-title" align="center"></tr>
 				</table>		
@@ -244,7 +244,7 @@ function innitialize(){
 				thead+='<th><?php echo $tr->translate("COLETERAL_TYPE");?></th>';
 				thead+='<th><?php echo $tr->translate("OWNER_NAME");?></th>';
 				thead+='<th><?php echo $tr->translate("NUMBER_COLLTERAL");?></th>';
-
+				thead+='<th><?php echo $tr->translate("SIGN_DATE");?></th>';
 				thead+='<th><?php echo $tr->translate("NOTE");?> </th>';
 				
 				fund_title=1;
@@ -252,12 +252,11 @@ function innitialize(){
 	        }
 			temp='<td style="width:30px !important;text-align:center;" ><img style="cursor:pointer" onclick="deleteRecord('+r+')" src="<?php echo $this->baseUrl();?>/images/Delete_16.png"></td>';
 			temp+='<td><select style="width:250px;background:#fff; padding-left:5px;" readonly="true" id="collect_type'+r+'" name="collect_type'+r+'" dojoType="dijit.form.FilteringSelect"  >'+collect_option+'</select></td>';
-		    temp+='<td><select style="background:#fff; padding-left:5px;" readonly="true" id="owner_type'+r+'" name="owner_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="setOwnerNameCollecteralById('+r+')">'+owner_option+'</select></td>';
-			temp+='<td><input style="width:200px;" type="text" required="true"  readonly="true" name="owner_name'+r+'" id="owner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
-			temp+='<td><input style="width:150px; type="text" required="true" readonly="true" name="number_collteral'+r+'" id="number_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
+		    temp+='<td><select style="background:#fff; padding-left:5px; width:100px; readonly="true" id="owner_type'+r+'" name="owner_type'+r+'" dojoType="dijit.form.FilteringSelect" onchange="setOwnerNameCollecteralById('+r+')">'+owner_option+'</select></td>';
+			temp+='<td><input style="width:200px;" type="text"  readonly="true" name="owner_name'+r+'" id="owner_name'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
+			temp+='<td><input style="width:150px; type="text"  readonly="true" name="number_collteral'+r+'" id="number_collteral'+r+'" dojoType="dijit.form.ValidationTextBox"/></td>';
+			temp+='<td><input style=" width:200px" type="text" readonly="true" name="issue_date'+r+'" id="issue_date'+r+'" dojoType="dijit.form.DateTextBox"/></td>';
 			temp+='<td><input type="text" name="note'+r+'" id="note'+r+'" dojoType="dijit.form.TextBox" /><input type="hidden" name="coid'+r+'" id="coid'+r+'" dojoType="dijit.form.TextBox" /></td>';
-
-			
 			tmp='<tr style="border:1px solid #ccc;" id="row_capital'+r+'">'
 			tmp+="</tr>";
 				dojo.query("#t_amountmoneytype").append(tmp);
@@ -274,6 +273,8 @@ function innitialize(){
 			dijit.byId('owner_type'+r).attr('value',<?php echo $rs['owner_type'];?>);
 			dijit.byId('owner_name'+r).attr('value','<?php echo $rs['owner_name'];?>');
 			dijit.byId('number_collteral'+r).attr('value','<?php echo $rs['number_collteral'];?>');
+			dijit.byId('issue_date'+r).attr('value','<?php echo $rs['issue_date'];?>');
+			
 			dijit.byId('note'+r).attr('value','<?php echo $rs['note'];?>');
 			//dijit.byId('id'+r).attr('value','<?php //echo $rs['id'];?>');
 			

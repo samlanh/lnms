@@ -36,6 +36,7 @@ class Group_Model_DbTable_DbReturnCollteral extends Zend_Db_Table_Abstract
 				 		'owner_type'=>$data['owner_type'.$i],
 				 		'owner_name'=>$data['owner_name'.$i],
 				 		'number_collteral'=>$data['number_collteral'.$i],
+				 		'issue_date'=>$data['issue_date'.$i],
 				 		'note'=>$data['note'.$i]
 				 		);
 			  $this->insert($array);

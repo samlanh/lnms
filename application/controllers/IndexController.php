@@ -52,6 +52,7 @@ class IndexController extends Zend_Controller_Action
 					
 					$arr_acl=$db_user->getArrAcl($user_info['user_type']);
 					
+					
 					$session_user->user_id=$user_id;
 					$session_user->user_name=$user_name;
 					$session_user->pwd=$password;		
@@ -62,18 +63,23 @@ class IndexController extends Zend_Controller_Action
 					
 					
 					$a_i = 0;
-					$arr_actin = array();					
+					$arr_actin = array();	
+// 					print_r($arr_acl);
 					for($i=0; $i<count($arr_acl);$i++){
 						$arr_module[$i]=$arr_acl[$i]['module'];
-						if($arr_acl[$i]['module'] == 'exchange'){
-							if($arr_acl[$i]['action'] == "index" || $arr_acl[$i]['action'] == "add" || $arr_acl[$i]['action'] == "edited" ) {
-								continue;
-							}
-							$arr_actin[$a_i++] = $arr_acl[$i]['action'];
-						}
-					}					
+// 						if($arr_acl[$i]['module'] == 'exchange'){
+// 							if($arr_acl[$i]['action'] == "index" || $arr_acl[$i]['action'] == "add" || $arr_acl[$i]['action'] == "edit" ) {
+// 								continue;
+// 							}
+							$arr_actin[$a_i++] = $arr_acl[$i]['module'].'/'.$arr_acl[$i]['controller'].'/'.$arr_acl[$i]['action'];
+// 						}
+					}	
+// 					print_r($arr_actin);exit();
+					$arr_module=(array_unique($arr_module));
+					$arr_actin=(array_unique($arr_actin));
+// 					print_r($arr_module);	echo "<br />============<br />";
 					$arr_module=$this->sortMenu($arr_module);
-					
+// 					print_r($arr_module);exit();
 // 					print_r($arr_module); exit;
 					$session_user->arr_acl = $arr_acl;
 					$session_user->arr_module = $arr_module;
@@ -106,7 +112,7 @@ class IndexController extends Zend_Controller_Action
     }
     
     protected function sortMenu($menus){
-    	$menus_order = Array ( 'other','group','loan','tellerandexchange','accounting','setting','backup','rsvAcl','reports');
+    	$menus_order = Array ( 'home','other','group','loan','tellerandexchange','accounting','report','setting','backup','rsvAcl');
     	$temp_menu = Array();
     	$menus=array_unique($menus);
     	foreach ($menus_order as $i => $val){

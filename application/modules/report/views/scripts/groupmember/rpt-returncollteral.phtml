@@ -76,6 +76,7 @@ th{padding: 5px;}
                     <th><?php echo $tr->translate("RECEIVER_NAME");?> </th>                   
                     <th><?php echo $tr->translate("COLETERAL_TYPE");?> </th>
                     <th><?php echo $tr->translate("NUMBER_COLLTERAL");?> </th>
+                    <th><?php echo $tr->translate("ISSUE_DATE");?> </th>
                     <th><?php echo $tr->translate("NOTE");?> </th>
                     <th><?php echo $tr->translate("DATE");?> </th>
                 </tr>
@@ -98,7 +99,7 @@ th{padding: 5px;}
                 <?php } ?>
              <?php ?>
                 <tr>
-                	<td colspan="5">&nbsp;<span style="text-align:center; font-size:12px; font-family:'Khmer OS Muol'"><?php echo $tr->translate("CUSTOMER_NAME");?> </span><?php  echo $row['client_code']." - ".$row['owner_name']; ?></td>
+                	<td colspan="9">&nbsp;<span style="text-align:center; font-size:12px; font-family:'Khmer OS Muol'"><?php echo $tr->translate("CUSTOMER_NAME");?> </span><?php  echo $row['client_code']." - ".$row['owner_name']; ?></td>
                 </tr>
                  <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 14px; font-size:11px; padding:5px 0px; ">
                     <td style="padding:5px 0px;"><?php echo $tr->translate("NUM");?> </td>
@@ -107,6 +108,7 @@ th{padding: 5px;}
                     <td style="padding:5px 0px;"><?php echo $tr->translate("RECEIVER_NAME");?> </td>                   
                     <td style="padding:5px 0px;"><?php echo $tr->translate("COLETERAL_TYPE");?> </td>
                     <td style="padding:5px 0px;"><?php echo $tr->translate("NUMBER_COLLTERAL");?> </td>
+                    <td style="padding:5px 0px;"><?php echo $tr->translate("ISSUE_DATE");?> </td>
                     <td style="padding:5px 0px;"><?php echo $tr->translate("NOTE");?> </td>
                     <td style="padding:5px 0px;"><?php echo $tr->translate("DATE");?> </td>
                 </tr>
@@ -120,6 +122,7 @@ th{padding: 5px;}
 						<td>&nbsp;<?php echo $row['receiver_name'];?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['collecteral_type']." - ".$row['re_owner_type'];?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['number_collteral']?>&nbsp;</td>
+						<td>&nbsp;<?php echo date('d/m/Y',strtotime($row['issue_date'])) ;?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['note']?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['date']?>&nbsp;</td>
 					</tr>

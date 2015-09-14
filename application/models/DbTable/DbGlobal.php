@@ -977,6 +977,31 @@ $sql = " SELECT g.co_id,m.client_id  FROM  `ln_loan_member` AS m , `ln_loan_grou
   		return $result;
   	}
   }
+  public function ClassifiedLoan($type=26){
+  	$db = $this->getAdapter();
+  	$sql="SELECT id,key_code,name_en FROM `ln_view` WHERE status =1 ";//just concate
+  	if($type!=null){
+  		$sql.=" AND type = $type ";
+  	}
+  	 $rows = $db->fetchAll($sql);
+  	$opt = array();
+  	if(!empty($rows))foreach($rows AS $row){
+  		$opt[$row['key_code']]=$row['name_en'];
+  	}
+  	return $opt;
+//   	if($option!=null){
+//   		$options=array();
+//   		if($first_option==null){//if don't want to get first select
+//   			$options=array(''=>"-----ជ្រើសរើស-----",-1=>"Add New",);
+//   		}
+//   		if(!empty($rows))foreach($rows AS $row){
+//   			$options[$row['key_code']]=$row['name_en'];//($row['displayby']==1)?$row['name_kh']:$row['name_en'];
+//   		}
+//   		return $options;
+//   	}else{
+//   		return $rows;
+//   	}
+  }
   
   
   

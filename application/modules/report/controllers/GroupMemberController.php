@@ -149,7 +149,6 @@ class Report_GroupMemberController extends Zend_Controller_Action {
 		    'end_date'=>date('Y-m-d'),
 			'adv_search' => '',
 			'status_search' => -1);
-		
 	}
 	$this->view->calleteral_list = $db->getAllChangeCollteral($search);//call frome model
 	$this->view->result=$search;
@@ -192,7 +191,6 @@ class Report_GroupMemberController extends Zend_Controller_Action {
   				'status_search' => -1,
   				'start_date'=> date('Y-m-d'),
   				'end_date'=>date('Y-m-d'));
-  		
   		}
   	  $this->view->calleteral_list = $db->getAllReturnCollteral($search);//call frome model
   	  $this->view->result = $search;

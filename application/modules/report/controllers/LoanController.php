@@ -159,25 +159,27 @@ function rptLoanDisburseAction(){//release all loan
   	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
   	if($this->getRequest()->isPost()){
   		$search = $this->getRequest()->getPost();
-  			
+  		$search['branch_id']=$search['branch'];
   	}else{
   		$search = array(
   				'adv_search'=>'',
-  				'branch' => '',
+  				'branch_id' => '',
   				'client_name' =>'',
   				'client_code'=>'',
   				'Term'=>'',
   				'status' =>'',
   				'cash_type'=>'',
-  				'start_date'=> date('Y-m-01'),
   				'end_date'=>date('Y-m-d'));
   	}
-  	$this->view->LoanCollectionco_list =$db->getALLWritoff($search);
+  	$this->view->LoanCollectionco_list =$db->getALLNPLLoan($search);
   	$this->view->list_end_date=$search;
   	$fm = new Loan_Form_Frmbadloan();
   	$frm = $fm->FrmBadLoan();
   	Application_Model_Decorator::removeAllDecorator($frm);
   	$this->view->frm_loan = $frm;
+  	
+  	$db = new Application_Model_DbTable_DbGlobal();
+  	$this->view->classified_loan = $db->ClassifiedLoan();
   }
   function rptLoanOutstandingAction(){//loand out standing with /collection
 	    $db  = new Report_Model_DbTable_DbLoan();
@@ -410,7 +412,7 @@ function rptPaymentschedulesAction(){
 	$form = $frm->FrmSearchLoadSchedule();
 	Application_Model_Decorator::removeAllDecorator($form);
 	$this->view->form_filter = $form;
-	$db= new Application_Model_DbTable_DbGlobal();
+// 	$db= new Application_Model_DbTable_DbGlobal();
 	$day_inkhmer = $db->getDayInkhmerBystr(null);
 	$this->view->day_inkhmer = $day_inkhmer;
 	

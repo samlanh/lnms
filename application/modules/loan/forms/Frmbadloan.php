@@ -12,6 +12,7 @@ Class Loan_Form_Frmbadloan extends Zend_Dojo_Form {
 		$_title = new Zend_Dojo_Form_Element_TextBox('adv_search');
 		$_title->setAttribs(array(
 				'dojoType'=>'dijit.form.TextBox',
+				'class'=>'fullside',
 				'placeholder'=>$this->tr->translate("SEARCH")
 		));
 		$_title->setValue($request->getParam("adv_search"));
@@ -149,7 +150,9 @@ Class Loan_Form_Frmbadloan extends Zend_Dojo_Form {
 		$star_date->setValue($date);
 		
 		$_enddate = new Zend_Dojo_Form_Element_DateTextBox('end_date');
-		$_enddate->setAttribs(array('dojoType'=>'dijit.form.DateTextBox','required'=>'true',
+		$_enddate->setAttribs(array('dojoType'=>'dijit.form.DateTextBox',
+				'required'=>'true',
+				'class'=>'fullside',
 		));
 		$date = $request->getParam("end_date");
 		
@@ -179,7 +182,7 @@ Class Loan_Form_Frmbadloan extends Zend_Dojo_Form {
 				'required'=>true
 		));
 		$opt = array(''=>"Select Currency Type",2=>"Dollar",1=>'Khmer',3=>"Bath");
-		if($request->getActionName()!='index'){
+		if($request->getActionName()!='index' AND $request->getActionName()!='rpt-loan-npl' ){
 			unset($opt['']);
 		}
 		$cash_type->setMultiOptions($opt);

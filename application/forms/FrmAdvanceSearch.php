@@ -116,7 +116,8 @@ class Application_Form_FrmAdvanceSearch extends Zend_Dojo_Form
 
 		
 		$from_date = new Zend_Dojo_Form_Element_DateTextBox('start_date');
-		$from_date->setAttribs(array('dojoType'=>'dijit.form.DateTextBox','required'=>'true',
+		$from_date->setAttribs(array('dojoType'=>'dijit.form.DateTextBox',
+				//'required'=>'true',
 				'class'=>'fullside',
 				'onchange'=>'CalculateDate();'));
 		$_date = $request->getParam("start_date");
