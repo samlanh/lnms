@@ -12,13 +12,13 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 				$formdata=$this->getRequest()->getPost();
 				$search = array(
-						'advance_search' => $formdata['advance_search'],
-						'client_name'=>$formdata['client_name'],
-						'start_date'=>$formdata['start_date'],
-						'end_date'=>$formdata['end_date'],
-						'status'=>$formdata['status'],
-						'branch_id'		=>	$formdata['branch_id'],
-						'co_id'		=>	$formdata['co_id'],
+						'advance_search' 	=>  $formdata['advance_search'],
+						'client_name'		=>	$formdata['client_name'],
+						'start_date'		=>	$formdata['start_date'],
+						'end_date'			=>	$formdata['end_date'],
+						'status'			=>	$formdata['status'],
+						'branch_id'			=>	$formdata['branch_id'],
+						'co_id'				=>	$formdata['co_id'],
 						);
 			}
 			else{
