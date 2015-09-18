@@ -176,10 +176,10 @@
 		</tr>
 		<tr>
 			<td align="center">
-			   <input type="submit" value="រក្សាទុក" name="save" label="<?php echo $tr->translate('SAVENEW');?>" id="submitButton" dojoType="dijit.form.Button"
-			   iconClass="dijitEditorIcon dijitEditorIconSave"  />
+			   <input type="button" value="រក្សាទុក" name="save" label="<?php echo $tr->translate('SAVENEW');?>" id="submitButton" dojoType="dijit.form.Button"
+			   iconClass="dijitEditorIcon dijitEditorIconSave"  onClick="submitData();"/>
 			   <input type="button" value="រក្សាទុក & បិទ" name="save_close" label="<?php echo $tr->translate('SAVECLOSE');?>" id="submit_close" dojoType="dijit.form.Button"
-			   iconClass="dijitEditorIcon dijitEditorIconSave" Onclick="submitDataClose();" onClick="submitData();"/>
+			   iconClass="dijitEditorIcon dijitEditorIconSave" Onclick="submitDataClose();" />
 			   <input type="button" value="រក្សាទុក & បោះពុម្ព" label="<?php echo $tr->translate('SAVEPRINT');?>" id="saveprint" dojoType="dijit.form.Button" 
 			   iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="showReciept();"/>
 			</td>
@@ -578,7 +578,8 @@ function submitData(){
 			load: function(data) {
 				document.getElementsByClassName("overlay")[0].style.display="none";	
 				alert('<?php echo $tr->translate('INSERT_SUCCESS');?> !');
-				dijit.byId("frm_add_group_pay").reset();
+				//dijit.byId("frm_add_group_pay").reset();
+				window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment/add";
 			},
 			error: function(e) {
 				//alert("Your message could not be sent, please try again!.");

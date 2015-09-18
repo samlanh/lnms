@@ -1928,7 +1928,7 @@ public function cancelIlPayment($data){
     
    public function getReceiptMoneyDetailByID($id){
    	$db = $this->getAdapter();
-   	$sql = "SELECT lc.`crm_id`,lc.`lfd_id`,lc.`loan_number`,lc.`service_charge`,lc.`penelize_amount`,lc.`total_interest`,lc.`total_payment`,lc.`total_recieve`,lc.`principal_permonth` FROM `ln_client_receipt_money_detail` AS lc WHERE lc.`id`=$id";
+   	$sql = "SELECT lc.`crm_id`,lc.`lfd_id`,lc.`loan_number`,lc.`service_charge`,lc.`penelize_amount`,lc.`total_interest`,lc.`total_payment`,lc.`total_recieve`,lc.`principal_permonth` FROM `ln_client_receipt_money_detail` AS lc WHERE lc.`crm_id`=$id";
    	return $db->fetchAll($sql);
    }
    public function getFunDetailById($id){

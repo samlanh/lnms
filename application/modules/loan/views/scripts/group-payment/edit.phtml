@@ -496,7 +496,7 @@ function submitData(){
 					document.getElementsByClassName("overlay")[0].style.display="none";	
 					alert('<?php echo $tr->translate('UPDATE_SUCCESS');?> !');
 					dijit.byId("frm_add_group_pay").reset();
-					window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
+					window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment/add";
 				},
 				error: function(e) {
 					//alert("Your message could not be sent, please try again!.");
