@@ -48,7 +48,7 @@ class Group_ReturncollteralController extends Zend_Controller_Action {
 				if(!empty($data['save_new'])){
 					Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
 				}else{
-					Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL . '/changecollteral/index');
+					Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL . '/Returncollteral/index');
 				}
 			} catch (Exception $e) { 
 				$this->view->msg = 'ការ​បញ្ចូល​មិន​ជោគ​ជ័យ';
@@ -74,7 +74,7 @@ class Group_ReturncollteralController extends Zend_Controller_Action {
 			$data=$this->getRequest()->getPost();
 		try {
 				$db->updateReturnCollteral($data);
-				Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL . '/Returncollteral/index');
+				Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL .'/Returncollteral/index');
 			} catch (Exception $e) {
 				$this->view->msg = 'ការ​បញ្ចូល​មិន​ជោគ​ជ័យ';
 			}
