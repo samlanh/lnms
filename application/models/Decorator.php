@@ -32,12 +32,12 @@ class Application_Model_Decorator
 		$i=0;
 		$session_user=new Zend_Session_Namespace('auth');
 		$arr_actin=$session_user->arr_actin;
-		print_r($arr_actin);
+// 		print_r($arr_actin);
 		
-		if(is_array($arr_menu)){
+		//if(is_array($arr_menu)){
 			foreach($arr_menu as $param=>$url){
 				$access = array_search($module.'/'.$param,$arr_actin);
-				if($access!=''){
+				//if($access!=''){
 						if($param==$controller){
 							$uri=$this->baseUrl().'/'.$module.'/'.$param;
 							$url=str_replace('href=""', 'href="'.$uri.'"', $url);
@@ -51,12 +51,12 @@ class Application_Model_Decorator
 								$menu.=$url;
 							}
 						}
-				}
+				//}
 				$i++;
 			}
 			return $menu;
-	  }
-		return null;
+	 // }
+		//return null;
 	}
 	public function spanMenu($url,$controller,$class="current-left"){
 		$temp=str_replace('<a', '<a class="'.$class.'"', $url);

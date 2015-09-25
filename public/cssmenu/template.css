@@ -84,20 +84,7 @@ Dark grey color:			#666666 		RGB: 102/102/102
 Border grey color:			#CCCCCC 		RGB: 204/204/204
 
 ----------------------------------------------------------*/
-#header-left {		
-	/*background:#EDF7DF;*/
-    border-bottom: 0px solid #CCCCCC;
-    border-left: 0px solid #CCCCCC;    
-    margin-right:0px;
-		height: 100%;
-	/*
-	background: #ccc;
-	
-	padding-left:10px;
-	height: 100%;
-    width: 239px;*/
-	/*box-shadow:3px 2px 3px 0 #ccc;*/
-}
+
 #header-left ul {   	
    clear:both;
    float:left;
