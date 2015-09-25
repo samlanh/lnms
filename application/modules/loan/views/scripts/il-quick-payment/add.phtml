@@ -300,7 +300,8 @@ function getLoan(type){
 					+'<th class="tdheader">ប្រាក់ដើមគ្រា</th>'
 					+'<th class="tdheader">ប្រាក់ដើមត្រូវបង់</th>'
 					+'<th class="tdheader">ប្រាក់ការ</th>'
-					+'<th class="tdheader">មេគុណផាកពិន័យ</th>'
+					+'<th class="tdheader">ផាកពិន័យចាស់</th>'
+					+'<th class="tdheader">ប្រាក់សេវាកម្មចាស់</th>'
 					+'<th class="tdheader">ផាកពិន័យ</th>'
 					+'<th class="tdheader">ប្រាក់សេវាកម្ម</th>'
 					+'<th class="tdheader">ប្រាក់ត្រូវបង់សរុប</th>'
@@ -329,8 +330,6 @@ function getLoan(type){
 							dijit.byId('reciever').attr('value',respone[i].collect_by);
 							is_set=1;
 						}
-						
-						
 							tem+= '<tr id=tr_'+inx+' style="background-color:none">';
 							tem += '<td style="width:3%;">&nbsp;'+num+'<input type="hidden" name="paymentTerm_'+inx+'" id="paymentTerm_'+inx+'" value="'+respone[i].collect_typeterm+'" /><input type="hidden" name="interestRate_'+inx+'" id="interestRate_'+inx+'" value="'+respone[i].interest_rate+'" /><input type="hidden" id="group_id_'+inx+'" name="group_id_'+inx+'" value="'+respone[i].g_id+'"/><input type="hidden" id="loan_type_'+inx+'" name="loan_type_'+inx+'" value="'+respone[i].loan_type+'"/></td>';
 							tem += '<td style="width:3%;">&nbsp;<input type="checkbox" class="checkbox" name="mfdid_'+inx+'" id="mfdid_'+inx+'" value="'+id+'" OnClick="calculateTotal('+inx+');checkRow('+inx+');" checked="checked"/><input type="hidden" name="cu_id_'+inx+'" id="cu_id_'+inx+'" value="'+respone[i].currency_type+'" /></td>';
@@ -341,10 +340,11 @@ function getLoan(type){
 						    tem += '<td style="white-space: nowrap;">&nbsp;'+dojo.number.format(respone[i].total_principal)+' '+curr+'&nbsp;<input type="hidden" name="sub_total_priciple_'+inx+'" id="sub_total_priciple_'+inx+'" value="'+total_principal+'" /></td>';
 						    tem += '<td style="white-space: nowrap;">&nbsp;'+dojo.number.format(respone[i].principle_after)+' '+curr+'&nbsp;<input type="hidden" name="sub_principal_permonth_'+inx+'" id="sub_principal_permonth_'+inx+'" value="'+principal_permonth+'" /></td>';
 						    tem += '<td style="white-space: nowrap;">&nbsp;'+dojo.number.format(respone[i].total_interest_after)+' '+curr+'&nbsp;<input type="hidden" name="sub_interest_'+inx+'" id="sub_interest_'+inx+'" value="'+interest+'" /></td>';
-						    tem += '<td style="width:4%;">&nbsp;'+respone[i].pay_after+'&nbsp;<input type="hidden" name="multiplier_'+inx+'" id="multiplier_'+inx+'" value="'+multiplier+'" /></td>';
-							tem += '<td>&nbsp;<input required ="true" class="fullside" type="text" id="sub_penelize_'+inx+'" name="sub_penelize_'+inx+'" value="'+respone[i].penelize+'" style="width:93%;margin:3px 0" onKeyUp="doPenelizeAmount('+inx+');"/><input type="hidden" id="old_sub_penelize_'+inx+'" name="old_sub_penelize_'+inx+'" value="'+respone[i].penelize+'" /></td>';
-							tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_service_charge_'+inx+'" name="sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'" style="width:93%;" onKeyUp="doServiceChargeAmount('+inx+');"/><input type="hidden" id="old_sub_service_charge_'+inx+'" name="old_sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'"/></td>';
-							tem += '<td>&nbsp;<label id="lb_subpayment_'+inx+'">'+payment+'</label><input type="hidden" name="sub_payment_'+inx+'" id="sub_payment_'+inx+'" value="'+parseFloat(payment)+'" style="width:93%;margin:3px 0"/><input type="hidden" name="old_sub_payment_'+inx+'" id="old_sub_payment_'+inx+'" value="'+parseFloat(payment)+'" /></td>';
+						    tem += '<td style="width:4%;">&nbsp;'+respone[i].penelize+' '+curr+'&nbsp;<input type="hidden" name="old_penelize_'+inx+'" id="old_penelize_'+inx+'" value="'+respone[i].penelize+'" /><input type="hidden" name="multiplier_'+inx+'" id="multiplier_'+inx+'" value="'+multiplier+'" /></td>';
+						    tem += '<td style="width:4%;">&nbsp;'+respone[i].service_charge+' '+curr+'&nbsp;<input type="hidden" name="old_service_charge_'+inx+'" id="old_service_charge_'+inx+'" value="'+respone[i].service_charge+'" /></td>';
+							tem += '<td>&nbsp;<input required ="true" class="fullside" type="text" id="sub_penelize_'+inx+'" name="sub_penelize_'+inx+'" value="0.00" style="width:93%;margin:3px 0" onKeyUp="doPenelizeAmount('+inx+');"/><input type="hidden" id="old_sub_penelize_'+inx+'" name="old_sub_penelize_'+inx+'" value="'+respone[i].penelize+'" /></td>';
+							tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_service_charge_'+inx+'" name="sub_service_charge_'+inx+'" value="0.00" style="width:93%;" onKeyUp="doServiceChargeAmount('+inx+');"/><input type="hidden" id="old_sub_service_charge_'+inx+'" name="old_sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'"/></td>';
+							tem += '<td>&nbsp;<label id="lb_subpayment_'+inx+'">'+payment+' '+curr+'</label><input type="hidden" name="sub_payment_'+inx+'" id="sub_payment_'+inx+'" value="'+parseFloat(payment)+'" style="width:93%;margin:3px 0"/><input type="hidden" name="old_sub_payment_'+inx+'" id="old_sub_payment_'+inx+'" value="'+parseFloat(payment)+'" /></td>';
 							tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_recive_amount_'+inx+'" name="sub_recive_amount_'+inx+'" style="width:93%;" OnChange="netRecieveAmount('+inx+');"/><input type="hidden" name="old_recieve_amount_'+inx+'" id="old_recieve_amount_'+inx+'" /></td>';
 						    tem += '</tr>';
 	 					    if(inx!=1) {
@@ -418,6 +418,7 @@ function calculateTotal(index){
 		          	var payment_term = $('#paymentTerm_'+arrays[i]).val();
 		          	var interest_rate = $('#interestRate_'+arrays[i]).val();
 		          	var penelize = $('#sub_penelize_'+arrays[i]).val();
+		          	var old_penelize = $('#old_penelize_'+arrays[i]).val();
 		          	var old_penelize = $('#sub_penelize_'+arrays[i]).val();
 
 		          	pay_date=last_paydate="null"?new Date($('#date_payment_'+arrays[i]).val()):new Date(last_paydate);
@@ -436,7 +437,7 @@ function calculateTotal(index){
 							$('#sub_service_charge_'+arrays[i]).val(0);
 							$('#old_sub_service_charge_'+arrays[i]).val(0);
 							sub_total_penelize = ((parseFloat(totalPay)*(parseFloat(ps*(interest_rate/100))/1)*parseFloat(total_late_day))+parseFloat(penelize))-old_penelize;
-							sub_total_amount =parseFloat(totalPay)+parseFloat(sub_total_penelize);
+							sub_total_amount =parseFloat(totalPay)+parseFloat(sub_total_penelize)+parseFloat(old_penelize);
 							sub_total_recieve = parseFloat(sub_total_amount.toFixed(2));
 							$('#sub_recive_amount_'+arrays[i]).val(sub_total_recieve);
 							$('#old_recieve_amount_'+arrays[i]).val(sub_total_recieve.toFixed(2));
@@ -448,7 +449,7 @@ function calculateTotal(index){
 							$('#sub_service_charge_'+arrays[i]).val(0);
 							$('#old_sub_service_charge_'+arrays[i]).val(0);
 							sub_total_penelize = ((parseFloat(totalPay)*(parseFloat(ps*(interest_rate/100))/7)*parseFloat(total_late_day))+parseFloat(penelize))-old_penelize;
-							sub_total_amount =parseFloat(totalPay)+parseFloat(sub_total_penelize);
+							sub_total_amount =parseFloat(totalPay)+parseFloat(sub_total_penelize)+parseFloat(old_penelize);;
 							sub_total_recieve = parseFloat(sub_total_amount.toFixed(2));
 							$('#old_recieve_amount_'+arrays[i]).val(sub_total_recieve.toFixed(2));
 							$('#sub_recive_amount_'+arrays[i]).val(sub_total_recieve);
@@ -460,7 +461,7 @@ function calculateTotal(index){
 							$('#sub_service_charge_'+arrays[i]).val(0);
 							$('#old_sub_service_charge_'+arrays[i]).val(0);
 							sub_total_penelize = ((parseFloat(totalPay)*(parseFloat(ps*(interest_rate/100))/30)*parseFloat(total_late_day))+parseFloat(penelize))-old_penelize;
-							sub_total_amount =parseFloat(totalPay)+parseFloat(sub_total_penelize);
+							sub_total_amount =parseFloat(totalPay)+parseFloat(sub_total_penelize)+parseFloat(old_penelize);
 							sub_total_recieve = sub_total_amount;
 							$('#sub_recive_amount_'+arrays[i]).val(sub_total_recieve.toFixed(2));
 							$('#old_recieve_amount_'+arrays[i]).val(sub_total_recieve.toFixed(2));
@@ -471,7 +472,7 @@ function calculateTotal(index){
 						}
 					}else{
 						sub_total_penelize = old_penelize-0;
-						sub_total_amount =parseFloat(totalPay)+parseFloat(sub_total_penelize);
+						sub_total_amount =parseFloat(totalPay)+parseFloat(sub_total_penelize)+parseFloat(old_penelize);;
 						sub_total_recieve = parseFloat(sub_total_amount.toFixed(2));
 						$('#sub_recive_amount_'+arrays[i]).val(sub_total_recieve);
 						$('#old_recieve_amount_'+arrays[i]).val(sub_total_recieve.toFixed(2));

@@ -1060,13 +1060,12 @@ public function addILPayment($data){
 	   						if(!empty($loanFun) or $loanFun!="" or $loanFun!=null){
 	   							foreach ($loanFun as $rowFun){
 	   								if($is_set!=1){
-	   									$total_pene = $data["sub_penelize_".$i];
+// 	   									$total_pene = $data["old_penelize_".$i];
 	   									$total_pay = $rowFun["total_payment_after"]+$data["sub_penelize_".$i];
 	   									$is_set=1;
 	   								}else{
-	   									$total_pene = $rowFun["penelize"];
+// 	   									$total_pene = $rowFun["penelize"];
 	   									$total_pay = $rowFun["total_payment_after"];
-	   									print_r($is_set);
 	   								}
 	   								
 	   								$arr_money_detail = array(
@@ -1083,8 +1082,8 @@ public function addILPayment($data){
 	   										'total_recieve'			=>		$total_pay,
 	   										'currency_id'			=>		$data["cu_id_".$i],
 	   										'pay_after'				=>		$data['multiplier_'.$i],
-	   										'penelize_amount'		=>		$total_pene,
-	   										'service_charge'		=>		$data["sub_service_charge_".$i],
+	   										'penelize_amount'		=>		$rowFun["penelize"],
+	   										'service_charge'		=>		$rowFun["service_charge"],
 	   										'is_completed'			=>		1,
 	   										'is_verify'				=>		0,
 	   										'verify_by'				=>		0,
@@ -1126,15 +1125,22 @@ public function addILPayment($data){
 			   							'total_recieve'			=>		$data["sub_recive_amount_".$i],
 			   							'currency_id'			=>		$data["cu_id_".$i],
 			   							'pay_after'				=>		$data['multiplier_'.$i],
-			   							'penelize_amount'		=>		$data["sub_penelize_".$i],
-			   							'service_charge'		=>		$data["sub_service_charge_".$i],
+			   							'penelize_amount'		=>		$data["old_penelize_".$i],
+			   							'service_charge'		=>		$data["old_service_charge_".$i],
 			   							'is_completed'			=>		0,
 			   							'is_verify'				=>		0,
 			   							'verify_by'				=>		0,
 			   							'is_closingentry'		=>		0,
 			   							'status'				=>		1
 			   					);
+			   					
+			   					$db->getProfiler()->setEnabled(true);
+			   					
 			   					$db->insert("ln_client_receipt_money_detail", $arr_money_detail);
+			   					
+			   					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+			   					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+			   					$db->getProfiler()->setEnabled(false);
 			   						
 			   					$arr_update_fun_detail = array(
 			   							'is_completed'		=> 	1,
@@ -1143,9 +1149,16 @@ public function addILPayment($data){
 			   					$this->_name="ln_loanmember_funddetail";
 			   					$where = $db->quoteInto("id=?", $data["mfdid_".$i]);
 			   					
+			   					$db->getProfiler()->setEnabled(true);
+			   					
 			   					$this->update($arr_update_fun_detail, $where);
 			   					
+			   					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+			   					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+			   					$db->getProfiler()->setEnabled(false);
+			   					
 			   				}else{
+			   					print_r("ede");
 			   					$new_sub_interest_amount = $data["sub_interest_".$i];
 			   					$new_sub_penelize = $data["sub_penelize_".$i];
 			   					$new_sub_service_charge = $data["sub_service_charge_".$i];
@@ -1173,27 +1186,34 @@ public function addILPayment($data){
 				   				}
 				   				$arr_money_detail = array(
 				   						'crm_id'				=>		$client_recipt_money,
-				   						'loan_number'			=>		$data["loan_number_".$i],
-				   						'lfd_id'				=>		$data["mfdid_".$i],
-				   						'client_id'				=>		$data["client_id_".$i],
-				   						'date_payment'			=>		$data["date_payment_".$i],
-				   						'capital'				=>		$data["sub_total_priciple_".$i],
-				   						'remain_capital'		=>		$data["sub_total_priciple_".$i] - $data["sub_principal_permonth_".$i],
-				   						'principal_permonth'	=>		$sub_principle,
-				   						'total_interest'		=>		$sub_interest_amount,
-				   						'total_payment'			=>		$sub_total_payment,
-				   						'total_recieve'			=>		$data["sub_recive_amount_".$i],
-				   						'currency_id'			=>		$data["cu_id_".$i],
-				   						'pay_after'				=>		$data['multiplier_'.$i],
-				   						'penelize_amount'		=>		$data["sub_penelize_".$i],
-				   						'service_charge'		=>		$data["sub_service_charge_".$i],
-				   						'is_completed'			=>		0,
-				   						'is_verify'				=>		0,
-				   						'verify_by'				=>		0,
-				   						'is_closingentry'		=>		0,
-				   						'status'				=>		1
+			   							'loan_number'			=>		$data["loan_number_".$i],
+			   							'lfd_id'				=>		$data["mfdid_".$i],
+			   							'client_id'				=>		$data["client_id_".$i],
+			   							'date_payment'			=>		$data["date_payment_".$i],
+			   							'capital'				=>		$data["sub_total_priciple_".$i],
+			   							'remain_capital'		=>		$data["sub_total_priciple_".$i] - $data["sub_principal_permonth_".$i],
+			   							'principal_permonth'	=>		$data["sub_principal_permonth_".$i],
+			   							'total_interest'		=>		$data["sub_interest_".$i],
+			   							'total_payment'			=>		$data["sub_payment_".$i],
+			   							'total_recieve'			=>		$data["sub_recive_amount_".$i],
+			   							'currency_id'			=>		$data["cu_id_".$i],
+			   							'pay_after'				=>		$data['multiplier_'.$i],
+			   							'penelize_amount'		=>		$data["old_penelize_".$i],
+			   							'service_charge'		=>		$data["old_service_charge_".$i],
+			   							'is_completed'			=>		0,
+			   							'is_verify'				=>		0,
+			   							'verify_by'				=>		0,
+			   							'is_closingentry'		=>		0,
+			   							'status'				=>		1
 				   				);
+				   				
+				   				$db->getProfiler()->setEnabled(true);
+				   				
 				   				$db->insert("ln_client_receipt_money_detail", $arr_money_detail);
+				   				
+				   				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+				   				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+				   				$db->getProfiler()->setEnabled(false);
 				   				
 				   				$arr_update_fun_detail = array(
 				   						'is_completed'			=> 	0,
@@ -1206,7 +1226,14 @@ public function addILPayment($data){
 				   				);
 				   				$this->_name="ln_loanmember_funddetail";
 				   				$where = $db->quoteInto("id=?", $data["mfdid_".$i]);
+				   				
+				   				$db->getProfiler()->setEnabled(true);
+				   				
 				   				$this->update($arr_update_fun_detail, $where);
+				   				
+				   				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+				   				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+				   				$db->getProfiler()->setEnabled(false);
 			   				}
 	   					}
 	   					$loan_fun = $db_loan_fun->getFunByGroupId($group_id);
@@ -1219,14 +1246,28 @@ public function addILPayment($data){
 		   						);
 		   						$this->_name ="ln_loan_member";
 		   						$where = $db->quoteInto("member_id=?", $rs_mem["member_id"]);
+		   						
+		   						$db->getProfiler()->setEnabled(true);
+		   						
 		   						$this->update($arr_member, $where);
+		   						
+		   						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+		   						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+		   						$db->getProfiler()->setEnabled(false);
 		   						
 		   						$arr_group = array(
 		   							'status'	=> 2,
 		   						);
 		   						$this->_name ="ln_loan_group";
 		   						$where = $db->quoteInto("g_id=?", $group_id);
+		   						
+		   						$db->getProfiler()->setEnabled(true);
+		   						
 		   						$this->update($arr_group, $where);
+		   						
+		   						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+		   						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+		   						$db->getProfiler()->setEnabled(false);
 	   						}
 	   					}
 	   				}
@@ -1247,6 +1288,7 @@ public function addILPayment($data){
    	$user_id = $session_user->user_id;
    	$reciept_no=$this->getIlPaymentNumber();
    	$db_loanFun = new Loan_Model_DbTable_DbLoanILPayment();
+   	$db_group = new Loan_Model_DbTable_DbGroupPayment();
    	
    	try {
    		$is_set=0;
@@ -1280,8 +1322,101 @@ public function addILPayment($data){
    			$where = $db->quoteInto("id=?", $id);
    			$this->update($arr_reciept_money, $where);
    			
-   			$sql_delete = "DELETE FROM `ln_client_receipt_money_detail` WHERE crm_id = $id";
-   			$db->query($sql_delete);
+   			$recipt_money = $db_loan->getReceiptMoneyById($id);
+			$recipt_money_detail = $db_loan->getReceiptMoneyDetailByID($id);
+			foreach ($recipt_money_detail as $row_recipt_detail){
+				$fun_id = $row_recipt_detail["lfd_id"];
+				if($is_set!=1){
+					$loan_number = $row_recipt_detail["loan_number"];
+					$rs_fun = $db_group->getFunDetailByLoanNumber($loan_number);
+					$rs_group = "SELECT m.group_id FROM ln_loan_member AS m WHERE m.loan_number = '$loan_number' GROUP BY m.loan_number";
+					$group_id = $db->fetchOne($rs_group);
+					if(empty($rs_fun) or $rs_fun=="" or $rs_fun==null){
+						$arr_member = array(
+							'is_completed'	=>	0,
+						);
+						$this->_name = "ln_loan_member";
+						$where = $db->quoteInto("loan_number=?", $loan_number);
+						
+						$db->getProfiler()->setEnabled(true);
+						
+						$this->update($arr_member, $where);
+						
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+						$db->getProfiler()->setEnabled(false);
+						
+						$arr_group = array(
+							'status'	=>	1,
+						);
+						$this->_name = "ln_loan_group";
+						$where = $db->quoteInto("g_id=?", $group_id);
+						
+						$db->getProfiler()->setEnabled(true);
+						
+						$this->update($arr_group, $where);
+						
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+						$db->getProfiler()->setEnabled(false);
+					}
+					$is_set=1;
+				}
+				if($recipt_money["payment_option"]==1){
+					$is_completed = $db_loan->getFunDetailById($fun_id);
+					if($is_completed==1){
+						$arr_update = array(
+							'is_completed' =>	0,
+						);
+						$this->_name = "ln_loanmember_funddetail";
+						$where = $db->quoteInto("id=?", $fun_id);
+						
+						$db->getProfiler()->setEnabled(true);
+						
+						$this->update($arr_update, $where);
+						
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+						$db->getProfiler()->setEnabled(false);
+					}else{
+						$arr_update = array(
+							'principle_after'		=> 	$row_recipt_detail["principal_permonth"],
+							'total_interest_after'	=>	$row_recipt_detail["total_interest"],
+							'penelize'				=>	$row_recipt_detail["penelize_amount"],
+							'service_charge'		=>	$row_recipt_detail["service_charge"],
+							'total_payment_after'	=>	$row_recipt_detail["total_payment"],	
+							'is_completed' 			=>	0,
+						);
+						$this->_name = "ln_loanmember_funddetail";
+						$where = $db->quoteInto("id=?", $fun_id);
+						
+						$db->getProfiler()->setEnabled(true);
+						
+						$this->update($arr_update, $where);
+						
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+						Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+						$db->getProfiler()->setEnabled(false);
+					}
+				}else{
+					$arr_update = array(
+							'is_completed' =>	0,
+					);
+					$this->_name = "ln_loanmember_funddetail";
+					$where = $db->quoteInto("id=?", $fun_id);
+					
+					$db->getProfiler()->setEnabled(true);
+					
+					$this->update($arr_update, $where);
+					
+					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
+					Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
+					$db->getProfiler()->setEnabled(false);
+				}
+			}
+			
+			$sql_cmd = "DELETE FROM `ln_client_receipt_money_detail` WHERE `crm_id` = $id";
+			$db->query($sql_cmd);
    			
    			if(!empty($quick_fun)){
    				foreach ($quick_fun as $rs){
@@ -1520,8 +1655,8 @@ public function addILPayment($data){
    				}
    			}
    		}
-//    		exit();
-   		$db->commit();
+   		exit();
+//    		$db->commit();
    	}catch (Exception $e){
    		$db->rollBack();
    		Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
