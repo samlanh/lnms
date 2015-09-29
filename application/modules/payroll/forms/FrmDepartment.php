@@ -56,19 +56,33 @@ Class Payroll_Form_FrmDepartment extends Zend_Dojo_Form {
 		
 		$_status=  new Zend_Dojo_Form_Element_FilteringSelect('status');
 		$_status->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside',));
+		
+		$_status_pop=  new Zend_Dojo_Form_Element_FilteringSelect('status_pop');
+		$_status_pop->setAttribs(array('dojoType'=>$this->filter,'class'=>'fullside',));
+		
 		$_status_opt = array(
 				1=>$this->tr->translate("ACTIVE"),
 				0=>$this->tr->translate("DACTIVE"));
 		$_status->setMultiOptions($_status_opt);
 		
+		$_status_pop->setMultiOptions($_status_opt);
+		
 		$_display=  new Zend_Dojo_Form_Element_FilteringSelect('display');
 		$_display->setAttribs(array(
 				'dojoType'=>$this->filter,
 				'class'=>'fullside',));
+		
+		$_display_pop=  new Zend_Dojo_Form_Element_FilteringSelect('display_pop');
+		$_display_pop->setAttribs(array(
+				'dojoType'=>$this->filter,
+				'class'=>'fullside',));
+		
 		$_display_opt = array(
 				1=>$this->tr->translate("NAME_KHMER"),
 				2=>$this->tr->translate("NAME_ENGLISH"));
 		$_display->setMultiOptions($_display_opt);
+		
+		$_display_pop->setMultiOptions($_display_opt);
 		
 		$_id = new Zend_Form_Element_Hidden('id');
 		
@@ -81,7 +95,7 @@ Class Payroll_Form_FrmDepartment extends Zend_Dojo_Form {
 			$_display->setValue($_data['displayby']);
 			$_id->setValue($_data['id']);
 		}
-		$this->addElements(array($_btn_search,$_status_search,$_title,$_id,$department_en,$department_kh,$_status,$_display));
+		$this->addElements(array($_btn_search,$_status_search,$_title,$_id,$department_en,$department_kh,$_status,$_display,$_display_pop,$_status_pop));
 		
 		return $this;
 	}

@@ -18,7 +18,18 @@ class Payroll_Model_DbTable_DbDepartment extends Zend_Db_Table_Abstract
     			'displayby'=>$_data['display'],
     			'user_id'=>$this->getUserId(),
     	);
-    	$this->insert($arr);//insert data
+    	return $this->insert($arr);//insert data
+    }
+    function addDepartmentPop($_data){
+    	$arr = array(
+    			'department_kh'=>$_data['department_kh'],
+    			'department_en'=>$_data['department_en'],
+    			'status'=>$_data['status_pop'],
+    			'date'=>date('Y-m-d'),
+    			'displayby'=>$_data['display_pop'],
+    			'user_id'=>$this->getUserId(),
+    	);
+    	return $this->insert($arr);//insert data
     }
     function upDateDepartment($_data){
     	$arr = array(

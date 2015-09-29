@@ -94,7 +94,7 @@ Class Other_Form_FrmCO extends Zend_Dojo_Form {
 		
 		$_department= new Zend_Dojo_Form_Element_FilteringSelect('department_id');
 		$_department->setAttribs(array('dojoType'=>$this->filter,
-				'required'=>'true','class'=>'fullside',));
+				'required'=>'true','class'=>'fullside','OnChange'=>'popupDepartment()'));
 		
 		$db = new Application_Model_DbTable_DbGlobal();
 		$opt = $db->getAllDepartment(null,1);

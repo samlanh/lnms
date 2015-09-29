@@ -3,6 +3,7 @@
 	echo $this->headTitle($tr->translate('ADD_STAFF'));
 ?>	
 <?php  $techer= $this->frm_co;?>
+
 <form  id='add_techer' action="<?php echo $this->url(array('module'=>'payroll','controller'=>'co','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="multipart/form-data">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
@@ -115,7 +116,15 @@
 	</tr>
 </table>	
 </form>
+<?php  echo $this->frmpopupdepartment;?>
 <script type="text/javascript">
+dojo.require("dojo.data.ItemFileWriteStore"); 
+dojo.require("dojo.date.locale");
+
+dojo.require("dojo.data.ObjectStore");
+dojo.require("dojo.NodeList-manipulate");
+dojo.require("dojo.html");
+
 	function calculateDay(){
 		start_date = dijit.byId("start_date").get('value');
 		var a=new Date(start_date);
@@ -155,5 +164,32 @@
 				dijit.byId("workingtime").set('readOnly',false);
 			}
 		}
+	}
+
+	function popupDepartment(){
+		var department_id = dijit.byId('department_id').get('value');
+		if(department_id==-1){
+			dijit.byId('department').show();
+		}
+	}
+	function addNewDepartment(){
+		var url_submit = '<?php echo $this->url(array('module'=>'payroll','controller'=>'co','action'=>'addnewdepartment')); ?>';
+				dojo.xhrPost({
+			    url: url_submit,	
+				form: dojo.byId("frm_department"),		    
+				handleAs:"json", 
+				load: function(data) {	
+					alert(data);
+					labelen = dijit.byId('department_en').get('value');
+					labelkh = dijit.byId('department_kh').get('value');
+					$('#department_id').val(labelen);
+					$('input[name="department_id"]').val(data);
+					dojo.byId('frm_department').reset(); 
+					dijit.byId('department').hide();
+				},
+				error: function(e) {
+				alert("Your message could not be sent, please try again!.");
+				}
+			});
 	}
 </script>

@@ -116,10 +116,14 @@ class Payroll_CoController extends Zend_Controller_Action {
    			Application_Model_DbTable_DbUserLog::writeMessageError($err);
    		}
    	}
+   	
    	$frm = new Other_Form_FrmCO();
    	$frm_co=$frm->FrmAddCO();
    	Application_Model_Decorator::removeAllDecorator($frm_co);
    	$this->view->frm_co = $frm_co;
+   	
+   	$frmpopup = new Application_Form_FrmPopupGlobal();
+   	$this->view->frmpopupdepartment = $frmpopup->frmPopupDepartment();
    }
    function editAction(){
    	$db_co = new Other_Model_DbTable_DbCreditOfficer();
@@ -157,6 +161,16 @@ class Payroll_CoController extends Zend_Controller_Action {
    		print_r(Zend_Json::encode($id));
    		exit();
    	}
+   }
+   public function addnewdepartmentAction(){
+   	if($this->getRequest()->isPost()){
+   		$db = new Payroll_Model_DbTable_DbDepartment();
+   		$_data = $this->getRequest()->getPost();
+   		$id = $db->addDepartmentPop($_data);
+   		print_r(Zend_Json::encode($id));
+   		exit();
+   	}
+   
    }
 }
 
