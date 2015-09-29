@@ -268,27 +268,27 @@ class Group_Model_DbTable_DbChangeCollteral extends Zend_Db_Table_Abstract
 			$to_date = (empty($search['end_date']))? '1': " date <= '".$search['end_date']." 23:59:59'";
 			$where = " WHERE ".$from_date." AND ".$to_date;
 			
-			 $sql=" SELECT id, (SELECT branch_namekh FROM ln_branch WHERE br_id = branch_id LIMIT 1) AS branch_id, 
-			(SELECT CONCAT(client_number,' ',name_kh,' ',name_en) FROM ln_client AS c WHERE c.client_id=client_id LIMIT 1) AS client_name, 
-			 'to',date,note,status, (SELECT user_name FROM rms_users WHERE id=user_id) AS user_id
-			 FROM $this->_name ";
+			 $sql=" SELECT cc.id,(SELECT branch_namekh FROM ln_branch WHERE br_id = branch_id LIMIT 1) AS branch_id, 
+			(SELECT CONCAT(c.client_number,' ',c.name_kh,' ',c.name_en) FROM ln_client AS c WHERE c.client_id=cc.client_id LIMIT 1) AS client_name, 
+			 cc.date,cc.note,cc.status, (SELECT user_name FROM rms_users WHERE id=cc.user_id) AS user_id
+			 FROM $this->_name AS cc ";
 			
 			if($search['status_search']>-1){
-				$where.=" AND status=".$search['status_search'];
+				$where.=" AND cc.status=".$search['status_search'];
 			}
 			if(!empty($search['branch_id'])){
-				$where.=" AND branch_id = ".$search['branch_id'];
+				$where.=" AND cc.branch_id = ".$search['branch_id'];
 			}
 			if(!empty($search['client_code'])){
-				$where.=" AND client_id = ".$search['client_code'];
+				$where.=" AND cc.client_id = ".$search['client_code'];
 			}
 			if(!empty($search['client_name'])){
-				$where.=" AND client_id = ".$search['client_name'];
+				$where.=" AND cc.client_id = ".$search['client_name'];
 			}
 			if(!empty($search['adv_search'])){
 				$s_where=array();
 				$s_search=$search['adv_search'];
-				$s_where[]="note LIKE '%{$s_search}%'";
+				$s_where[]=" cc.note LIKE '%{$s_search}%'";
 				$where .=' AND ('.implode(' OR ',$s_where).')';
 		}
 // 	echo  $sql.$where;

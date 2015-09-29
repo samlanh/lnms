@@ -77,8 +77,8 @@ th{padding: 5px;}
                     <th><?php echo $tr->translate("COLETERAL_TYPE");?> </th>
                     <th><?php echo $tr->translate("NUMBER_COLLTERAL");?> </th>
                     <th><?php echo $tr->translate("ISSUE_DATE");?> </th>
-                    <th><?php echo $tr->translate("NOTE");?> </th>
                     <th><?php echo $tr->translate("DATE");?> </th>
+                    <th><?php echo $tr->translate("NOTE");?> </th>
                 </tr>
             	<?php }?>
                    <?php  
@@ -109,8 +109,8 @@ th{padding: 5px;}
                     <td style="padding:5px 0px;"><?php echo $tr->translate("COLETERAL_TYPE");?> </td>
                     <td style="padding:5px 0px;"><?php echo $tr->translate("NUMBER_COLLTERAL");?> </td>
                     <td style="padding:5px 0px;"><?php echo $tr->translate("ISSUE_DATE");?> </td>
-                    <td style="padding:5px 0px;"><?php echo $tr->translate("NOTE");?> </td>
                     <td style="padding:5px 0px;"><?php echo $tr->translate("DATE");?> </td>
+                    <td style="padding:5px 0px;"><?php echo $tr->translate("NOTE");?> </td>
                 </tr>
                 <?php }
                
@@ -123,13 +123,12 @@ th{padding: 5px;}
 						<td>&nbsp;<?php echo $row['collecteral_type']." - ".$row['re_owner_type'];?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['number_collteral']?>&nbsp;</td>
 						<td>&nbsp;<?php echo date('d/m/Y',strtotime($row['issue_date'])) ;?>&nbsp;</td>
-						<td>&nbsp;<?php echo $row['note']?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['date']?>&nbsp;</td>
+						<td>&nbsp;<?php echo $row['note']?>&nbsp;</td>
 					</tr>
 				<?php 
 				$id = $row['client_id'];
 }?>
-            
             <br />
               </table>
               <br />

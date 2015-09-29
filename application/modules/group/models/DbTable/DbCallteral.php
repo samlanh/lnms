@@ -25,8 +25,10 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 	    	$ids = explode(",",$data['record_row']);
 	    	$this->_name='ln_client_callecteral_detail';
 	    	foreach ($ids as $i){
+	    		$code = Group_Model_DbTable_DbCallteral::getCallteralCode();
 	    		$array = array(
 	    				'client_coll_id'=> $id_call,//$data['client_coll'],
+	    				'collecteral_code'=>$code,
 	    				'collecteral_type'=>$data['collect_type'.$i],
 	    				'owner_type'=>$data['owner_type'.$i],
 	    				'owner_name'=>$data['owner_name'.$i],
@@ -72,8 +74,10 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 			$ids = explode(",",$format['record_row']);
 			
 			foreach ($ids as $i){
+				$code = Group_Model_DbTable_DbCallteral::getCallteralCode();
 				$array = array(
 						'client_coll_id'=> $format['id'],
+						'collecteral_code'=>$code,
 						'collecteral_type'=>$format['collect_type'.$i],
 						'owner_type'=>$format['owner_type'.$i],
 						'owner_name'=>$format['owner_name'.$i],
@@ -137,7 +141,7 @@ class Group_Model_DbTable_DbCallteral extends Zend_Db_Table_Abstract
 	}
 	public static function getCallteralCode(){
 		$db = new Application_Model_DbTable_DbGlobal();
-		$sql = "SELECT COUNT(id) AS amount FROM `ln_client_callecteral`";
+		$sql = "SELECT COUNT(id) AS amount FROM `ln_client_callecteral_detail`";
 		$acc_no= $db->getGlobalDbRow($sql);
 		$acc_no=$acc_no['amount'];
 		$new_acc_no= (int)$acc_no+1;

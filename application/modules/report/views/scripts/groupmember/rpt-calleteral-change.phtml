@@ -75,6 +75,7 @@ th{padding: 5px;}
                     <th ><?php echo $tr->translate("NUMBER_COLLTERAL");?> </th>
                     <th ><?php echo $tr->translate("SIGN_DATE");?> </th>
                     <th ><?php echo $tr->translate("DATE");?> </th>
+                    <th ><?php echo $tr->translate("NOTE");?> </th>
                 </tr>
             	<?php }?>
                    <?php  
@@ -89,11 +90,11 @@ th{padding: 5px;}
                 <?php } ?>
              <?php ?>
              	<tr>
-             		<td colspan="11">&nbsp;<span class="style"><?php echo $tr->translate("CUSTOMER_NAME");?> </span><?php  echo $row['client_name']; ?></td>
+             		<td colspan="12">&nbsp;<span class="style"><?php echo $tr->translate("CUSTOMER_NAME");?> </span><?php  echo $row['client_name']; ?></td>
              	</tr>
                 <tr>
                 	<td colspan="6" align="center" bgcolor="#ccc">&nbsp;<span class="style"><?php  echo $tr->translate("FROM_COLL"); ?></td>
-                	<td colspan="5" align="center" bgcolor="#ccc" style="border-left:3px double #000; ">&nbsp;<span class="style"><?php echo $tr->translate("TO_COLL");?> </span></td>
+                	<td colspan="6" align="center" bgcolor="#ccc" style="border-left:3px double #000; ">&nbsp;<span class="style"><?php echo $tr->translate("TO_COLL");?> </span></td>
                 </tr>
                  <tr bgcolor="#ccc" class="style"  align="center" style="font-weight:bold; line-height: 18px; ">
                     <td><?php echo $tr->translate("NUM");?> </td>
@@ -107,6 +108,7 @@ th{padding: 5px;}
                     <td><?php echo $tr->translate("NUMBER_COLLTERAL");?> </td>
                     <th ><?php echo $tr->translate("SIGN_DATE");?> </th>
                     <td><?php echo $tr->translate("DATE");?> </td>
+                    <th ><?php echo $tr->translate("NOTE");?> </th>
                 </tr>
                 <?php }
                 ?>
@@ -122,6 +124,7 @@ th{padding: 5px;}
 						<td>&nbsp;<?php echo $row['number_collateral']?>&nbsp;</td>
 						<td>&nbsp;<?php echo date("d/m/Y",strtotime($row['issue_date']))?>&nbsp;</td>
 						<td>&nbsp;<?php echo date("d/m/Y",strtotime($row['date']))?>&nbsp;</td>
+						<td>&nbsp;<?php echo $row['note']?>&nbsp;</td>
 					</tr>
 				<?php 
 				$id = $row['client_id'];

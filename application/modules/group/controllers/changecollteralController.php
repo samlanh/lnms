@@ -29,7 +29,7 @@ class Group_ChangecollteralController extends Zend_Controller_Action {
 					'branch_id'=>$rs['branch_id'],
 					'client_name'=>$rs['client_name'],
 					'from'=>'from',
-					'to'=>$rs['to'],
+					'to'=>'to',
 					'date'=>$rs['date'],
 					'note'=>$rs['id'],
 					'status'=>$rs['status'],

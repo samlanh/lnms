@@ -71,8 +71,8 @@ th{padding: 5px;}
                     <th><?php echo $tr->translate("COLETERAL_TYPE");?> </th>
                     <th><?php echo $tr->translate("OWNER_NAME");?> </th>
                     <th><?php echo $tr->translate("NUMBER_COLLTERAL");?> </th>
-                    <th><?php echo $tr->translate("NOTE");?> </th>
                     <th><?php echo $tr->translate("DATE");?> </th>
+                    <th><?php echo $tr->translate("NOTE");?> </th>
                 </tr>
             	<?php }?>
                    <?php  
@@ -102,14 +102,14 @@ th{padding: 5px;}
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("COLETERAL_TYPE");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("NUMBER_COLLTERAL");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("SIGN_DATE");?></td>
-                    <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("NOTE");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("DATE");?> </td>
                     <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("STATUS");?> </td>
+                    <td style="text-align:center; font-size:11px; font-family:'Khmer MEF2'"><?php echo $tr->translate("NOTE");?> </td>
                 </tr>
                 <?php }
                 $id = $row['client_id'];
                 ?>
-					<tr align="center" style="font-size: 11px;" class="style">
+					<tr align="center"  <?php if($row['is_return']==1)echo'style="background:#ccc;"';?> >
 						<td>&nbsp;<?php echo $key+1; ?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['branch_name'];?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['collecteral_code']; ?>&nbsp;</td>
@@ -118,9 +118,9 @@ th{padding: 5px;}
 						<td style="white-space:nowrap; text-align: left;">&nbsp;<?php echo $row['collecteral_title_en']." -  ".$row['collecteral_owner']; ?>&nbsp;</td>
 						<td style="white-space:nowrap;" >&nbsp;<?php echo $row['number_collecteral']; ?>&nbsp;</td>
 						<td style="white-space:nowrap;" >&nbsp;<?php echo date("d-M-Y",strtotime($row['issue_date'])); ?>&nbsp;</td>
-						<td style="white-space:nowrap;" >&nbsp;<?php echo $row['note']; ?>&nbsp;</td>
 						<td>&nbsp;<?php echo date('d-M-Y',strtotime($row['date']));?>&nbsp;</td>
-						<td>&nbsp;<?php echo ($row['is_return']==1)?"Return":"Keeping";?>&nbsp;</td>
+						<td>&nbsp;<?php echo ($row['is_return']==1)?"Returned":"Keeping";?>&nbsp;</td>
+						<td style="white-space:nowrap;" >&nbsp;<?php echo $row['note']; ?>&nbsp;</td>
 						
 					</tr>
 				<?php }?>

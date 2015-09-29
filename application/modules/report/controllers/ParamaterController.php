@@ -33,6 +33,7 @@ class Report_ParamaterController extends Zend_Controller_Action {
   	}
   	$frm=new Other_Form_FrmStaff();
   	$row=$frm->FrmAddStaff();
+  	Application_Model_Decorator::removeAllDecorator($row);
   	$this->view->frm_staff=$row;
   }
   function  rptVillageAction(){

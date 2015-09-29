@@ -18,8 +18,7 @@ class Application_Model_CustomAuth extends Zend_Controller_Plugin_Abstract
 										"default/index/index",
 										"default/error/error",
 										"default/index/changepassword",
-										"default/index/logout",
-										"exchange/index/check-rate" 
+										"default/index/logout" 
 								);
  	
 	public function __construct(Zend_Auth $auth)
@@ -32,7 +31,7 @@ class Application_Model_CustomAuth extends Zend_Controller_Plugin_Abstract
 	public function preDispatch(Zend_Controller_Request_Abstract $request)
  	{ 	
  		//clear session from search session
- 		$this->clearSession();
+ 		//$this->clearSession();
  		
  		$session_user=new Zend_Session_Namespace('auth');
  		$module = $request->getModuleName();
@@ -41,7 +40,6 @@ class Application_Model_CustomAuth extends Zend_Controller_Plugin_Abstract
  		$url = $module."/".$controller."/".$action;
  		$_url = "";
  		
- 		//print_r($session_user->arr_acl); exit();
  		//have login
  		if(isset($session_user->arr_acl)){
 	 		$arr_acl = $session_user->arr_acl;
@@ -63,10 +61,10 @@ class Application_Model_CustomAuth extends Zend_Controller_Plugin_Abstract
 	 		
 	 		//redirect to homepage
 	 		if(!$valid_action){
-	 			//For all url that can access all user type
-// 	 			if($url !== "default/index/index" && $url !=="default/error/error" && $url !=="default/index/changepassword" && $url !=="default/index/logout"){
-// 	 				$_url = '/';
-// 	 			}
+	 			//just open block below
+	 			if($url !== "default/index/index" && $url !=="default/error/error" && $url !=="default/index/changepassword" && $url !=="default/index/logout"){
+	 				$_url = '/';
+	 			}
 	 			$_have = false;
 	 			foreach ($this->_exception_url as $i => $val){
 	 				if($url === $val){
@@ -89,6 +87,7 @@ class Application_Model_CustomAuth extends Zend_Controller_Plugin_Abstract
 	 	}
 	 	
 	 	if(!empty($_url)){
+	 		echo"url here". $_url;exit();
 	 		Application_Form_FrmMessage::redirectUrl($_url);
 	 	}
 			

@@ -91,7 +91,7 @@ $free_day=$key_code['value'];
                     <th><?php echo $tr->translate("PAYMENT");?></th>
                     <th><?php echo $tr->translate("LATE_DAY");?></th>
                     <th><?php echo $tr->translate("PAY_DATE");?></th>
-                    <th><?php echo $tr->translate("TIME_COLLECT");?></th>
+                    <!-- <th><?php //echo $tr->translate("TIME_COLLECT");?></th> -->
                     
                 </tr>
                 <?php $amt_r1 = 0;$amt_r2 = 0;$amt_r3 = 0;$amt_r4 = 0;
@@ -160,7 +160,7 @@ $free_day=$key_code['value'];
                		<td style="white-space: nowrap;">&nbsp;<?php echo number_format($total_payment,2).' '.$rs['currency_type'];?>&nbsp;</td>
                		<td align="center">&nbsp;&nbsp;<?php echo $total_late_day." Days";?> &nbsp;</td>
                		<td align="center">&nbsp;&nbsp;<?php echo date_format(date_create($rs["date_payment"]),'d-m-Y');?>&nbsp;</td>
-               		<td align="center" style="width:100px;">&nbsp;<?php echo  str_replace(' ', '', $rs["time_collect"]);?>&nbsp;</td>
+               		<!--<td align="center" style="width:100px;">&nbsp;<?php //echo  str_replace(' ', '', $rs["time_collect"]);?>&nbsp;</td> -->
                 </tr>
                 
                 <?php 

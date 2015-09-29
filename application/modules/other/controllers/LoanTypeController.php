@@ -24,7 +24,7 @@ public function init()
 				if(isset($data['btn_save_close'])){
 					$db->addViewType($data);
 					Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
-					Application_Form_FrmMessage::redirectUrl('/other/LoanType');
+					Application_Form_FrmMessage::redirectUrl('/other/loantype');
 				}
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -55,7 +55,7 @@ public function init()
     		$list = new Application_Form_Frmtable();
     		$collumns = array("NAME_EN","NAME_KH","TYPE","STATUS");
     		$link=array(
-    				'module'=>'other','controller'=>'LoanType','action'=>'edit',
+    				'module'=>'other','controller'=>'loantype','action'=>'edit',
     		);
     		$this->view->list=$list->getCheckList(0, $collumns,$rs_rows,array('name_en'=>$link,'name_kh'=>$link));
     	}catch (Exception $e){
@@ -75,7 +75,7 @@ public function init()
 			try {
 				$db->updatViewById($data);
 				Application_Form_FrmMessage::message($this->tr->translate('EDIT_SUCCESS'));
-				Application_Form_FrmMessage::redirectUrl('/other/LoanType');
+				Application_Form_FrmMessage::redirectUrl('/other/loantype');
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("EDIT_FAIL");
 				$err = $e->getMessage();
