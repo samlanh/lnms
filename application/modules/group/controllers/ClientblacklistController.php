@@ -24,7 +24,7 @@ public function init()
 				if(isset($data['btn_save_close'])){
 					$db->updatBlackList($data);
 					Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
-					Application_Form_FrmMessage::redirectUrl('/group/Clientblacklist');
+					Application_Form_FrmMessage::redirectUrl('/group/clientblacklist');
 				}
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -59,7 +59,7 @@ public function init()
     		$list = new Application_Form_Frmtable();
     		$collumns = array("BRANCH_NAME","CUSTOMER_CODE","CUSTOMER_NAME","SEX","SITU_STATUS","NATIONAL_ID","NUMBER","REASON","DATE","STATUS");
     		$link=array(
-    				'module'=>'group','controller'=>'Clientblacklist','action'=>'edit',
+    				'module'=>'group','controller'=>'clientblacklist','action'=>'edit',
     		);
     		$this->view->list=$list->getCheckList(0, $collumns,$rs_rows,array('name_kh'=>$link,'name_en'=>$link,'client_number'=>$link));
     	}catch (Exception $e){
@@ -78,7 +78,7 @@ public function init()
 			try {
 					$db->updatClientBlackList($data);
 					Application_Form_FrmMessage::message($this->tr->translate('EDIT_SUCCESS'));
-					Application_Form_FrmMessage::redirectUrl('/group/Clientblacklist');
+					Application_Form_FrmMessage::redirectUrl('/group/clientblacklist');
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message("EDIT_FAIL");
 				$err = $e->getMessage();

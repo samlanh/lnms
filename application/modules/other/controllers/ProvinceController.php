@@ -34,7 +34,7 @@ class Other_ProvinceController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array("EN_PROVINCE","KH_PROVINCE","DISPLAY_BY","MODIFY_DATE","STATUS","BY_USER");
 			$link=array(
-					'module'=>'other','controller'=>'Province','action'=>'edit',
+					'module'=>'other','controller'=>'province','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs,array('province_kh_name'=>$link,'province_en_name'=>$link));
 		}catch (Exception $e){
@@ -54,10 +54,10 @@ class Other_ProvinceController extends Zend_Controller_Action {
 				$_dbmodel = new Other_Model_DbTable_DbProvince();				
 				if(!empty($_data['save_new'])){
 					$_dbmodel->addNewProvince($_data);
-					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL."/Province/add");
+					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL."/province/add");
 				}else{
 					$_dbmodel->addNewProvince($_data);
-					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL."/Province/index");
+					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL."/province/index");
 				}
 			}catch (Exception $e) {
 				Application_Form_FrmMessage::message($this->tr->translate("INSERT_FAIL"));
@@ -80,7 +80,7 @@ class Other_ProvinceController extends Zend_Controller_Action {
 			$db = new Other_Model_DbTable_DbProvince();
 			try {
 			$db->updateProvince($data,$id);
-				Application_Form_FrmMessage::Sucessfull($this->tr->translate("EDIT_SUCCESS"),self::REDIRECT_URL . "/Province/index");
+				Application_Form_FrmMessage::Sucessfull($this->tr->translate("EDIT_SUCCESS"),self::REDIRECT_URL . "/province/index");
 			}catch (Exception $e){
 				Application_Form_FrmMessage::message($this->tr->translate("EDIT_FAIL"));
 				$err=$e->getMessage();

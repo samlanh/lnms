@@ -27,7 +27,7 @@ class Other_ZoneController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array("ZONE_NAME","ZONE_NUMBER","DATE","STATUS","BY");
 			$link=array(
-					'module'=>'other','controller'=>'Zone','action'=>'edit',
+					'module'=>'other','controller'=>'zone','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('zone_name'=>$link,'zone_num'=>$link));
 		}catch (Exception $e){
@@ -54,7 +54,7 @@ class Other_ZoneController extends Zend_Controller_Action {
    			if(!empty($_data['save_new'])){
    				Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
    			}else{
-   				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL.'/Zone/index');
+   				Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL.'/zone/index');
    			}
    		}catch(Exception $e){
    			Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
@@ -73,7 +73,7 @@ class Other_ZoneController extends Zend_Controller_Action {
 	   		try{
 	   			$_data = $this->getRequest()->getPost();
 	   			$db->addZone($_data);
-	   			Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'),self::REDIRECT_URL.'/Zone/index');
+	   			Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'),self::REDIRECT_URL.'/zone/index');
 	   		}catch(Exception $e){
 	   			Application_Form_FrmMessage::message($this->tr->translate('EDIT_FAIL'));
 	   			$err =$e->getMessage();
@@ -83,7 +83,7 @@ class Other_ZoneController extends Zend_Controller_Action {
 	   	$id=$this->getRequest()->getParam('id');
 	   	$row = $db->getZoneById($id);
 	   	if(empty($row)){
-	   		$this->_redirect('/other/Zone');
+	   		$this->_redirect('/other/zone');
 	   	}
 	   	$frm = new Other_Form_FrmZone();
 	   	$frm_co=$frm->FrmAddZone($row);

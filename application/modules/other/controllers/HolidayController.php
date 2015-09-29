@@ -28,7 +28,7 @@ class Other_HolidayController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array("HOLIDAY_NAME","AMOUNT","START_DATE","END_DATE","NOTE","STATUS","BY");
 			$link=array(
-					'module'=>'other','controller'=>'Holiday','action'=>'edit',
+					'module'=>'other','controller'=>'holiday','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('holiday_name'=>$link,'start_date'=>$link,'amount_day'=>$link));
 		}catch (Exception $e){
@@ -51,7 +51,7 @@ class Other_HolidayController extends Zend_Controller_Action {
 				if(!empty($_data['save_new'])){
 					Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
 				}else{
-					Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/Holiday/index');
+					Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'), self::REDIRECT_URL . '/holiday/index');
 				}
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message($this->tr->translate('INSERT_FAIL'));
@@ -73,7 +73,7 @@ class Other_HolidayController extends Zend_Controller_Action {
 			$_data = $this->getRequest()->getPost();
 			try {
 				$_major_id = $db->addHoliday($_data);
-				Application_Form_FrmMessage::Sucessfull($this->tr->translate("EDIT_SUCCESS"),self::REDIRECT_URL.'/Holiday/index');
+				Application_Form_FrmMessage::Sucessfull($this->tr->translate("EDIT_SUCCESS"),self::REDIRECT_URL.'/holiday/index');
 			} catch (Exception $e) {
 				Application_Form_FrmMessage::message($this->tr->translate("EDIT_FAIL"));
 				$err =$e->getMessage();
@@ -83,7 +83,7 @@ class Other_HolidayController extends Zend_Controller_Action {
 		$id = $this->getRequest()->getParam('id');
 		$row = $db->getHolidayById($id);
 		if(empty($row)){
-			$this->_redirect('/other/Holiday');
+			$this->_redirect('/other/holiday');
 		}
 		$frm = new Other_Form_FrmHoliday();
 		$frm_holiday=$frm->FrmAddHoliday($row);

@@ -25,7 +25,7 @@ class Other_DistrictController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array("DISTRICT_KH","DISTRICT_ENG","DISPLAY_BY","PROVINCE","DATE","STATUS","BY");
 			$link=array(
-					'module'=>'other','controller'=>'District','action'=>'edit',
+					'module'=>'other','controller'=>'district','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('district_name'=>$link,'district_namekh'=>$link));
 		}catch (Exception $e){
@@ -48,7 +48,7 @@ class Other_DistrictController extends Zend_Controller_Action {
 				if(!empty($_data['save_new'])){
 					Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
 				}else{
-					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL .'/District/index');
+					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL .'/district/index');
 				}
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message($this->tr->translate("INSERT_FAIL"));
@@ -67,7 +67,7 @@ class Other_DistrictController extends Zend_Controller_Action {
 			$_data = $this->getRequest()->getPost();
 			try{
 				$db_district->addDistrict($_data);
-				Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'),self::REDIRECT_URL . '/District/index');
+				Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'),self::REDIRECT_URL . '/district/index');
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message($this->tr->translate('EDIT_FAIL'));
 				$err =$e->getMessage();
@@ -77,7 +77,7 @@ class Other_DistrictController extends Zend_Controller_Action {
 		$id = $this->getRequest()->getParam("id");
 		$row = $db_district->getDistrictById($id);
 		if(empty($row)){
-			$this->_redirect('other/District');
+			$this->_redirect('other/district');
 		}
 		$fm = new Other_Form_FrmDistrict();
 		$frm = $fm->FrmAddDistrict($row);

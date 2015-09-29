@@ -3,7 +3,7 @@
 	echo $this->headTitle($tr->translate('EDIT_PROVINCE')); 
 ?>
 <?php  $province= $this->frm_province;?>
-<form id="add_province" action="<?php echo $this->url(array('module'=>'other','controller'=>'Province','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form id="add_province" action="<?php echo $this->url(array('module'=>'other','controller'=>'province','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
 				return true;

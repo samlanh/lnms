@@ -25,7 +25,7 @@ class Other_CommuneController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array("COMMUNENAME_KH","COMMUNENAME_EN","DISTRICT_NAME","DATE","STATUS","BY");
 			$link=array(
-					'module'=>'other','controller'=>'Commune','action'=>'edit',
+					'module'=>'other','controller'=>'commune','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('commune_namekh'=>$link,'district_name'=>$link,'commune_name'=>$link));
 		}catch (Exception $e){
@@ -45,10 +45,10 @@ class Other_CommuneController extends Zend_Controller_Action {
 				$db_district = new Other_Model_DbTable_DbCommune();				
 				if(!empty($_data['save_new'])){
 					$db_district->addCommune($_data);
-					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL . '/Commune/add');
+					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL . '/commune/add');
 				}else{
 					$db_district->addCommune($_data);
-					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL . '/Commune/index');
+					Application_Form_FrmMessage::Sucessfull($this->tr->translate("INSERT_SUCCESS"),self::REDIRECT_URL . '/commune/index');
 				}
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message($this->tr->translate("INSERT_FAIL"));
@@ -72,7 +72,7 @@ class Other_CommuneController extends Zend_Controller_Action {
 			//print_r($_data);exit();
 			try{				
 				$db->addCommune($_data,$id);
-				Application_Form_FrmMessage::Sucessfull($this->tr->translate("EDIT_SUCCESS"),self::REDIRECT_URL.'/Commune/');
+				Application_Form_FrmMessage::Sucessfull($this->tr->translate("EDIT_SUCCESS"),self::REDIRECT_URL.'/commune/');
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message($this->tr->translate("EDIT_FAIL"));
 				$err =$e->getMessage();

@@ -10,7 +10,7 @@ class Other_VillageController extends Zend_Controller_Action {
 	}
 	public function indexAction(){
 		try{
-			$db = new Other_Model_DbTable_DbVillage();
+			$db = new Other_Model_DbTable_Dbvillage();
 			if($this->getRequest()->isPost()){
 				$search=$this->getRequest()->getPost();
 			}
@@ -28,7 +28,7 @@ class Other_VillageController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array("VILLAGENAME_KH","VILLAGE_NAME","DISPLAY_BY","COMMNUE_NAME","DISTRICT_NAME","PROVINCE_NAME","DATE","STATUS","BY");
 			$link=array(
-					'module'=>'other','controller'=>'Village','action'=>'edit',
+					'module'=>'other','controller'=>'village','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('village_name'=>$link,'village_namekh'=>$link));
 		}catch (Exception $e){
@@ -55,7 +55,7 @@ class Other_VillageController extends Zend_Controller_Action {
 				if(!empty($_data['save_new'])){
 					Application_Form_FrmMessage::message($this->tr->translate('INSERT_SUCCESS'));
 				}else{
-					Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'),self::REDIRECT_URL . '/Village/index');
+					Application_Form_FrmMessage::Sucessfull($this->tr->translate('INSERT_SUCCESS'),self::REDIRECT_URL . '/village/index');
 				}
 			}catch(Exception $e){
 				$err = $e->getMessage();
@@ -78,7 +78,7 @@ class Other_VillageController extends Zend_Controller_Action {
 			$_data = $this->getRequest()->getPost();
 			try{
 				$db->addVillage($_data);
-				Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'),self::REDIRECT_URL . '/Village/index');
+				Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'),self::REDIRECT_URL . '/village/index');
 			}catch(Exception $e){
 				Application_Form_FrmMessage::message($this->tr->translate('EDIT_FAIL'));
 				$err =$e->getMessage();
@@ -89,7 +89,7 @@ class Other_VillageController extends Zend_Controller_Action {
 		$row = $db->getVillageById($id);
 		$this->view->row=$row;
 		if(empty($row)){
-			$this->_redirect('other/Village');
+			$this->_redirect('other/village');
 		}		
 		$fm = new Other_Form_FrmVillage();
 		$frm = $fm->FrmAddVillage($row);

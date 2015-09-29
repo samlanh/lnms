@@ -27,7 +27,7 @@ class Group_ClientController extends Zend_Controller_Action {
 			$collumns = array("Client N.","NAME_EN","Name Eng","Sex","Phone","House","Street","Village","Spouse Name",
 				"By","status");
 			$link=array(
-					'module'=>'group','controller'=>'Client','action'=>'edit',
+					'module'=>'group','controller'=>'client','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('client_number'=>$link,'name_kh'=>$link,'name_en'=>$link));
 		}catch (Exception $e){
@@ -66,7 +66,7 @@ class Group_ClientController extends Zend_Controller_Action {
 			try{
 				$data = $this->getRequest()->getPost();
 				$db->addClient($data);
-				Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'),"/group/Client");
+				Application_Form_FrmMessage::Sucessfull($this->tr->translate('EDIT_SUCCESS'),"/group/client");
 			}catch (Exception $e){
 				echo $e->getMessage();exit();
 				Application_Form_FrmMessage::message("Application Error");
@@ -76,7 +76,7 @@ class Group_ClientController extends Zend_Controller_Action {
 		}
 		$id = $this->getRequest()->getParam("id");
 		$row = $db->getClientById($id);
-		if(empty($row)){$this->_redirect("/group/Client");}
+		if(empty($row)){$this->_redirect("/group/client");}
 		$fm = new Group_Form_FrmClient();
 		$frm = $fm->FrmAddClient($row);
 		Application_Model_Decorator::removeAllDecorator($frm);

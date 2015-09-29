@@ -65,7 +65,7 @@ class Group_CallteralController extends Zend_Controller_Action {
 					Application_Form_FrmMessage::message('ការ​បញ្ចូល​​ជោគ​ជ័យ');
 					
 				}else{
-					Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL . '/Callteral/index');
+					Application_Form_FrmMessage::Sucessfull('ការ​បញ្ចូល​​ជោគ​ជ័យ', self::REDIRECT_URL . '/callteral/index');
 				}
 			} catch (Exception $e) { 
 				Application_Form_FrmMessage::message("Application Error");
@@ -93,7 +93,7 @@ class Group_CallteralController extends Zend_Controller_Action {
 				$db_call = new Group_Model_DbTable_DbCallteral();
 				try{
 					$db = $db_call->updatecallteral($calldata);
-					Application_Form_FrmMessage::Sucessfull('EDIT_SUCCESS', self::REDIRECT_URL. '/Callteral/index');
+					Application_Form_FrmMessage::Sucessfull('EDIT_SUCCESS', self::REDIRECT_URL. '/callteral/index');
 				} catch (Exception $e) {
 					Application_Form_FrmMessage::message("INSERT_FAIL");
 				    Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
@@ -104,7 +104,7 @@ class Group_CallteralController extends Zend_Controller_Action {
 		$db = new Group_Model_DbTable_DbCallteral();
 		$row  = $db->getecallteralbyid($id);
 		if(empty($id) OR empty($row) ){
-			Application_Form_FrmMessage::Sucessfull('RECORD_NOT_EXIST', self::REDIRECT_URL. '/Callteral/index');
+			Application_Form_FrmMessage::Sucessfull('RECORD_NOT_EXIST', self::REDIRECT_URL. '/callteral/index');
 		}
 		
 		$this->view->client_id = $row['client_id'];

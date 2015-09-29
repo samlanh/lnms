@@ -3,7 +3,7 @@
 	echo $this->headTitle($tr->translate('ADD_ZONE_AREA'));
 ?>	
 <?php  $frm = $this->frm_zone;?>
-<form action="<?php echo $this->url(array('module'=>'other','controller'=>'Zone','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form action="<?php echo $this->url(array('module'=>'other','controller'=>'zone','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
  <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
 				return true;

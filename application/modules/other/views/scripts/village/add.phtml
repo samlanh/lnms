@@ -59,7 +59,7 @@ function filterCommune(){
 	dijit.byId('commune_name').query.district_id = dijit.byId('district_name').get('value');
 }
 </script>
-<form  id='add_techer' action="<?php echo $this->url(array('module'=>'other','controller'=>'Village','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
+<form  id='add_techer' action="<?php echo $this->url(array('module'=>'other','controller'=>'village','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
  <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
 				return true;

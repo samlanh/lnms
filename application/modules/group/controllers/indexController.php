@@ -79,7 +79,7 @@ class Group_indexController extends Zend_Controller_Action {
 					Application_Form_FrmMessage::message("ការ​បញ្ចូល​ជោគ​ជ័យ !");
 					if($data['chackcall']==1){
 						Application_Form_FrmMessage::message("វានឹងបន្ថែមទ្រព្យបញ្ចាំរបស់អតិថិជនដោយស្វ័យប្រវត្តិ!");
-						Application_Form_FrmMessage::redirectUrl("/group/Callteral/add/id/".$id);
+						Application_Form_FrmMessage::redirectUrl("/group/callteral/add/id/".$id);
 					}
 				}
 				else if (isset($data['save_close'])){
@@ -87,7 +87,7 @@ class Group_indexController extends Zend_Controller_Action {
 					Application_Form_FrmMessage::message("ការ​បញ្ចូល​ជោគ​ជ័យ !");
 					if($data['chackcall']==1){
 						Application_Form_FrmMessage::message("វានឹងបន្ថែមទ្រព្យបញ្ចាំរបស់អតិថិជនដោយស្វ័យប្រវត្តិ!");
-						Application_Form_FrmMessage::redirectUrl("/group/Callteral/add/id/".$id);
+						Application_Form_FrmMessage::redirectUrl("/group/callteral/add/id/".$id);
 					}
 					Application_Form_FrmMessage::redirectUrl("/group/index");
 				}
@@ -153,7 +153,7 @@ class Group_indexController extends Zend_Controller_Action {
 				$id= $db->addClient($data);
 				if($data['chackcall']==1){
 					Application_Form_FrmMessage::message("វានឹងបន្ថែមទ្រព្យបញ្ចាំរបស់អតិថិជនដោយស្វ័យប្រវត្តិ!");
-					Application_Form_FrmMessage::redirectUrl("/group/Callteral/add/id/".$id);
+					Application_Form_FrmMessage::redirectUrl("/group/callteral/add/id/".$id);
 				}
 				Application_Form_FrmMessage::Sucessfull('EDIT_SUCCESS',"/group/index");
 			}catch (Exception $e){
@@ -167,7 +167,7 @@ class Group_indexController extends Zend_Controller_Action {
 	    $this->view->row=$row;
 		$this->view->photo = $row['photo_name'];
 		if(empty($row)){
-			$this->_redirect("/group/Client");
+			$this->_redirect("/group/client");
 		}
 		$fm = new Group_Form_FrmClient();
 		$frm = $fm->FrmAddClient($row);

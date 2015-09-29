@@ -12,7 +12,7 @@ echo $this->headTitle($tr->translate("RETURN_COLLTERAL_INFO"));
 	color:blue;
 }
 </style>
-<form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'group','controller'=>'Returncollteral','action'=>'add')); ?>" 
+<form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'group','controller'=>'returncollteral','action'=>'add')); ?>" 
 dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
