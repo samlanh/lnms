@@ -41,7 +41,7 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 			$collumns = array("RECIEPT_NO","LOAN_NO","LIST_GROUP_CLIENT","TOTAL_PRINCEPLE","TOTAL_PAYMENT","RECEIVE_AMOUNT","TOTAL_INTEREST","PENALIZE AMOUNT","DATE","DATE_DUE","CO_NAME","BRANCH_NAME",
 				);
 			$link=array(
-					'module'=>'loan','controller'=>'il-payment','action'=>'edit',
+					'module'=>'loan','controller'=>'ilpayment','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('client_name'=>$link,'receipt_no'=>$link,'branch'=>$link));
 		}catch (Exception $e){
@@ -62,10 +62,10 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 			$identify = $_data["identity"];
 			try {
 				if($identify==""){
-					Application_Form_FrmMessage::Sucessfull("Client no laon to pay!","/loan/il-payment/");
+					Application_Form_FrmMessage::Sucessfull("Client no laon to pay!","/loan/ilpayment/");
 				}else {
 					$db->addILPayment($_data);
-// 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/il-payment/");
+			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/ilpayment/");
 				}
 			}catch (Exception $e) {
 				//echo $e->getMessage();
@@ -109,11 +109,10 @@ class Loan_IlPaymentController extends Zend_Controller_Action {
 			$identify = $_data["identity"];
 			try {
 				if($identify==""){
-					Application_Form_FrmMessage::Sucessfull("Client no laon to pay!","/loan/il-payment/");
+					Application_Form_FrmMessage::Sucessfull("Client no laon to pay!","/loan/ilpayment/");
 				}else{
 					$db->updateIlPayment($_data);
-// 					$db->cancelIlPayment($_data);
-// 					Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/loan/il-payment/");
+					Application_Form_FrmMessage::Sucessfull("EDIT_SUCCESS","/loan/ilpayment/");
 				}
 			}catch (Exception $e) {
 				//echo $e->getMessage();

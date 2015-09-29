@@ -36,9 +36,9 @@ class Loan_RepaymentScheduleController extends Zend_Controller_Action {
 			$collumns = array("LOAN_NO","CUSTOMER_NAME","COMUNE_NAME_EN","LOAN_AMOUNT","INTEREST_RATE","REPAYMENT_TYPE","TERM_BORROW","ZONE_NAME","CO_NAME",
 				"BRANCH_NAME","STATUS");
 			$link=array(
-					'module'=>'loan','controller'=>'RepaymentSchedule','action'=>'view',
+					'module'=>'loan','controller'=>'repaymentschedule','action'=>'view',
 			);
-			$link_info=array('module'=>'loan','controller'=>'RepaymentSchedule','action'=>'edit',);
+			$link_info=array('module'=>'loan','controller'=>'repaymentschedule','action'=>'edit',);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('loan_number'=>$link,'payment_method'=>$link_info,'client_name_kh'=>$link_info,'client_name_en'=>$link_info,'total_capital'=>$link_info),0);
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
@@ -58,7 +58,7 @@ class Loan_RepaymentScheduleController extends Zend_Controller_Action {
 				
 				$_dbmodel->addRepayMentSchedule($_data);
 				if(!empty($_data['saveclose'])){
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/RepaymentSchedule");
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/repaymentschedule");
 				}else{
 					Application_Form_FrmMessage::message("INSERT_SUCCESS");
 				}
@@ -115,7 +115,7 @@ class Loan_RepaymentScheduleController extends Zend_Controller_Action {
 			try{
 				$_dbmodel = new Loan_Model_DbTable_DbRepaymentSchedule();
 				$_dbmodel->updateRepaymentSchedule($_data);
-				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/RepaymentSchedule/index");
+				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/repaymentschedule/index");
 			}catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
 				Application_Model_DbTable_DbUserLog::writeMessageError($err =$e->getMessage());
@@ -126,12 +126,12 @@ class Loan_RepaymentScheduleController extends Zend_Controller_Action {
 		$db_g = new Application_Model_DbTable_DbGlobal();
 		$rs = $db_g->getLoanFundExist($id);
 		if($rs==true){
-			Application_Form_FrmMessage::Sucessfull("LOAN_FUND_EXIST","/loan/RepaymentSchedule/index");
+			Application_Form_FrmMessage::Sucessfull("LOAN_FUND_EXIST","/loan/repaymentschedule/index");
 		}
 		
 		$db = new Loan_Model_DbTable_DbLoanIL();
 		$row = $db->getTranLoanByIdWithBranch($id,1,1);
-		if(empty($row)){ Application_Form_FrmMessage::Sucessfull("RECORD_NOT_EXIST","/loan/RepaymentSchedule/index"); }
+		if(empty($row)){ Application_Form_FrmMessage::Sucessfull("RECORD_NOT_EXIST","/loan/repaymentschedule/index"); }
 		
 		$frm = new Loan_Form_FrmLoan();
 		$frm_loan=$frm->FrmAddLoan($row);

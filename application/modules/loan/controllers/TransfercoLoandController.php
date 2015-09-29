@@ -31,7 +31,7 @@ class Loan_TransfercoLoandController extends Zend_Controller_Action {
 			$list = new Application_Form_Frmtable();
 			$collumns = array("BRANCH_NAME","LOAN_NO","CUSTOMER_NAME","FROM_CO","TO_CO","DATE","NOTE","STATUS",);
  			$link=array(
-					'module'=>'loan','controller'=>'transferco-loand','action'=>'edit',
+					'module'=>'loan','controller'=>'transfercoloand','action'=>'edit',
  			);
  			$this->view->list=$list->getCheckList(0, $collumns,$rs_rows,array('loan_number'=>$link,'branch_name'=>$link,'client_name'=>$link,'from_coname'=>$link,'to_coname'=>$link));
  		}catch (Exception $e){
@@ -50,10 +50,10 @@ class Loan_TransfercoLoandController extends Zend_Controller_Action {
  				$db = new Loan_Model_DbTable_DbTransferCoClient(); 
  				$db->insertTransferloan($_data);
  				if(isset($_data['btn_save'])){				 				
-	 				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/transferco-loand/add");
+	 				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/transfercoloand/add");
  				}
  				elseif (isset($_data['btn_save_close'])){
- 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/transferco-loand/");
+ 					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/transfercoloand/");
  				}
  			}catch (Exception $e) {
  				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -76,7 +76,7 @@ class Loan_TransfercoLoandController extends Zend_Controller_Action {
 			//print_r($post);exit(); 			
 			if(isset($post['btn_save'])){
 				$db->updatTransferloan($post, $id);
-				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/transferco-loand/");
+				Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/transfercoloand/");
 			}
 		}
 		//print_r($id);exit();		

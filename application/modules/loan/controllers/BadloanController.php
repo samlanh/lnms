@@ -34,7 +34,7 @@ class Loan_BadloanController extends Zend_Controller_Action {
 			$collumns = array("BRANCH_NAME","CUSTOMER_NAME","LOSS_DATE"
 					,"TOTAL_PRINCEPLE","INTERREST_AMOUNT","TERM","NOTE","DATE","STATUS");
 			$link=array(
-					'module'=>'loan','controller'=>'BadLoan','action'=>'edit',
+					'module'=>'loan','controller'=>'badloan','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns,$rs_row,array('branch_namekh'=>$link,'client_name_en'=>$link,
 					'total_amount'=>$link,'intrest_amount'=>$link,'loss_date'=>$link));
@@ -55,10 +55,10 @@ class Loan_BadloanController extends Zend_Controller_Action {
 				$_dbmodel = new Loan_Model_DbTable_DbBadloan();
 				if(isset($_data['save'])){
 					$_dbmodel->addbadloan($_data);
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/BadLoan/add");
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/badloan/add");
 				}elseif(isset($_data['save_close'])){
 					$_dbmodel->addbadloan($_data);
-					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/BadLoan");
+					Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/badloan");
 				}				
 			}catch (Exception $e) {
 				Application_Form_FrmMessage::message("INSERT_FAIL");
@@ -85,7 +85,7 @@ class Loan_BadloanController extends Zend_Controller_Action {
 						//Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/BadLoan/add");
 					}else{
 						$_dbmodel->updatebadloan_bad($_data);
-						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/BadLoan/add");
+						Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS","/loan/badloan/add");
 					}
 				}elseif(isset($_data['save_close'])){
 					if($this->getRequest()->getParam('id')==$_data['client_name']){

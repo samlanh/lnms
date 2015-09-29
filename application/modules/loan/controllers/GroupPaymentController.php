@@ -37,7 +37,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			$collumns = array("Recirpt No","Loan No","Group Client","Total Principle","Total Payment","Recieve Amount","Total Interest","Penalize Amount","Date Pay","Due Date","CO Name","Branch",
 				);
 			$link=array(
-					'module'=>'loan','controller'=>'group-payment','action'=>'edit',
+					'module'=>'loan','controller'=>'grouppayment','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('receipt_no'=>$link,'team_group'=>$link,'date'=>$link));
 		}catch (Exception $e){
@@ -58,9 +58,13 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			$identify = $_data["identity"];
 			try {
 				if($identify==""){
-					Application_Form_FrmMessage::Sucessfull("Client is no loan to pay", "/loan/GroupPayment");
+					Application_Form_FrmMessage::Sucessfull("Client is no loan to pay", "/loan/grouppayment");
 				}else{
 					$db->addGroupPayment($_data);
+					if(isset($_data["save"])){
+					}elseif (isset($_data["save_close"])){
+						Application_Form_FrmMessage::Sucessfull("Client has pay sucessfull!", "/loan/grouppayment");
+					}
 				}
 			}catch (Exception $e) {
 				echo $e->getMessage();
@@ -94,7 +98,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			$identity = $_data["identity"];
 			try {
 				if($identity==""){
-					Application_Form_FrmMessage::Sucessfull("Group Client no loan to pay!", "/loan/GroupPayment");
+					Application_Form_FrmMessage::Sucessfull("Group Client no loan to pay!", "/loan/grouppayment");
 				}else{
 					$db->updateGroupPayment($_data);
 // 					Application_Form_FrmMessage::Sucessfull("Update Success!", "/loan/GroupPayment");

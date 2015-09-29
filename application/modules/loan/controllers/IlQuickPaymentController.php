@@ -39,7 +39,7 @@ class Loan_IlQuickPaymentController extends Zend_Controller_Action {
 			$collumns = array("BRANCH_NAME","CO_NAME","RECIEPT_NO","TOTAL_PRINCEPLE_PAYMENT","TOTAL_PAYMENT","RECEIVE_AMOUNT","TOTAL_INTEREST","PENALIZE AMOUNT","DATE_PAYMENT"
 				);
 			$link=array(
-					'module'=>'loan','controller'=>'IlQuickPayment','action'=>'edit',
+					'module'=>'loan','controller'=>'ilquickPayment','action'=>'edit',
 			);
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('co_name'=>$link,'receipt_no'=>$link,'branch'=>$link));
 		}catch (Exception $e){
@@ -59,9 +59,9 @@ class Loan_IlQuickPaymentController extends Zend_Controller_Action {
   		$data = $this->getRequest()->getPost();
   		$db->quickPayment($data);
   		if(isset($data["save_new"])){
-  			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/il-quick-payment/add");
+  			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/ilquickpayment/add");
   		}elseif(isset($data["save_close"])){
-  			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/IlQuickPayment");
+  			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/ilquickpayment");
   		}
   	}
   	$frm = new Loan_Form_FrmIlPayment();
@@ -86,9 +86,9 @@ class Loan_IlQuickPaymentController extends Zend_Controller_Action {
   		$db->editQuickPayment($id,$data);
 //   		$db->cancelPaymnet($data);
   		if(isset($data["save_new"])){
-  			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/il-quick-payment/add");
+  			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/ilquickpayment/add");
   		}elseif(isset($data["save_close"])){
-  			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/IlQuickPayment");
+  			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/ilquickpayment");
   		}
   	}
   	
