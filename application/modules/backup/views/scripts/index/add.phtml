@@ -75,7 +75,6 @@
 	
 	//save file
 	$sql_file = 'db_loan_'.date('Y-m-d h-i').'.sql';
-	//header('Content-disposition: attachment; filename="'.basename('/cs2_5/public'.$sql_file).'"');
 	
 	$handle = fopen($sql_file,'w+');
 	fwrite($handle,$return);

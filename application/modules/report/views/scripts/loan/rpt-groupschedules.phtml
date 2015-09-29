@@ -3,7 +3,7 @@ $client = $this->client;
 $filter = $this->form_filter;
 $dayin_khmer = $this->day_inkhmer;
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
-$url_barcode = $this->url(array("module"=>"loan","controller"=>"IlPayment","action"=>"generate-barcode","loan_code"=>$client['loan_number']),null,true);											
+$url_barcode = $this->url(array("module"=>"loan","controller"=>"ilpayment","action"=>"generate-barcode","loan_code"=>$client['loan_number']),null,true);											
 												
 ?>
 <title><?php echo $tr->translate('REPORT WEEK');?></title>
