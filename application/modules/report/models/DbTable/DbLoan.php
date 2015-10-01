@@ -232,7 +232,8 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
 				  AND lg.`status` = 1 
 				  AND co.`co_id` = lg.`co_id` 
 				  AND c.`client_id` = lm.`client_id` 
-				  AND b.`br_id`=f.`branch_id`";
+				  AND b.`br_id`=f.`branch_id`
+				  AND f.`status`=1 ";
       	$where='';
       	if(!empty($search['adv_search'])){
       		//print_r($search);

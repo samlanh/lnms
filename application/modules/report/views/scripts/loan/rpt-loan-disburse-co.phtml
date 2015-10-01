@@ -121,7 +121,7 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
                 ?>
              <?php ?>
                 <tr>
-                	<td colspan="15" class="style">&nbsp;<span style="text-align:center;"><?php //echo $tr->translate("CO_NAME");?> </span><?php  echo $row['co_code'].' , '.$row['co_name'].' - '.$row['co_name_en'].' '//.($row['sex']=1?'ភេទ ប្រុស':'ភេទ  ស្រី'); ?></td>
+                	<td colspan="15" class="style" style="background:#3875F2;">&nbsp;<span style="text-align:center;"><?php //echo $tr->translate("CO_NAME");?> </span><?php  echo $row['co_code'].' , '.$row['co_name'].' - '.$row['co_name_en'].' '//.($row['sex']=1?'ភេទ ប្រុស':'ភេទ  ស្រី'); ?></td>
                 </tr>
                  <tr bgcolor="#ccc" align="center" class="style" style="font-weight:bold; line-height: 18px; font-size:8px;white-space: pre-wrap;">
                    <th>&nbsp;<?php echo $tr->translate("NUM");?>&nbsp;</th>
@@ -183,35 +183,35 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 				<?php } //echo $a;?>
             <br />
             	 <tr>
-                	<td  style="padding:5px 0px;" colspan="10">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</td>
+                	<td  style="padding:5px 0px;" colspan="8">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</td>
                 </tr>
                   <tr bgcolor="#ccc" class="style" style="font-weight:bold;font-weight:bold; line-height: 24px; text-align: center;" >
 	                    <th style="padding:5px 0px;" colspan="2">&nbsp;​<?php echo $tr->translate("CURRENT_TYPE");?>&nbsp;</th>
 	                    <th style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL_AMOUNT");?>&nbsp;</th>
 	                    <th style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL_FEE");?>&nbsp;</th>
 	                    <th style="padding:5px 0px;"colspan="2">&nbsp;<?php echo $tr->translate("OTHER_FEE");?>&nbsp;</th>
-	                    <th style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</th>
+	                    <!--<th style="padding:5px 0px;" colspan="2">&nbsp;<?php //echo $tr->translate("TOTAL");?>&nbsp;</th>-->
 	                </tr>
                  <tr class="style" style=" font-weight:bold;line-height: 24px; font-size:10px;font-family: 'Khmer OS Content';">
                     <td colspan="2">&nbsp;<?php echo $tr->translate("DOLLAR");?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amt_d,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amn_d,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($other_fee_d,2);?>&nbsp;</td>
-					<td colspan="2">&nbsp;<?php echo number_format($total_d,2);?>&nbsp;</td>
+					<!--<td colspan="2">&nbsp;<?php //echo number_format($total_d,2);?>&nbsp;</td> -->
                 </tr>
                  <tr class="style" style="font-weight:bold; line-height: 24px; font-size:10px;font-family: 'Khmer OS Content';">
                     <td colspan="2">&nbsp;<?php echo $tr->translate("REILS");?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amt_r,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amn_r,2);?>&nbsp;</td>
                   	<td colspan="2">&nbsp;<?php echo number_format($other_fee_r,2);?>&nbsp;</td>
-                  	<td colspan="2">&nbsp;<?php echo number_format($other_fee_r,2);?>&nbsp;</td>
+                  	<!--<td colspan="2">&nbsp;<?php //echo number_format($other_fee_r,2);?>&nbsp;</td>-->
                 </tr>
                  <tr class="style" style=" font-weight:bold;line-height: 24px; font-size:10px;font-family: 'Khmer OS Content';">
                     <td colspan="2">&nbsp;<?php echo $tr->translate("BATH");?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amt_b,2);?>&nbsp;</td>
                    <td colspan="2">&nbsp;<?php echo number_format($amn_b,2);?>&nbsp;</td>
                    <td colspan="2">&nbsp;<?php echo number_format($other_fee_b,2);?>&nbsp;</td>
-                   <td colspan="2">&nbsp;<?php echo number_format($total_b,2);?>&nbsp;</td>
+                   <!-- <td colspan="2">&nbsp;<?php //echo number_format($total_b,2);?>&nbsp;</td> -->
                 </tr>
               </table>
               <br />
