@@ -87,7 +87,8 @@ class Application_Model_CustomAuth extends Zend_Controller_Plugin_Abstract
 	 	}
 	 	
 	 	if(!empty($_url)){
-	 		echo"url here". $_url;exit();
+// 	 		echo"url here". $_url;exit();
+	 		$_url="/home";
 	 		Application_Form_FrmMessage::redirectUrl($_url);
 	 	}
 			

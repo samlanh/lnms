@@ -2,7 +2,7 @@
 class RsvAcl_AclController extends Zend_Controller_Action
 {
 
-	const REDIRECT_URL = '/rsvAcl/acl';
+	const REDIRECT_URL = '/rsvacl/acl';
 	
 	public function init()
     {
@@ -26,7 +26,7 @@ class RsvAcl_AclController extends Zend_Controller_Action
           $list = new Application_Form_Frmtable();
           $collumns = array("VIEW","MODULE_NAME","CONTROLLER","ACTION","STATUS");
           $link=array(
-          		'module'=>'rsvAcl','controller'=>'acl','action'=>'edit',
+          		'module'=>'rsvacl','controller'=>'acl','action'=>'edit',
           );
         	if (empty($rs_rows)){
         		$result = Application_Model_DbTable_DbUserLog::writeMessageError('');
@@ -98,7 +98,7 @@ class RsvAcl_AclController extends Zend_Controller_Action
 				    		 $userLog->writeUserLog($acl_id);
 				     	  //End write log file
 					//Application_Form_FrmMessage::message('One row affected!');
-					Application_Form_FrmMessage::redirector('/rsvAcl/acl/index');																																				
+					Application_Form_FrmMessage::redirector('/rsvacl/acl/index');																																				
 				
 			}else{
 				if(!$db->isActionExist($post['action'])){
@@ -108,7 +108,7 @@ class RsvAcl_AclController extends Zend_Controller_Action
 				    		 $userLog->writeUserLog($acl_id);
 				     	  //End write log file
 					//Application_Form_FrmMessage::message('One row affected!');
-					Application_Form_FrmMessage::redirector('/rsvAcl/acl/index');						
+					Application_Form_FrmMessage::redirector('/rsvacl/acl/index');						
 				}else {
 					Application_Form_FrmMessage::message('Action had existed already');
 				}

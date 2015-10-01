@@ -92,7 +92,7 @@ class RsvAcl_UserController extends Zend_Controller_Action
 				     	  //End write log file
 				
 						//Application_Form_FrmMessage::message('One row affected!');
-						Application_Form_FrmMessage::redirector('/rsvAcl/user/index');																			
+						Application_Form_FrmMessage::redirector('/rsvacl/user/index');																			
 				}else {
 					Application_Form_FrmMessage::message('User had existed already');
 				}
@@ -121,7 +121,7 @@ class RsvAcl_UserController extends Zend_Controller_Action
 				}
 			}
 	}
-	public function editedAction()
+	public function editAction()
 	    {
 	        // action body
 	        $us_id = $this->getRequest()->getParam('id');
@@ -169,14 +169,14 @@ class RsvAcl_UserController extends Zend_Controller_Action
 					    		 $userLog->writeUserLog($user_id);
 					     	  //End write log file		
 					Application_Form_FrmMessage::message('Password has been changed');
-					Application_Form_FrmMessage::redirector('/rsvAcl/user/view-user/id/'.$user_id);
+					Application_Form_FrmMessage::redirector('/rsvacl/user/view-user/id/'.$user_id);
 				}else{
 					Application_Form_FrmMessage::message('Invalid current password');
 				}
 			}		
 		}else{ 
 			   Application_Form_FrmMessage::message('Access Denied!');
-		       Application_Form_FrmMessage::redirector('/rsvAcl');	
+		       Application_Form_FrmMessage::redirector('/rsvacl');	
 		}
 		
 	}

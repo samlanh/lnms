@@ -1,6 +1,6 @@
 <?php
 
-class RsvAcl_IndexController extends Zend_Controller_Action
+class Rsvacl_IndexController extends Zend_Controller_Action
 {
 
     public function init()
@@ -11,7 +11,7 @@ class RsvAcl_IndexController extends Zend_Controller_Action
 
     public function indexAction()
     {
-    	Application_Form_FrmMessage::redirector('/rsvAcl/user/index');
+    	Application_Form_FrmMessage::redirector('/rsvacl/user/index');
 	}		 
     
 }

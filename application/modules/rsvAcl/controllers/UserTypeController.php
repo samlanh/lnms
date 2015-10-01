@@ -3,7 +3,7 @@
 class RsvAcl_UserTypeController extends Zend_Controller_Action
 {
 	
-	const REDIRECT_URL = '/rsvAcl/user-type';
+	const REDIRECT_URL = '/rsvacl/usertype';
 	
     public function init()
     {
@@ -30,7 +30,7 @@ class RsvAcl_UserTypeController extends Zend_Controller_Action
     		}
     		$collumns = array("USER_TYPE","PARENT","STATUS");
     		$link=array(
-    				'module'=>'rsvAcl','controller'=>'userType','action'=>'edit-user-type',
+    				'module'=>'rsvacl','controller'=>'usertype','action'=>'edit',
     		);
     		$this->view->list=$list->getCheckList(0,$collumns, $result,array('user_type'=>$link,'title'=>$link));
     		
@@ -54,7 +54,7 @@ class RsvAcl_UserTypeController extends Zend_Controller_Action
     	}  	 
     	
     }
-	public function addUserTypeAction()
+	public function addAction()
 		{
 			if($this->getRequest()->isPost())
 			{
@@ -69,7 +69,7 @@ class RsvAcl_UserTypeController extends Zend_Controller_Action
 				     	  //End write log file
 				
 						//Application_Form_FrmMessage::message('One row affected!');
-						Application_Form_FrmMessage::redirector('/rsvAcl/user-type/index');																			
+						Application_Form_FrmMessage::redirector('/rsvacl/usertype/index');																			
 				}else {
 					Application_Form_FrmMessage::message('User type had existed already');
 				}
@@ -83,7 +83,7 @@ class RsvAcl_UserTypeController extends Zend_Controller_Action
 			
 	}
 	
-    public function editUserTypeAction()
+    public function editAction()
     {	
     	if($this->getRequest()->getParam('id')){
     		$db = new RsvAcl_Model_DbTable_DbUserType();
@@ -114,7 +114,7 @@ class RsvAcl_UserTypeController extends Zend_Controller_Action
 				    		 $userLog->writeUserLog($user_type_id);
 				     	  //End write log file
 					//Application_Form_FrmMessage::message('One row affected!');
-					Application_Form_FrmMessage::redirector('/rsvAcl/user-type/index');																																				
+					Application_Form_FrmMessage::redirector('/rsvacl/usertype/index');																																				
 				
 			}else{
 				if(!$db->isUserTypeExist($post['user_type'])){
@@ -124,7 +124,7 @@ class RsvAcl_UserTypeController extends Zend_Controller_Action
 				    		 $userLog->writeUserLog($user_type_id);
 				     //End write log file
 					//Application_Form_FrmMessage::message('One row affected!');
-					Application_Form_FrmMessage::redirector('/rsvAcl/user-type/index');						
+					Application_Form_FrmMessage::redirector('/rsvacl/usertype/index');						
 				}else {
 					Application_Form_FrmMessage::message('User had existed already');
 				}

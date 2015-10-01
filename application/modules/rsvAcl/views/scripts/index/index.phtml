@@ -2,25 +2,25 @@
 <?php 
 	header("Cache-Control: no-cache, must-revalidate");
 	$url_user = $this->url(array(
-		'module'=>'rsvAcl',
+		'module'=>'rsvacl',
 		'controller'=>'user',
 		'action'=>'index',
 	));
 	
 	$url_user_type = $this->url(array(
-		'module'=>'rsvAcl',
-		'controller'=>'user-type',
+		'module'=>'rsvacl',
+		'controller'=>'usertype',
 		'action'=>'index',
 	));
 	
 	$url_user_acl = $this->url(array(
-		'module'=>'rsvAcl',
+		'module'=>'rsvacl',
 		'controller'=>'acl',
 		'action'=>'index',
 	));
 	$url_user_access = $this->url(array(
-		'module'=>'rsvAcl',
-		'controller'=>'user-access',
+		'module'=>'rsvacl',
+		'controller'=>'useraccess',
 		'action'=>'index',
 	));
 ?>
