@@ -1,22 +1,18 @@
-<title>SRMS System | Edit User Type</title>
+<title>SRMS System | Add User Type</title>
 <?php 
 	$cancel_url=$this->url(array(
-			'module'=>'rsvAcl',
-			'controller'=>'user-type',
+			'module'=>'rsvacl',
+			'controller'=>'usertype',
 			'action'=>'index',
 		));
 ?>
-
-<div class="btn" align="right">
-	<input  type="button" value="ត្រលប់​ក្រោយ" label="ត្រលប់​ក្រោយ" id="btadd" dojoType="dijit.form.Button" onclick="window.location = '<?php echo $cancel_url; ?>';"/>
-</div>
 <form action="" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	<script type="dojo/method" event="onSubmit">										
 			if(this.validate()) {								
 				return true;
 			}
 			return false;
-	</script>
+	</script>	
 	<table cellspacing="20" style="margin: 0 auto; widht:100%;">
 		<tr>
 			<td>
@@ -59,10 +55,12 @@
 				</fieldset>
 			</td>			
 		</tr>
-		<tr>
-			<td colspan="2" align="center">
-				</td>
-		</tr>
-	</table>	
-	<input type="hidden" name="user_type_id" value="<?php echo $this->user_edit['id'];?>" />
+	</table>
 </form>
+
+<script type="text/javascript">	
+	dojo.require("dijit.form.ValidationTextBox");
+	dojo.require('dijit.form.Form');
+	dojo.require('dijit.form.FilteringSelect');	
+	dojo.require('dijit.form.Button');
+</script>

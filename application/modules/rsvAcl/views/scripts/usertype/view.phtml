@@ -2,14 +2,14 @@
 <?php $rs=$this->rs;
 
 $edit_url=$this->url(array(
-		'module'=>'rsvAcl',
-		'controller'=>'user-type',
-		'action'=>'edit-user-type',
+		'module'=>'rsvacl',
+		'controller'=>'usertype',
+		'action'=>'edit',
 		'id'=>$rs['user_type_id'],
 	));
 $cancel_url=$this->url(array(
-		'module'=>'rsvAcl',
-		'controller'=>'user-type',
+		'module'=>'rsvacl',
+		'controller'=>'usertype',
 		'action'=>'index',
 	));
 

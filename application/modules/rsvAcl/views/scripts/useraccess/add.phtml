@@ -13,12 +13,6 @@ table.user td{
 </style>       
 
 <?php $rs=$this->rs;
-$cancel_url=$this->url(array(
-		'module'=>'rsvAcl',
-		'controller'=>'user-access',
-		'action'=>'index',
-	));
-	
 	
 	  $acl=($this->acl=='')? array():$this->acl;
 	  $acl_name=($this->acl_name=='')? array(): $this->acl_name;
@@ -96,7 +90,7 @@ $(function(){
 	$('#fstatus').val('<?php echo $df['fstatus']?>');
 });
 	function changeStatus(id, user_type){
-		url = "<?php echo BASE_URL;?>/rsvAcl/user-access/update-status";
+		url = "<?php echo BASE_URL;?>/rsvacl/useraccess/update-status";
 		status = "no";
 		none_src = "<?php echo BASE_URL?>/images/icon/none.png";
 		tick_src = "<?php echo BASE_URL?>/images/icon/tick.png";
