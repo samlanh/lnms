@@ -502,7 +502,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	}
   	$rows = $db->fetchAll($sql);
   	if($option!=null){
-  		$options=array(''=>"----ជ្រើសរើស----");
+  		$options=array(''=>"----ជ្រើសរើស----",'-1'=>"Add New");
   		if(!empty($rows))foreach($rows AS $row){
   			$options[$row['id']]=($row['displayby']==1)?$row['department_kh']:$row['department_kh'];
   		}

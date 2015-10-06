@@ -326,9 +326,9 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       	if($search['client_name']>0){
       		$where.=" AND client_id = ".$search['client_name'];
       	} 
-       	if($search['co_id']>0){
-       		$where.=" AND co_id = ".$search['co_id'];
-       	}
+//        	if($search['co_id']>0){
+//        		$where.=" AND co_id = ".$search['co_id'];
+//        	}
       	if(!empty($search['adv_search'])){
       		$s_where = array();
       		$s_search = trim($search['adv_search']);
@@ -346,8 +346,8 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       		$s_where[] = " receipt_no LIKE '%{$s_search}%'";
       		$where .=' AND '.implode(' OR ',$s_where).'';
       	}
-      	$order=" ORDER BY currency_type ASC ,id DESC ";
-      	echo $sql.$where.$order;
+      	$order=" ORDER BY date_input DESC ";
+      	//echo $sql.$where.$order;
       	return $db->fetchAll($sql.$where.$order);
       }
       public function getALLLoanIcome($search=null){
@@ -514,7 +514,7 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       	}
       	 
       	
-      	$groupby=" GROUP BY lm.`group_id`,crm.`date_input`";
+      	$groupby=" GROUP BY lm.`group_id`,crm.`date_input` ORDER BY crm.`date_input` DESC";
       	//echo $sql.$where.$order;
       	return $db->fetchAll($sql.$where.$groupby);
       }

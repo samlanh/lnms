@@ -100,8 +100,8 @@ $free_day=$key_code['value'];
 			      <th><?php echo $tr->translate("PENALIZE AMOUNT");?></th>
 			      <th><?php echo $tr->translate("SERVICE_CHARGE");?></th>
 			      <th><?php echo $tr->translate("PAYMENT");?></th>
-			      <th><?php echo $tr->translate("COLLECT_DATE");?></th>
 			      <th><?php echo $tr->translate("PAY_DATE");?></th>
+			      <th><?php echo $tr->translate("COLLECT_DATE");?></th>
 			   	</tr>
 <?php if(!empty($this->LoanCollectionco_list)) foreach ($this->LoanCollectionco_list as $key => $rs){?>
 	
@@ -154,9 +154,8 @@ $free_day=$key_code['value'];
 				               }
 		           // }
 		               ?>
-               		
-               		<td style="font-size: 11px;text-align: center;"><?php echo date("d-M-Y",strtotime($rs["date_input"]));?></td>
                		<td style="font-size: 11px;text-align: center;"><?php echo date("d-M-Y",strtotime($rs["date_payment"]));?></td>
+               		<td style="font-size: 11px;text-align: center;"><?php echo date("d-M-Y",strtotime($rs["date_input"]));?></td>
                 </tr>
 
 <?php  }?>

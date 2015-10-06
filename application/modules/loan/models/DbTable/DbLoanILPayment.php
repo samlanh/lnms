@@ -241,7 +241,7 @@ public function addILPayment($data){
     			'total_payment'					=>		$data["total_payment"],
     			'total_interest'				=>		$data["total_interest"],
     			'recieve_amount'				=>		$data["amount_receive"],
-    			'penalize_amount'				=>		$data['penalize_amount'],
+    			'penalize_amount'				=>		$data['new_penelize'],
     			'return_amount'					=>		$return,
     			'service_charge'				=>		$data["service_charge"],
     			'note'							=>		$data['note'],
@@ -322,9 +322,8 @@ public function addILPayment($data){
 		    				$db->getProfiler()->setEnabled(false);
 	    				}else{
 			   					$new_sub_interest_amount = $data["interest_".$i];
-			   					$new_sub_penelize = $data["penelize_".$i]+$data["penalize_amount"];
+			   					$new_sub_penelize = $data["penalize_amount"];
 			   					$new_sub_service_charge = $data["service_".$i]+$data["service_charge"];
-			   					echo $new_sub_service_charge;
 			   					$principle_after = $data["principal_permonth_".$i];
 			   					$pyament_after = $total_payment-$amount_receive;
 				   				if($sub_recieve_amount>0){
@@ -332,6 +331,7 @@ public function addILPayment($data){
 				   					if($new_amount_after_service>=0){
 				   						$new_sub_service_charge = 0;
 				   						$new_amount_after_penelize = $new_amount_after_service - $new_sub_penelize;
+				   						echo $new_amount_after_penelize."=".$new_amount_after_service."-".$new_sub_penelize;
 				   						if($new_amount_after_penelize>=0){
 				   							$new_sub_penelize = 0;
 				   							$new_amount_after_interest = $new_amount_after_penelize - $sub_interest_amount;

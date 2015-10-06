@@ -31,6 +31,12 @@ $frm = $this->frm_search;
 }
 th{padding: 5px;}
 </style>
+<?php $client_id = null;?>
+<?php $principle_r = 0;$interst_r = 0;$penalize_r = 0;$service_charge_r = 0;$balane_r = 0;
+                	  $principle_b = 0;$interst_b = 0;$penalize_b = 0;$service_charge_b = 0;$balane_b = 0;
+                	 $principle_d = 0; $interst_d = 0; $penalize_d= 0; $service_charge_d = 0;$balane_d = 0;
+                	 $i=1;
+                	?>
 <table width="100%">
 	<tr>
     	<td align="center">
@@ -67,9 +73,11 @@ th{padding: 5px;}
     <tr>
     	<td>
             <table id="exportExcel" width="100%" border="1" style="border-collapse:collapse;" cellspacing="0">
-	              	<tr><td colspan="8" class="style"><?php if(!empty($this->loantotalcollect_list)) 
-	              	foreach ($this->loantotalcollect_list as $index => $rs)
-	              			if ($index==0) {
+            	<?php if(!empty($this->loantotalcollect_list)) {
+	              	foreach ($this->loantotalcollect_list as $index => $rs){?>
+	              	<tr style="background: #A4CEF8"><td colspan="13" class="style">
+	              		<?php 
+	              			if ($client_id!=$rs["client_id"]) {
 	              				 echo $tr->translate("LOAN_NO").':'.$rs["loan_number"].','.$tr->translate("CUSTOMER_NAME").':'.$rs["client_name"].',';
 	              				 echo $tr->translate("SEX").':';
 	              					if ($rs['sex']==1){
@@ -78,11 +86,9 @@ th{padding: 5px;}
 	              				else {
 	              					echo "F";
 	              				}
-	              			}
-	              			else {
-	              				echo  "";
-
-	              			}
+	              			
+	              				$client_id=$rs["client_id"];
+	              				echo $client_id ."-".$rs["client_id"];
 	              			?>
 	              	</td></tr>
 	                <tr bgcolor="#ccc" class="style" align="center" style="padding:5px 0;height: 20px;">
@@ -102,12 +108,9 @@ th{padding: 5px;}
 	                      <th bgcolor="#999"><?php echo $tr->translate("BALANCE");?></th>
 	                      <th bgcolor="#999"><?php echo $tr->translate("INPUT_DATE");?></th>
 	                </tr>
-                <?php $principle_r = 0;$interst_r = 0;$penalize_r = 0;$service_charge_r = 0;$balane_r = 0;
-                	  $principle_b = 0;$interst_b = 0;$penalize_b = 0;$service_charge_b = 0;$balane_b = 0;
-                	 $principle_d = 0; $interst_d = 0; $penalize_d= 0; $service_charge_d = 0;$balane_d = 0;
-                	 $i=1;
-                	?>
-                <?php if(!empty($this->loantotalcollect_list)) foreach ($this->loantotalcollect_list as $index => $rs){ ?>
+	                <?php }?>
+                
+                <?php //if(!empty($this->loantotalcollect_list)) foreach ($this->loantotalcollect_list as $index => $rs){ ?>
                 <?php $balance=$rs["amount_payment"]-$rs["total_payment"];?>
                  <?php 
 		               if($rs['currency_type']==1){
@@ -157,7 +160,7 @@ th{padding: 5px;}
                		<td>&nbsp;&nbsp;<?php   if($balance<0){echo '('.abs($balance).')';}else {echo $balance=0;};?></td>
                		<td>&nbsp;&nbsp;<?php echo $rs["date_input"];?></td>
                 </tr>
-                <?php }?>
+                <?php }}?>
                 <br />
                 <tr>
                 	<td colspan="13">&nbsp;</td>

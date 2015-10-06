@@ -414,7 +414,7 @@ function submitData(){
 				document.getElementsByClassName("overlay")[0].style.display="none";	
 				alert('<?php echo $tr->translate('UPDATE_SUCCESS');?> !');
 				dijit.byId("frm_add_group_pay").reset();
-				window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
+				window.location.href ="<?php echo $this->baseUrl();?>/loan/grouppayment";
 			},
 			error: function(e) {
 				//alert("Your message could not be sent, please try again!.");
@@ -431,7 +431,7 @@ function submitDataClose(){
 			load: function(data) {
 				document.getElementsByClassName("overlay")[0].style.display="none";		
 				alert('<?php echo $tr->translate('UPDATE_SUCCESS');?> !');
-				window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
+				window.location.href ="<?php echo $this->baseUrl();?>/loan/grouppayment";
 			},
 			error: function(e) {
 				//alert("Your message could not be sent, please try again!.");
@@ -448,7 +448,7 @@ function submitNew(){
 				document.getElementsByClassName("overlay")[0].style.display="none";	
 				alert('<?php echo $tr->translate('UPDATE_SUCCESS');?> !');
 				dijit.byId("frm_add_group_pay").reset();
-				window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment/add";
+				window.location.href ="<?php echo $this->baseUrl();?>/loan/grouppayment/add";
 			},
 			error: function(e) {
 				//alert("Your message could not be sent, please try again!.");
@@ -467,7 +467,7 @@ function cancelPayment(){
 					document.getElementsByClassName("overlay")[0].style.display="none";	
 					alert('<?php echo $tr->translate('CANCEL_SUCCESS');?> !');
 					dijit.byId("frm_add_group_pay").reset();
-					window.location.href ="<?php echo $this->baseUrl();?>/loan/group-payment";
+					window.location.href ="<?php echo $this->baseUrl();?>/loan/grouppayment";
 				},
 				error: function(e) {
 // 					alert(e);
@@ -502,13 +502,13 @@ dojo.ready(function(){
 	date_pay = new Date('<?php echo $reciept_money["date_input"];?>');
 	loan_number = '<?php echo $reciept_money["loan_numbers"];?>';
 	new_loanNumber = dijit.byId('loan_number').get('value');
-	dijit.byId('collect_date').attr('value','<?php echo $reciept_money["date_input"];?>');
-	new_date_pay = dijit.byId('collect_date').get('value');
-	if(date_pay!=new_date_pay){
-		dijit.byId('collect_date').attr('onchange',"calculateTotal();");
-	}else{
-		dijit.byId('collect_date').attr('onchange',"");
-	}
+//	dijit.byId('collect_date').attr('value','<?php //echo $reciept_money["date_input"];?>');
+// 	new_date_pay = dijit.byId('collect_date').get('value');
+// 	if(date_pay!=new_date_pay){
+// 		dijit.byId('collect_date').attr('onchange',"calculateTotal();");
+// 	}else{
+// 		dijit.byId('collect_date').attr('onchange',"");
+// 	}
 	getGroupPayment();
 });
 function filterClient(){
@@ -539,7 +539,7 @@ function getGroupPayment(){
 	dijit.byId('option_pay').attr('value','<?php echo $reciept_money["payment_option"];?>');
 	dijit.byId('payment_term').attr('value','<?php echo $reciept_money["collect_typeterm"];?>');
 	dijit.byId('amount_payment_term').attr('value','<?php echo $reciept_money["amount_term"];?>');
-	//dijit.byId('collect_date').attr('value','<?php //echo $reciept_money["date_input"];?>');
+	dijit.byId('collect_date').attr('value','<?php echo $reciept_money["date_input"];?>');
 	dijit.byId('penalize_amount').attr('value','<?php echo number_format($reciept_money["penalize_amount"],2);?>');
 	dijit.byId('service_charge').attr('value','<?php echo number_format($reciept_money["service_charge"],2);?>');
 	dijit.byId('load_level').attr('value','<?php echo $reciept_money["level"];?>');

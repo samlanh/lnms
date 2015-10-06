@@ -139,7 +139,7 @@
 							<td><?php echo $tr->translate("TOTAL_SERVICE_CHARGE")?></td>
 							<td><?php echo $frm->getElement('service_charge');echo $frm->getElement('old_service_charge');?></td>
 							<td><?php echo $tr->translate("TOTAL_PENELIZE")?></td>
-							<td><?php echo $frm->getElement('penalize_amount');?><?php echo $frm->getElement('old_penelize');?></td>
+							<td><?php echo $frm->getElement('penalize_amount');?><?php echo $frm->getElement('old_penelize');?><input type="hidden" name="new_penelize" id="new_penelize"></td>
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("COLLECT_DATE");?></td>
@@ -174,7 +174,7 @@
 			   <input type="button" value="រក្សាទុក" label="<?php echo $tr->translate('SAVENEW');?>" id="submitButton" dojoType="dijit.form.Button"
 			   iconClass="dijitEditorIcon dijitEditorIconSave" OnClick="submitData();"/>
 			   <input type="button" value="រក្សាទុក & បិទ" label="<?php echo $tr->translate('SAVECLOSE');?>" id="submit_close" dojoType="dijit.form.Button"
-			   iconClass="dijitEditorIcon dijitEditorIconSave" OnClick="submitDataClose();"/>
+			   iconClass="dijitEditorIcon dijitEditorIconSave" OnClick="submitDataClose();"  />
 			   <input type="button" value="រក្សាទុក & បោះពុម្ព" label="<?php echo $tr->translate('SAVEPRINT');?>" id="saveprint" dojoType="dijit.form.Button" 
 			   iconClass="dijitEditorIcon dijitEditorIconPrint" onclick="showReciept();"/>
 			</td>
@@ -924,6 +924,7 @@ function calculateTotal(index){
 		var amount_collect_term = dijit.byId('amount_payment_term').get('value');
 		var old_installment_date = $('#installment_date').val();
 		var installment_date= new Date(old_installment_date); 
+		var total_penelize =0;
 
 		if(payOption==4){
 			var ids =dijit.byId('record_id').get('value');
@@ -968,6 +969,7 @@ function calculateTotal(index){
 		          	var principlePerMonth = $('#principal_permonth_'+arrays[i]).val();
 		          	var interest = parseFloat($('#interest_'+arrays[i]).val());
 		          	var penelize = parseFloat($('#old_penelize_'+arrays[i]).val());
+		          	
 		          	var service_charge = parseFloat($('#service_'+arrays[i]).val());
 		          	
 		          	last_payment_date= $('#last_date_payment_'+arrays[i]).val();
@@ -1010,6 +1012,7 @@ function calculateTotal(index){
 							$('#payment_'+arrays[i]).val(totalAmount.toFixed(2));
 						}
 						if(payment_term==3){
+							
 							total_interest_late = total_interest_late + parseFloat(totalPay)*(parseFloat(ps*(interest_rate/100))/30)*parseFloat(total_late_day);
 							total_penelize = parseFloat(total_interest_late)+parseFloat(penelize);
 							document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
@@ -1020,6 +1023,9 @@ function calculateTotal(index){
 						}
 					}else if(total_late_day==0){
 						total_interest_late = total_interest_late +0;
+						total_penelize = parseFloat(total_interest_late)+parseFloat(penelize);
+						document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+						$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 						totalAmount = totalAmount + parseFloat(totalPay)+penelize+service_charge;
 					}else{
 						dijit.byId('option_pay').attr('readOnly',false);
@@ -1027,13 +1033,19 @@ function calculateTotal(index){
 			  	  	  			if(payOption==1){
 			  	  	  				total_interest_late = total_interest_late + 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(totalPay)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==2){
 				  	  	  			total_interest_late = total_interest_late + 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(totalPay)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==3){
 				  	  	  			total_interest_late = total_interest_late + 0;
 			  	  	  				total_interest = 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(principlePerMonth)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==4){
 				  	  	  			total_interest_late = total_interest_late + 0;
 					  	  	  		total_interest = 0;
@@ -1056,13 +1068,19 @@ function calculateTotal(index){
 			  	  	  			if(payOption==1){
 				  	  	  			total_interest_late = total_interest_late + 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(totalPay)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==2){
 				  	  	  			total_interest_late = total_interest_late + 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(totalPay)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==3){
 				  	  	  			total_interest_late = total_interest_late + 0;
 			  	  	  				total_interest = 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(principlePerMonth)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==4){
 				  	  	  			total_interest_late = total_interest_late + 0;
 					  	  	  		total_interest = 0;
@@ -1083,13 +1101,20 @@ function calculateTotal(index){
 		  	  			}else if(payment_term==3){
 				  				if(payOption==1){
 				  	  	  			total_interest_late = total_interest_late + 0;
+				  	  	  		total_penelize = parseFloat(total_interest_late)+parseFloat(penelize);
 			  	  	  				totalAmount = totalAmount + parseFloat(totalPay)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==2){
 				  	  	  			total_interest_late = total_interest_late + 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(totalPay)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==3){
 				  	  	  			total_interest_late = total_interest_late + 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(principlePerMonth)+parseFloat(total_interest_late)+penelize+service_charge;
+			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
+								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==4){
 				  	  	  			total_interest_late = total_interest_late + 0;
 					  	  	  		total_interest = 0;
@@ -1121,8 +1146,9 @@ function calculateTotal(index){
 		dijit.byId('oldTotalPay').attr('value',totalAmount.toFixed(2));
 		dijit.byId('amount_receive').attr('value',totalAmount.toFixed(2));
 		dijit.byId('amount_return').attr('value',0);
-		dijit.byId('penalize_amount').attr('value',total_interest_late.toFixed(2));
-		dijit.byId('old_penelize').attr('value',total_interest_late.toFixed(2));
+		dijit.byId('penalize_amount').attr('value',total_penelize.toFixed(2));
+		dijit.byId('old_penelize').attr('value',total_penelize.toFixed(2));
+		$('#new_penelize').val(total_interest_late.toFixed(2));
 		dijit.byId('total_payment').attr('value',totalAmount.toFixed(2));
 		dijit.byId('os_amount').attr('value',os_amount.toFixed(2));
 		dijit.byId('total_interest').attr('value',total_interest.toFixed(2));
@@ -1133,7 +1159,7 @@ function calculateTotal(index){
 			$('#check_all').attr('checked');
 		}
 	}catch(err){
-		//alert(err);
+		alert(err);
 	}
 }
 
@@ -1316,7 +1342,7 @@ function checkAll(index){
 				}
 			  }
 			}
-		
+    	
     	dijit.byId('oldTotalPay').attr('value',totalAmount);
     	dijit.byId('amount_receive').attr('value',totalAmount);
     	dijit.byId('amount_return').attr('value',0);
