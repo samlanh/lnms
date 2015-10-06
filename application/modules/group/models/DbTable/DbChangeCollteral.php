@@ -48,8 +48,10 @@ class Group_Model_DbTable_DbChangeCollteral extends Zend_Db_Table_Abstract
 		
 			
 			$this->_name='ln_changecollteral_detail';
+			$code = Group_Model_DbTable_DbCallteral::getCallteralCode();
 			$array = array(
 				//	'client_coll'=>$data['client_coll'],
+// 					colllecteral_code
 					'client_coll_id'=>$data['coid'.$i],
 					'change_id'=>$change_id,
 					'from_collateral_type'=>$data['collect_type'.$i],
@@ -67,7 +69,9 @@ class Group_Model_DbTable_DbChangeCollteral extends Zend_Db_Table_Abstract
 			 $change_detail_id = $this->insert($array);
 			 
 			 $this->_name='ln_client_callecteral_detail';//what relationship
+			 $code = Group_Model_DbTable_DbCallteral::getCallteralCode();
 			 $array = array(
+			 		'collecteral_code'=>$code,
 			 		'changecollteral_id'=>$change_detail_id,
 			 		'client_coll_id'=> $data['client_coll'],
 			 		'collecteral_type'=>$data['tocollect_type'.$i],

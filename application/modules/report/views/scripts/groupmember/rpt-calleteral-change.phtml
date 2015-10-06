@@ -90,11 +90,11 @@ th{padding: 5px;}
                 <?php } ?>
              <?php ?>
              	<tr>
-             		<td colspan="12">&nbsp;<span class="style"><?php echo $tr->translate("CUSTOMER_NAME");?> </span><?php  echo $row['client_name']; ?></td>
+             		<td colspan="13">&nbsp;<span class="style"><?php echo $tr->translate("CUSTOMER_NAME");?> </span><?php  echo $row['client_name']; ?></td>
              	</tr>
                 <tr>
                 	<td colspan="6" align="center" bgcolor="#ccc">&nbsp;<span class="style"><?php  echo $tr->translate("FROM_COLL"); ?></td>
-                	<td colspan="6" align="center" bgcolor="#ccc" style="border-left:3px double #000; ">&nbsp;<span class="style"><?php echo $tr->translate("TO_COLL");?> </span></td>
+                	<td colspan="7" align="center" bgcolor="#ccc" style="border-left:3px double #000; ">&nbsp;<span class="style"><?php echo $tr->translate("TO_COLL");?> </span></td>
                 </tr>
                  <tr bgcolor="#ccc" class="style"  align="center" style="font-weight:bold; line-height: 18px; ">
                     <td><?php echo $tr->translate("NUM");?> </td>
@@ -103,6 +103,7 @@ th{padding: 5px;}
                     <td><?php echo $tr->translate("COLETERAL_TYPE_ODL");?> </td>
                     <td><?php echo $tr->translate("OWNER_NAME");?> </td>
                     <td style="border-right:3px double #000; "><?php echo $tr->translate("NUMBER_COLLTERAL");?> </td>   
+                   	<td><?php echo $tr->translate("COLLTERAL_CODE");?> </td>
                     <td><?php echo $tr->translate("COLETERAL_TYPE_NEW");?> </td>
                     <td><?php echo $tr->translate("OWNER_NAME");?> </td>
                     <td><?php echo $tr->translate("NUMBER_COLLTERAL");?> </td>
@@ -115,10 +116,11 @@ th{padding: 5px;}
 					<tr class="style" >
 						<td>&nbsp;<?php echo $key+1; ?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['branch_name'];?>&nbsp;</td>
-						<td>&nbsp;<?php echo $row['collecteral_code']; ?>&nbsp;</td>
+						<td>&nbsp;<?php echo $row['from_collcode']//echo $row['collecteral_code']; ?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['collecteral_title_old']." - ".$row['collecteral_owner'];?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['from_owner_name'];?>&nbsp;</td>
 						<td style="border-right:3px double #000; ">&nbsp;<?php echo $row['from_number_collateral'];?>&nbsp;</td>
+						<td>&nbsp;<?php echo $row['to_collcode']//echo $row['collecteral_code']; ?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['collecteral_title_en']." - ".$row['collecteral_owner'];?>&nbsp;</td>
 						<td style="white-space:nowrap;" >&nbsp;<?php echo $row['toowner_name']; ?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['number_collateral']?>&nbsp;</td>
