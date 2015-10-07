@@ -42,17 +42,17 @@
 			  			<span>'.$tr->translate("TELLER_Module").'</span>
 			  		</a>
 	    </li>',
-	  	'accounting'=>'<li class="link">
+	  	/*'accounting'=>'<li class="link">
 			  		<a title="ព័ត៏មានចំណាយផ្សេងៗ" href="'.$accounting_view.'">
 			  			<span>'.$tr->translate("Accounting").'</span>
 			  		</a>
-	  			</li>',
+	  			</li>',*/
 	  	'report'=>'<li class="link">
 			  		<a title="Report" href="'.$report.'">
 			  			<span>'.$tr->translate("Reports").'</span>
 			  		</a>
 			  		</li>',
-	  	'rsvAcl'=>'<li class="link">
+	  	'rsvacl'=>'<li class="link">
 			  		<a title="acl" href="'.$acl.'">
 			  			<span>'.$tr->translate("Module_Mg").'</span>
 			  		</a>
@@ -73,16 +73,22 @@
 <div id="menu">
 	<ul>
 		<?php
-		
+// 		$access=0;
+// 		if($access!=''){
+// 			echo 1;
+// 		}else{
+// 			echo 0;
+// 		}
+// 		exit();
 		
 		$session_user=new Zend_Session_Namespace('auth');
 		$modules_access = $session_user->arr_module;
 // 		print_r($modules_access);exit();
 			foreach($item_arr as $key=>$value){
-// 				echo $key ;exit();
+// echo $key;exit();
 				$access = array_search($key,$modules_access);
 // 				echo $access;exit();
-				if($access!=''){
+				if($access!='' OR $access>=0){
 					if($module==$key){
 						echo str_replace('class="link"', 'class="current"', $value);
 					}

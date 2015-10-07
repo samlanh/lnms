@@ -31,7 +31,7 @@ class Group_Model_DbTable_DbClient extends Zend_Db_Table_Abstract
 				'branch_id'	  => $_data['branch_id'],
 				'parent_id'	  =>($_data['group_id']!=-1)?$_data['group_id']:"",
 				'group_code' => ($_data['is_group']==1)?$_data['group_code']:"",
-				'client_number'=> $client_code,//$_data['client_no'],
+				//'client_number'=> $client_code,//$_data['client_no'],
 				'name_kh'	  => $_data['name_kh'],
 				'name_en'	  => $_data['name_en'],
 				'join_with'	  => $_data['join_with'],
