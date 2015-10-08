@@ -218,10 +218,13 @@ public function addILPayment($data){
     	
     	if($amount_receive>$total_payment){
     		$amount_payment = $amount_receive - $return;
+    		$is_compleated = 1;
     	}elseif($amount_receive<$total_payment){
     		$amount_payment = $amount_receive;
+    		$is_compleated = 0;
     	}else{
     		$amount_payment = $total_payment;
+    		$is_compleated = 1;
     	}
     	
     	$service_charge= $data["service_charge"];
@@ -241,7 +244,7 @@ public function addILPayment($data){
     			'total_payment'					=>		$data["total_payment"],
     			'total_interest'				=>		$data["total_interest"],
     			'recieve_amount'				=>		$data["amount_receive"],
-    			'penalize_amount'				=>		$data['new_penelize'],
+    			'penalize_amount'				=>		$penalize,
     			'return_amount'					=>		$return,
     			'service_charge'				=>		$data["service_charge"],
     			'note'							=>		$data['note'],
@@ -251,7 +254,7 @@ public function addILPayment($data){
     			'currency_type'					=>		$data["currency_type"],
     			'status'						=>		1,
     			'amount_payment'				=>		$amount_payment,
-    			'is_completed'					=>		1
+    			'is_completed'					=>		$is_compleated
     		);
 			$this->_name = "ln_client_receipt_money";
     		$client_pay = $this->insert($arr_client_pay);
@@ -261,8 +264,14 @@ public function addILPayment($data){
     		foreach($identify as $i){
     			if($option_pay==1){
     				$total_recieve = $data["amount_receive"];
+    				if($total_recieve>=$data["total_payment"]){
+    					$is_compleated = 1;
+    				}else{
+    					$is_compleated = 0;
+    				}
     			}else{
     				$total_recieve=$data["payment_".$i];
+    				$is_compleated = 1;
     			}
     			$client_detail = $data["mfdid_".$i];
     			$sub_recieve_amount = $data["amount_receive"];
@@ -290,7 +299,9 @@ public function addILPayment($data){
     						'pay_after'				=>		$data['multiplier_'.$i],
     						'penelize_amount'		=>		$data['penelize_'.$i],
     						'service_charge'		=>		$data['service_'.$i],
-    						'is_completed'			=>		1,
+    						'penelize_new'			=>		$data['penelize_'.$i]-$data['old_penelize_'.$i],
+    						'service_charge_new'	=>		$data["service_charge"]-$data['service_'.$i],
+    						'is_completed'			=>		$is_compleated,
     						'is_verify'				=>		0,
     						'verify_by'				=>		0,
     						'is_closingentry'		=>		0,
@@ -331,7 +342,7 @@ public function addILPayment($data){
 				   					if($new_amount_after_service>=0){
 				   						$new_sub_service_charge = 0;
 				   						$new_amount_after_penelize = $new_amount_after_service - $new_sub_penelize;
-				   						echo $new_amount_after_penelize."=".$new_amount_after_service."-".$new_sub_penelize;
+				   						//echo $new_amount_after_penelize."=".$new_amount_after_service."-".$new_sub_penelize;
 				   						if($new_amount_after_penelize>=0){
 				   							$new_sub_penelize = 0;
 				   							$new_amount_after_interest = $new_amount_after_penelize - $sub_interest_amount;
@@ -465,11 +476,14 @@ public function addILPayment($data){
 	    	if($amount_receive>$total_payment){
 	    		$amount_payment = $amount_receive - $return;
 	    		$total_pay = $amount_receive - $data["total_payment"];
+	    		$is_completed = 1;
 	    	}elseif($amount_receive<$total_payment){
 	    		$amount_payment = $amount_receive;
 	    		$total_pay = $data["total_payment"]-$amount_receive;
+	    		$is_completed = 0;
 	    	}else{
 	    		$amount_payment = $total_payment;
+	    		$is_completed = 1;
 	    	}
 	    	
 	    	$service_charge= $data["service_charge"];
@@ -496,7 +510,7 @@ public function addILPayment($data){
     			'currency_type'					=>		$data["currency_type"],
     			'status'						=>		1,
     			'amount_payment'				=>		$amount_payment,
-    			'is_completed'					=>		1
+    			'is_completed'					=>		$is_completed
     		);
     		$this->_name = "ln_client_receipt_money";
     		$where = $db->quoteInto("id=?", $data["id"]);
@@ -760,6 +774,7 @@ public function addILPayment($data){
 					  AND lm.`client_id`=lc.`client_id`
 					  AND lg.`loan_type`=1
     				  AND lf.`is_completed`=0
+    				  AND lf.`status`=1
     				  AND $where
     				";
     	}elseif($data['type']==1){
@@ -797,7 +812,8 @@ public function addILPayment($data){
 					  AND lm.`client_id`=lc.`client_id`
 					  AND lg.`loan_type`=1
 					  AND $where
-    				AND lf.`is_completed`=0";
+    				AND lf.`is_completed`=0
+    				 AND lf.`status`=1";
     				
  	}
  		//return $sql;
@@ -832,6 +848,7 @@ public function addILPayment($data){
 			   		AND lf.`member_id`=lm.`member_id`
 			   		AND lm.`client_id`=lc.`client_id`
 			   		AND lg.`loan_type`=1
+			   		 AND lf.`status`=1
 			   		AND $where
 			   		";
    	}elseif($data['types']==1){
@@ -859,6 +876,7 @@ public function addILPayment($data){
    					  AND lf.`member_id`=lm.`member_id`
    					  AND lm.`client_id`=lc.`client_id`
    					  AND lg.`loan_type`=1
+   					   AND lf.`status`=1
    					  AND $where";
    
    		}

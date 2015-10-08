@@ -371,7 +371,7 @@ function submitData(){
 			load: function(data) {
 				document.getElementsByClassName("overlay")[0].style.display="none";	
 				alert('<?php echo $tr->translate('INSERT_SUCCESS');?> !');
-				dijit.byId("frm_add_group_pay").reset();
+				window.location.href ="<?php echo $this->baseUrl();?>/loan/ilpayment/add";
 			},
 			error: function(e) {
 				//alert("Your message could not be sent, please try again!.");
@@ -925,6 +925,7 @@ function calculateTotal(index){
 		var old_installment_date = $('#installment_date').val();
 		var installment_date= new Date(old_installment_date); 
 		var total_penelize =0;
+		var service_charge_amount=0;
 
 		if(payOption==4){
 			var ids =dijit.byId('record_id').get('value');
@@ -971,6 +972,8 @@ function calculateTotal(index){
 		          	var penelize = parseFloat($('#old_penelize_'+arrays[i]).val());
 		          	
 		          	var service_charge = parseFloat($('#service_'+arrays[i]).val());
+
+		        	service_charge_amount = service_charge_amount + parseFloat($('#service_'+arrays[i]).val());
 		          	
 		          	last_payment_date= $('#last_date_payment_'+arrays[i]).val();
 		          	if(last_payment_date=="null" || last_payment_date==null || last_payment_date=="" ){
@@ -1153,6 +1156,8 @@ function calculateTotal(index){
 		dijit.byId('os_amount').attr('value',os_amount.toFixed(2));
 		dijit.byId('total_interest').attr('value',total_interest.toFixed(2));
 		dijit.byId('priciple_amount').attr('value',priciple_amount.toFixed(2));
+		dijit.byId('service_charge').attr('value',service_charge_amount);
+		dijit.byId('old_service_charge').attr('value',service_charge_amount);
 		var identity = dijit.byId('identity').get('value');
 		var recored = dijit.byId('record_id').get('value');
 		if(identity==recored){
@@ -1178,6 +1183,7 @@ function checkAll(index){
 	var amount_collect_term = dijit.byId('amount_payment_term').get('value');
 	var old_installment_date = $('#installment_date').val();
 	var installment_date= new Date(old_installment_date); 
+	var service_charge_amount=0;
 	if($('#check_all').attr('checked')){
 		$('.checkbox').each(function() { //loop through each checkbox
             this.checked = true;  
@@ -1200,6 +1206,7 @@ function checkAll(index){
 		          	var interest = parseFloat($('#interest_'+arrays[i]).val());
 		          	var penelize = parseFloat($('#old_penelize_'+arrays[i]).val());
 		          	var service_charge = parseFloat($('#service_'+arrays[i]).val());
+
 		          	
 		          	last_payment_date= $('#last_date_payment_'+arrays[i]).val();
 		          	if(last_payment_date=="null" || last_payment_date==null || last_payment_date=="" ){

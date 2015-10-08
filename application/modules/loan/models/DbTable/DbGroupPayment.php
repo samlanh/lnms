@@ -185,6 +185,7 @@ function getLoanPaymentByLoanNumber($data){
 						  AND lg.`loan_type`=2
 						  AND lg.`is_reschedule`!=1
 						  AND lm.`loan_number`='$loan_number'
+						   AND lf.`status`=1
 						  GROUP BY lm.`client_id`
 						";
    		}else{
@@ -226,6 +227,7 @@ function getLoanPaymentByLoanNumber($data){
 					  AND lg.`loan_type`=2
 					  AND lg.`is_reschedule`!=1
 					  AND lm.`loan_number`='$loan_number'
+					   AND lf.`status`=1
 					  GROUP BY lm.`loan_number`,lf.`date_payment`
 		   			";
    		}
@@ -258,6 +260,7 @@ function getLoanPaymentByLoanNumber($data){
 			  AND lg.`loan_type` = 2
 			  AND lm.`client_id`=c.`client_id`
 			  AND lm.`loan_number`='$loan_number'
+			   AND lf.`status`=1
 			  GROUP BY lm.`group_id`,lf.`date_payment` 
 			   	";
 //    		return $sql;
