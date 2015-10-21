@@ -1074,6 +1074,7 @@ public function addILPayment($data){
 	   					$pay_date = $data["date_payment_".$i];
 	   					
 	   					$loanFun = $db_loan_fun->getLoanFunByGroupId($group_id,$pay_date);
+	   					
 	   					if($loan_type==2){
 	   						if(!empty($loanFun) or $loanFun!="" or $loanFun!=null){
 	   							foreach ($loanFun as $rowFun){
@@ -1143,8 +1144,8 @@ public function addILPayment($data){
 			   							'total_recieve'			=>		$data["sub_recive_amount_".$i],
 			   							'currency_id'			=>		$data["cu_id_".$i],
 			   							'pay_after'				=>		$data['multiplier_'.$i],
-			   							'penelize_amount'		=>		$data["old_penelize_".$i],
-			   							'service_charge'		=>		$data["old_service_charge_".$i],
+			   							'penelize_amount'		=>		$data["old_sub_penelize_".$i],
+			   							'service_charge'		=>		$data["old_sub_service_charge_".$i],
 			   							'is_completed'			=>		0,
 			   							'is_verify'				=>		0,
 			   							'verify_by'				=>		0,
@@ -1567,8 +1568,8 @@ public function addILPayment($data){
    									'total_recieve'			=>		$data["sub_recive_amount_".$i],
    									'currency_id'			=>		$data["cu_id_".$i],
    									'pay_after'				=>		$data['multiplier_'.$i],
-   									'penelize_amount'		=>		$data["sub_penelize_".$i],
-   									'service_charge'		=>		$data["sub_service_charge_".$i],
+   									'penelize_amount'		=>		$data["old_sub_penelize_".$i],
+			   							'service_charge'		=>		$data["old_sub_service_charge_".$i],
    									'is_completed'			=>		0,
    									'is_verify'				=>		0,
    									'verify_by'				=>		0,

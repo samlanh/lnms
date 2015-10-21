@@ -316,6 +316,7 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       public function getALLLoanPayment($search=null){
       	$db = $this->getAdapter();
       	$sql="SELECT * FROM v_getcollectmoney WHERE 1 ";
+      	
       	$from_date =(empty($search['start_date']))? '1': " date_input >= '".$search['start_date']." 00:00:00'";
       	$to_date = (empty($search['end_date']))? '1': " date_input <= '".$search['end_date']." 23:59:59'";
       	$where = " AND ".$from_date." AND ".$to_date;
@@ -347,7 +348,7 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       		$where .=' AND '.implode(' OR ',$s_where).'';
       	}
       	$order=" ORDER BY date_input DESC ";
-      	//echo $sql.$where.$order;
+      	echo $sql.$where.$order;
       	return $db->fetchAll($sql.$where.$order);
       }
       public function getALLLoanIcome($search=null){
@@ -355,7 +356,7 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
     	$end_date = $search['end_date'];
     	
     	$db = $this->getAdapter();
-    	$sql = " SELECT * FROM v_getcollectmoney";
+    	$sql = " SELECT * FROM v_getcollectmoney where 1";
 //     	$sql = "SELECT lcrm.`id`,
 // 					lcrm.`receipt_no`,
 // 					lcrm.`loan_number`,lcrm.service_charge,
@@ -372,31 +373,33 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
 //     				(SELECT b.`branch_namekh` FROM `ln_branch` AS b WHERE b.`br_id`=lcrm.`branch_id`) AS branch
 // 				FROM `ln_client_receipt_money` AS lcrm WHERE lcrm.is_group=0 AND lcrm.`status`=1";
     	$where ='';
-//     	if(!empty($search['advance_search'])){
-//     		//print_r($search);
-//     		$s_where = array();
-//     		$s_search = $search['advance_search'];
-//     		$s_where[] = "lcrm.`loan_number` LIKE '%{$s_search}%'";
-//     		$s_where[] = " lcrm.`receipt_no` LIKE '%{$s_search}%'";
+    	if(!empty($search['advance_search'])){
+    		//print_r($search);
+    		$s_where = array();
+    		$s_search = $search['advance_search'];
+    		$s_where[] = "client_name LIKE '%{$s_search}%'";
+    		$s_where[] = " client_number LIKE '%{$s_search}%'";
+    		$s_where[] = " co_name LIKE '%{$s_search}%'";
+    		$s_where[] = " loan_number LIKE '%{$s_search}%'";
     		
-//     		$where .=' AND ('.implode(' OR ',$s_where).')';
-//     	}
-//     	if($search['status']!=""){
-//     		$where.= " AND status = ".$search['status'];
-//     	}
+    		$where .=' AND ('.implode(' OR ',$s_where).')';
+    	}
+    	if($search['status']!=""){
+    		$where.= " AND status = ".$search['status'];
+    	}
     	
-//     	if(!empty($search['start_date']) or !empty($search['end_date'])){
-//     		$where.=" AND lcrm.`date_input` BETWEEN '$start_date' AND '$end_date'";
-//     	}
-//     	if($search['client_name']>0){
-//     		$where.=" AND lcrm.`group_id`= ".$search['client_name'];
-//     	}
-//     	if($search['branch_id']>0){
-//     		$where.=" AND lcrm.`branch_id`= ".$search['branch_id'];
-//     	}
-//     	if($search['co_id']>0){
-//     		$where.=" AND lcrm.`co_id`= ".$search['co_id'];
-//     	}    	
+    	if(!empty($search['start_date']) or !empty($search['end_date'])){
+    		$where.=" AND date_payment BETWEEN '$start_date' AND '$end_date'";
+    	}
+    	if($search['client_name']>0){
+    		$where.=" AND client_id = ".$search['client_name'];
+    	}
+    	if($search['branch_id']>0){
+    		$where.=" AND branch_id= ".$search['branch_id'];
+    	}
+    	if($search['co_id']>0){
+    		$where.=" AND `co_id`= ".$search['co_id'];
+    	}    	
     	//$where='';
     	$order="";
 //     	$order = " ORDER BY lcrm.currency_type";

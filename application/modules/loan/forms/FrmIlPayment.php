@@ -135,7 +135,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 				'dojoType'	=>'dijit.form.NumberTextBox',
 				'class'		=>'fullside',
 				//'onkeyUp'=>'totalReturn();'
-				'onBlur'	=>	'doTotalByServ();'
+				'onChange'	=>	'doTotalByServ();'
 		));
 		$_service_charge->setValue(0);
 		
@@ -451,7 +451,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 		$_client_code->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-				'readOnly'=>'readOnly',
+				//'readOnly'=>'readOnly',
 				//'onchange'=>'getLaonHasPayByLoanNumber(2);getLaonPayment(2);getAllLaonPayment(2);',
 				'required'=>true
 		));

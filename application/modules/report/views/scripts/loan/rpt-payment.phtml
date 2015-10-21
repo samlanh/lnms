@@ -94,15 +94,27 @@ th{padding: 5px;}
                 	 //$total_penilize_amount_r=0;$total_penilize_amount_d=0;$total_penilize_amount_b=0;
                 	 $total_d=0;$total_b=0;$total_r=0;
                 ?>
-                <?php if(!empty($this->loantotalcollect_list)) foreach ($this->loantotalcollect_list as $index => $rs){ ?>
+                <?php $is_set =0; if(!empty($this->loantotalcollect_list)) foreach ($this->loantotalcollect_list as $index => $rs){ ?>
                 
                <?php 
+               	if($rs["payment_option"]==4){
+					if($is_set!=1){
+						$principle= $rs["principle_amount"];
+						$total_pay = $rs["payment"];
+						$interest= $rs["interest"];
+						$recieve = $rs["amount_recieve"];
+						$penelize = $rs["penelize"];
+						$service_charge =$rs["service"];
+						$is_set=1;
+					}
+				}else{
                		$service_charge = $rs["service_charge"];
                		$interest = $rs["total_interest"];
                		$principle = $rs["total_principal_permonth"];
                		$penelize = $rs["penalize_amount"];
                		$recieve = $rs["recieve_amount"];
                		$total_pay = $rs["total_payment"];
+               		}
                		$new_service = $recieve-$service_charge;
                		if($new_service>=0){
 						$service = $service_charge;
@@ -134,7 +146,14 @@ th{padding: 5px;}
 						$principle_amount=0;
 					}
                ?>
-               
+               <?php 
+//                		if($rs["payment_option"]==4){
+// 						$principle_amount = $principle_amount + $principle;
+// 						$interest_amount = $interest_amount + $interest;
+// 						$penelize_amount= $penelize_amount+$penelize;
+// 						$service = $service+$service_charge;
+// 					}
+               ?>
                <?php 
 		               if($rs['currency_type']==1){
 		               		$amt_r1 = $amt_r1+$principle_amount;
@@ -168,7 +187,7 @@ th{padding: 5px;}
                		<td align="center" style="font:bolder 11px Arial;">&nbsp;<?php echo $interest_amount.' '.$rs['currency_typeshow'];?>&nbsp;</td>
                		<td align="center" style="font:bolder 11px Arial;">&nbsp;<?php echo $penelize_amount.' '.$rs['currency_typeshow'];?>&nbsp;</td>
                		<td align="center" style="font:bolder 11px Arial;">&nbsp;<?php echo $service.' '.$rs['currency_typeshow'];?>&nbsp;</td>
-               		<td style="font:bolder 11px Arial;">&nbsp;<?php echo number_format($rs["recieve_amount"],2).' '.$rs['currency_typeshow'];?>&nbsp;</td>
+               		<td style="font:bolder 11px Arial;">&nbsp;<?php echo $total_pay.' '.$rs['currency_typeshow'];?>&nbsp;</td>
                		<!-- <td align="center" style="font:bolder 11px Arial;">&nbsp;<?php //echo number_format($rs["total_payment"],2).' '.$rs['currency_typeshow'];;?>&nbsp;</td> -->
                		<td style="white-space:nowrap; border-right:3px double black; ">&nbsp;<?php echo date("d-M-Y",strtotime($rs["date_payment"]));?>&nbsp;</td>
                		<td style="white-space:nowrap; ">&nbsp;<?php echo date("d-M-Y",strtotime($rs["date_input"]));?>&nbsp;</td>

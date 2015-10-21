@@ -170,7 +170,7 @@ function getLoanPaymentByLoanNumber($data){
 						  lg.`total_duration`,
 						  lg.`collect_typeterm`,
 						  lg.`payment_method`,
-						  
+						  lg.`group_id`,
 						  DATE_FORMAT(lf.`date_payment`, '%d-%m-%Y') AS `payment_date`,
 						  lf.* 
 						FROM
@@ -206,6 +206,7 @@ function getLoanPaymentByLoanNumber($data){
 					  lg.`total_duration`,
 					  lg.`collect_typeterm`,
 					  lg.`payment_method`,
+					  lg.`group_id`,
 					  DATE_FORMAT(lf.`date_payment`, '%d-%m-%Y') AS `payment_date`,
 					   SUM(lf.`total_principal`) AS total_principal,
 					  SUM(lf.`principle_after`) AS principle_after,
@@ -386,7 +387,7 @@ function getLoanPaymentByLoanNumber($data){
     				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
     				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
     				$db->getProfiler()->setEnabled(false);
-    				if($option_pay==1){
+    				if($option_pay==1 and $option_pay==4){
 	    				if($sub_recieve_amount>=$sub_total_payment){
 		    				 
 		    				$arr_update_fun_detail = array(
