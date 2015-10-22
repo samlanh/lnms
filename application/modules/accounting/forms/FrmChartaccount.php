@@ -73,18 +73,18 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 		$None_operation->setMultiOptions($opt);
 		$None_operation->setValue(1);
 		
-		$parent = new Zend_Dojo_Form_Element_FilteringSelect('parent');
-		$parent->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'class'=>'fullside',
-				'required'=>true
+// 		$parent = new Zend_Dojo_Form_Element_FilteringSelect('parent');
+// 		$parent->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'class'=>'fullside',
+// 				'required'=>true
 				
-		));
-		$parent->setValue($request->getParam('parent'));
+// 		));
+// 		$parent->setValue($request->getParam('parent'));
 		
 		$db = new Accounting_Model_DbTable_DbChartaccount();
-		$option = $db->getAllchartaccount(3,1);
-		$parent->setMultiOptions($option);
+// 		$option = $db->getAllchartaccount(3,1);
+// 		$parent->setMultiOptions($option);
 		
 		$parents = new Zend_Dojo_Form_Element_CheckBox('parents');
 		$parents->setAttribs(array(
@@ -135,7 +135,7 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 			$account_Name->setValue($data['account_name_kh']);
 			$account_Nameen->setValue($data['account_name_en']);
 			$None_operation->setValue($data['option_acc']);
-			$parent->setValue($data['parent_id']);
+// 			$parent->setValue($data['parent_id']);
 			$parents->setValue($data['option_type']);
 			$Category->setValue($data['category_id']);
 			$Date->setValue($data['date']);
@@ -145,7 +145,7 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 				
 		}
 
-		$this->addElements(array($_title,$_id,$account_No,$None_operation,$parents,$account_Type,$account_Name,$account_Nameen,$parent,$Category,$Date,$Status,$Balance));
+		$this->addElements(array($_title,$_id,$account_No,$None_operation,$parents,$account_Type,$account_Name,$account_Nameen,$Category,$Date,$Status,$Balance));
 		return $this;
 		
 	}	

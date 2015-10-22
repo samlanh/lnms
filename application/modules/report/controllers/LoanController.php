@@ -36,8 +36,9 @@ function rptLoanDisburseAction(){//release all loan
   }
   function rptLoanDisburseCoAction(){//realease by co
   	$db  = new Report_Model_DbTable_DbLoan();
-  	$rs=$db->getAllLoanco();
-  	$this->view->loanrelease_list =$rs;
+//   	$rs=$db->getAllLoanco();
+//   	$this->view->loanrelease_list =$rs;
+
   	$key = new Application_Model_DbTable_DbKeycode();
   	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
   	

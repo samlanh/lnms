@@ -86,6 +86,7 @@ public function indexAction()
 		$row  = $db->getechartaccountbyid($id);
 		$fm = new Accounting_Form_FrmChartaccount();
 		$frm = $fm->FrmChartaccount($row);
+		$this->view->parent_id=$row['parent_id'];
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_fixedasset = $frm;
 	

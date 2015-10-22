@@ -43,8 +43,8 @@ $frm = $this->frm_fixedasset;
 						</tr>
 						<tr>
 						    <td>ប្រភេទមេ</td>
-							<td><?php echo $frm->getElement('parent')?></td>
-						    <td>ប្រភេទមេ</td>
+							<td><input id="parent" /><?php //echo $frm->getElement('parent')?></td>
+						    <td>ជាប្រភេទមេ</td>
 							<td><?php echo $frm->getElement('parents')?></td>
 						</tr>
 						
@@ -64,13 +64,55 @@ $frm = $this->frm_fixedasset;
 	</tr>		
 	<tr>
 		<td align="center">
-			<input type="submit" value="រក្សាទុក" label="<?php echo $tr->translate('SAVE');?>" id="submitButton" dojoType="dijit.form.Button"
+			<input type="submit" value="រក្សាទុក" label="<?php echo $tr->translate('GO_EDIT');?>" id="submitButton" dojoType="dijit.form.Button"
 				 iconClass="dijitEditorIcon dijitEditorIconSave"/>
 		</td>
 	</tr>	
 </table>
 </form>
 <script type="text/javascript">
-dojo.require("dijit.form.Textarea");
-dojo.require("dijit.form.NumberTextBox");
+dojo.require("dojo.data.ItemFileWriteStore"); 
+dojo.require("dojo.NodeList-manipulate");
+
+var account_store  = getDataStorefromJSON('id','name',[]);
+require(["dojo/ready"], function(ready){
+	 ready(function(){
+		 getAllParentsAccount();
+		
+	  });
+	new dijit.form.FilteringSelect({
+	store: account_store,
+	autoComplete: true,      
+	required: false,		           
+	name: "parent",
+	id: "parent",
+	searchAttr: "name",
+	class: 'fullside',
+	onChange: function() {
+      }
+	}, "parent");
+
+	});
+var url_getaccount = '<?php echo $this->url(array('module'=>'accounting','controller'=>'chartaccount','action'=>'get-parentaccount')); ?>';
+function getAllParentsAccount(){
+	account_type = dijit.byId('account_Type').get('value');
+	if(account_type==''){
+		return false;
+	}
+	dojo.xhrPost({
+		url:url_getaccount,	
+		content:{ 
+		    'account_type':account_type
+		},		    
+		handleAs:"json",
+		load: function(data) {
+		   account_store  = getDataStorefromJSON('id','name', data);		
+		   dijit.byId('parent').set('store', account_store);
+		   dijit.byId('parent').attr('value',<?php echo $this->parent_id;?>);
+		},
+		error: function(err) {
+			alert(err);
+		}
+	});
+}
 </script>
