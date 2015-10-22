@@ -77,7 +77,7 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       		$where .=' AND '.implode(' OR ',$s_where).'';
       	}
       	$order = " ORDER BY co_id DESC";
-      	return $db->fetchAll($sql.$where);
+      	return $db->fetchAll($sql.$where.$order);
       }
       public function getAllOutstadingLoan($search=null){
       	$db = $this->getAdapter();
