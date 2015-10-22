@@ -12,6 +12,12 @@ $frm = $this->frm_fixedasset;
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
+            account_Type = dijit.byId('account_Type').get('value');
+		      if(account_Type=='' || account_Type==-1){
+		  	  	 alert('Please Select Account Type');
+			     dijit.byId('account_Type').focus();
+			     return false;
+		      }
 				return true;
 			}else {
 				return false;

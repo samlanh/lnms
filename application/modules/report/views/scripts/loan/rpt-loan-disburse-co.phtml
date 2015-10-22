@@ -65,7 +65,7 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
                    <?php  
                     $amt_r = 0;$amt_d = 0;$amt_b = 0; $amn_r = 0;$amn_d = 0;$amn_b = 0;
                     $co_id='';$other_fee_r=0; $other_fee_b=0; $other_fee_d=0;$total_r=0;$total_b=0;$total_d=0;
-                    $all_total_r=0;$all_total_b=0;$all_total_d=0;
+                    $all_total_r=0;$all_total_b=0;$all_total_d=0;$num=1;
 	               if(!empty($this->loanrelease_list)) foreach($this->loanrelease_list as $key =>$row){
                ?>
                <?php if($row['curr_type']==1){
@@ -78,6 +78,7 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
                ?>
                 <?php 
                 if($co_id!=$row['co_id']){
+                	$num=1;
                 ?>
                 <?php if($key>0){?>
                 <tr>
@@ -163,7 +164,7 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
                }
                ?>
 					<tr align="center">
-						<td>&nbsp;<?php echo $key+1; ?>&nbsp;</td>
+						<td>&nbsp;<?php echo $num; ?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['branch_name'];?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['loan_number'];?>&nbsp;</td>
 						<td align="left">&nbsp;<?php echo $row['client_number']; ?>&nbsp;</td>
