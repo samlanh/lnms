@@ -33,10 +33,12 @@ $frm = $this->frm_fixedasset;
 							
 						</tr>
 						<tr>
+							<td>Parents Account</td>
+							<td><?php echo $frm->getElement('parent')?></td>
 							<td>Account_name</td>
-							<td><?php echo $frm->getElement('account_name')?></td>
+							<td><input id="account_name" /><?php //echo $frm->getElement('account_name')?></td>
 							<td>Note</td>
-							<td colspan="3"><?php echo $frm->getElement('note');?></td>
+							<td><?php echo $frm->getElement('note');?></td>
 							
 						</tr>
 						<tr>
@@ -63,6 +65,46 @@ $frm = $this->frm_fixedasset;
 </table>
 </form>
 <script type="text/javascript">
-dojo.require("dijit.form.Textarea");
-dojo.require("dijit.form.NumberTextBox");
+dojo.require("dojo.data.ItemFileWriteStore"); 
+dojo.require("dojo.NodeList-manipulate");
+
+var account_store  = getDataStorefromJSON('id','name',[]);
+require(["dojo/ready"], function(ready){
+	 ready(function(){
+		
+	  });
+	new dijit.form.FilteringSelect({
+	store: account_store,
+	autoComplete: true,      
+	required: false,		           
+	name: "account_name",
+	id: "account_name",
+	searchAttr: "name",
+	class: 'fullside',
+	onChange: function() {
+      }
+	}, "account_name");
+
+	});
+var url_getaccount = '<?php echo $this->url(array('module'=>'accounting','controller'=>'generaljurnal','action'=>'get-accountname')); ?>';
+function getAllAccountNameByParents(){
+	 parent_id = dijit.byId('parent').get('value');
+	if(parent_id==-1){
+		return false;
+	}
+	dojo.xhrPost({
+		url:url_getaccount,	
+		content:{ 
+		    'parent':parent_id
+		},		    
+		handleAs:"json",
+		load: function(data) {
+		   account_store  = getDataStorefromJSON('id','name', data);		
+		   dijit.byId('account_name').set('store', account_store);
+		},
+		error: function(err) {
+			alert(err);
+		}
+	});
+}
 </script>

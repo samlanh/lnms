@@ -29,7 +29,7 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 		
 		$account_No = new Zend_Dojo_Form_Element_TextBox('account_No');
 		$account_No->setAttribs(array(
-				'dojoType'=>'dijit.form.TextBox',
+				'dojoType'=>$this->tvalidate,
 				'class'=>'fullside',
 				'required'=>true
 				));
@@ -38,21 +38,24 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 		$account_Type->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-				'required'=>true
+				'required'=>true,
+				'onchange'=>'getAllParentsAccount();'
 		));
 		$opt= $db->getVewOptoinTypeByType(8,1);
+		unset($opt[-1]);
+		//unset($opt['']);
 		$account_Type->setMultiOptions($opt);
-		$account_Type->setValue(1);	
+		//$account_Type->setValue(1);	
 		
 		$account_Name = new Zend_Dojo_Form_Element_TextBox('account_Name');
 		$account_Name->setAttribs(array(
-				'dojoType'=>'dijit.form.TextBox',
+				'dojoType'=>$this->tvalidate,
 				'class'=>'fullside',
 				'required'=>true
 		));
 		$account_Nameen = new Zend_Dojo_Form_Element_TextBox('account_Nameen');
 		$account_Nameen->setAttribs(array(
-				'dojoType'=>'dijit.form.TextBox',
+				'dojoType'=>$this->tvalidate,
 				'class'=>'fullside',
 				'required'=>true
 		));
@@ -66,6 +69,7 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 				'required'=>true
 		));
 		$opt= $db->getVewOptoinTypeByType(10,1);
+		unset($opt[-1]);unset($opt['']);
 		$None_operation->setMultiOptions($opt);
 		$None_operation->setValue(1);
 		

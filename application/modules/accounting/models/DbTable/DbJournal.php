@@ -5,10 +5,9 @@ class Accounting_Model_DbTable_DbJournal extends Zend_Db_Table_Abstract
 	public function getUserId(){
 		$session_user=new Zend_Session_Namespace('auth');
 		return $session_user->user_id;
-	
 	}
 	function addTransactionJournal($data){
-		
+				
 		$arr =array(
 				'branch_id'=>$data['branch_id'],
 				'client_id'=>$data['client_id'],
@@ -57,6 +56,7 @@ class Accounting_Model_DbTable_DbJournal extends Zend_Db_Table_Abstract
 			$this->insert($arr);
 			$db_g->getAccountBranchByOther($arr['account_id'], $data['branch_id'], $data['currency_type'],$data['loan_fee'],$arr['is_increase']);
 		}
+		
 	}
 	function addJournalDetail($data){
 		$this->_name='ln_journal_detail';
@@ -73,6 +73,10 @@ class Accounting_Model_DbTable_DbJournal extends Zend_Db_Table_Abstract
 		}
 		
 	}
-
-
+	function getAllAccountByParrents($parents){
+		$db=$this->getAdapter();
+		$sql = "SELECT id,account_code,CONCAT(account_name_en,'-',account_name_kh,'-',account_code) AS name FROM `ln_account_name` WHERE STATUS =1 AND 
+				option_type=1 AND parent_id = $parents ";
+		return $db->fetchAll($sql);
+	}
 }

@@ -94,10 +94,10 @@ Class Other_Form_FrmCommune extends Zend_Dojo_Form {
 				'onchange'=>'filterDistrict();',
 		));
 		$_province->setMultiOptions($opt_province);
-		$_province->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'required'=>'true',
-				'class'=>'fullside',));
+// 		$_province->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'required'=>'true',
+// 				'class'=>'fullside',));
 		//$rows_provicess = $_db->getAllProvince();
 		//$opt_provicess = array($this->tr->translate("SELECT_PROVINCE"));
 		

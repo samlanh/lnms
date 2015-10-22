@@ -8,7 +8,7 @@ class Report_indexController extends Zend_Controller_Action {
     	defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
   function indexAction(){
-  	
+  	$this->_redirect('report/loan');
   }
   function addAction()
   {

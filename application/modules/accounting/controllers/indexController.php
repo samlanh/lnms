@@ -7,7 +7,7 @@ class Accounting_IndexController extends Zend_Controller_Action {
 		defined('BASE_URL')	|| define('BASE_URL', Zend_Controller_Front::getInstance()->getBaseUrl());
 	}
 	public function indexAction(){
-		
+		$this->_redirect("accounting/chartaccount");
 	}
 	public function addAction(){
 		$fm = new Accounting_Form_Frmassetname();

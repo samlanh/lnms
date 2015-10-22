@@ -112,7 +112,7 @@ class IndexController extends Zend_Controller_Action
     }
     
     protected function sortMenu($menus){
-    	$menus_order = Array ( 'home','other','group','loan','tellerandexchange','accounting','report','setting','backup','rsvAcl');
+    	$menus_order = Array ( 'home','other','group','loan','tellerandexchange','accounting','report','setting','rsvacl');
     	$temp_menu = Array();
     	$menus=array_unique($menus);
     	foreach ($menus_order as $i => $val){

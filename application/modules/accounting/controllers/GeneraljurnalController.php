@@ -23,4 +23,13 @@ class accounting_GeneraljurnalController extends Zend_Controller_Action {
 		}
 		
 	}
+	function getParentaccountAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Accounting_Model_DbTable_DbJournal();
+			$acc_names = $db->getAllAccountByParrents($data['parent']);
+			print_r(Zend_Json::encode($acc_names));
+			exit();
+		}
+	}
 }

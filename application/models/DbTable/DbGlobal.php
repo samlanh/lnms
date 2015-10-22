@@ -108,28 +108,35 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 //    }
    public function getAllProvince(){
    	$this->_name='ln_province';
-   	$sql = " SELECT province_id,CONCAT(province_en_name,'-',province_kh_name) province_en_name FROM $this->_name WHERE status=1 AND province_en_name!='' ";
+   	$sql = " SELECT province_id,CONCAT(province_en_name,'-',province_kh_name) province_en_name FROM $this->_name WHERE status=1 AND province_en_name!='' ORDER BY province_id DESC";
    	$db = $this->getAdapter();
    	return $db->fetchAll($sql);
    }
    public function getAllDistrict(){
    	$this->_name='ln_district';
-   	$sql = " SELECT dis_id,pro_id,CONCAT(district_namekh,'-',district_name) district_name FROM $this->_name WHERE status=1 AND district_name!='' ";
+   	$sql = " SELECT dis_id,pro_id,CONCAT(district_name,'-',district_namekh) district_name FROM $this->_name WHERE status=1 AND district_name!='' ";
    	$db = $this->getAdapter();
    	return $db->fetchAll($sql);
    }
    public function getAllDistricts(){
    	$this->_name='ln_district';
-   	$sql = " SELECT dis_id AS id,pro_id,CONCAT(district_namekh,'-',district_name) name FROM $this->_name WHERE status=1 AND district_name!='' ";
+   	$sql = " SELECT dis_id AS id,pro_id,CONCAT(district_name,'-',district_namekh) name FROM $this->_name WHERE status=1 AND district_name!='' ";
    	$db = $this->getAdapter();
    	return $db->fetchAll($sql);
    }
    public function getCommune(){
    	$this->_name='ln_commune';
-   	$sql = " SELECT com_id,com_id AS id,commune_name,CONCAT(commune_namekh,'-',commune_name) AS name,district_id FROM $this->_name WHERE status=1 AND commune_name!='' ";
+   	$sql = " SELECT com_id,com_id AS id,commune_name,CONCAT(commune_name,'-',commune_namekh) AS name,district_id FROM $this->_name WHERE status=1 AND commune_name!='' ";
    	$db = $this->getAdapter();
    	return $db->fetchAll($sql);
    }
+//    public function getCommuneByDistrict($district_id){
+// 	   	$this->_name='ln_commune';
+// 	   	$sql = " SELECT com_id,com_id AS id,commune_name,CONCAT(commune_name,'-',commune_namekh) AS name,district_id FROM $this->_name WHERE status=1 AND 
+// 	   	commune_name!='' AND district_id=$district_id ORDER BY commune_name ASC";
+// 	   	$db = $this->getAdapter();
+// 	   	return $db->fetchAll($sql);
+//    }
    
    public function getVillage(){
    	$this->_name='ln_village';

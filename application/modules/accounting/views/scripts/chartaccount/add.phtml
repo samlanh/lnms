@@ -17,23 +17,22 @@ $frm = $this->frm_fixedasset;
 				return false;
 			}
 </script>
-<table cellspacing="10" class='fullside'>
+<table class='fullside' style="margin-top: -10px">
 	<tr>
-		<td>
+		<td valign="top">
 				<fieldset>
 					<legend><strong>Form Chart Account</strong></legend>
 					<table cellspacing="10"  width="100%">
 						<tr>
-						     
 							<td>លេខគនេយ្យ</td>
 							<td><?php echo $frm->getElement('account_No')?></td>	
-							<td>ឈ្មោះលេខគនេយ្យ</td>
+							<td>ឈ្មោះលេខគណនេយ្យខ្មែរ</td>
 							<td><?php echo $frm->getElement('account_Name')?></td>
-							<td>ប្រភេទលេខគនេយ្យជាអង់គ្លេស</td>
+							<td>ឈ្មោះលេខគណនេយ្យ(EN)</td>
 							<td><?php echo $frm->getElement('account_Nameen')?></td>
 						</tr>
 						<tr>
-						    ​​​​​​​<td>ប្រភេទលេខគនេយ្យ</td>
+						    ​​​​​​​<td>ប្រភេទលេខគណនេយ្យ</td>
 							<td><?php echo $frm->getElement('account_Type')?></td>
 						    <td>ប្រតិបត្ដិការ</td>
 							<td><?php echo $frm->getElement('none')?></td>
@@ -43,7 +42,7 @@ $frm = $this->frm_fixedasset;
 						</tr>
 						<tr>
 						    <td>ប្រភេទមេ</td>
-							<td><?php echo $frm->getElement('parent')?></td>
+							<td><input id="parent" /><?php //echo $frm->getElement('parent')?></td>
 						    <td>ប្រភេទមេ</td>
 							<td><?php echo $frm->getElement('parents')?></td>
 							
@@ -66,13 +65,57 @@ $frm = $this->frm_fixedasset;
 	</tr>		
 	<tr>
 		<td align="center">
-			<input type="submit" value="រក្សាទុក" label="<?php echo $tr->translate('SAVE');?>" id="submitButton" dojoType="dijit.form.Button"
-				 iconClass="dijitEditorIcon dijitEditorIconSave"/>
+			<input type="reset" label="<?php echo $tr->translate("CLEAR")?>" dojoType="dijit.form.Button"
+				 iconClass="dijitIconClear"/>
+			<input type="submit" label="<?php echo $tr->translate("SAVECLOSE");?>" name='saveclose' value='saveclose' dojoType="dijit.form.Button"
+				 iconClass="dijitIconDelete"/>
+			<input type="submit" label="<?php echo $tr->translate("SAVENEW")?>" name='savenew' value='savenew' dojoType="dijit.form.Button"
+				 iconClass="dijitIconNewTask"/>
 		</td>
 	</tr>	
 </table>
 </form>
 <script type="text/javascript">
-dojo.require("dijit.form.Textarea");
-dojo.require("dijit.form.NumberTextBox");
+dojo.require("dojo.data.ItemFileWriteStore"); 
+dojo.require("dojo.NodeList-manipulate");
+
+var account_store  = getDataStorefromJSON('id','name',[]);
+require(["dojo/ready"], function(ready){
+	 ready(function(){
+		
+	  });
+	new dijit.form.FilteringSelect({
+	store: account_store,
+	autoComplete: true,      
+	required: false,		           
+	name: "parent",
+	id: "parent",
+	searchAttr: "name",
+	class: 'fullside',
+	onChange: function() {
+      }
+	}, "parent");
+
+	});
+var url_getaccount = '<?php echo $this->url(array('module'=>'accounting','controller'=>'chartaccount','action'=>'get-parentaccount')); ?>';
+function getAllParentsAccount(){
+	account_type = dijit.byId('account_Type').get('value');
+	if(account_type==''){
+		return false;
+	}
+	dojo.xhrPost({
+		url:url_getaccount,	
+		content:{ 
+		    'account_type':account_type
+		},		    
+		handleAs:"json",
+		load: function(data) {
+		   account_store  = getDataStorefromJSON('id','name', data);		
+		   dijit.byId('parent').set('store', account_store);
+		},
+		error: function(err) {
+			alert(err);
+		}
+	});
+}
 </script>

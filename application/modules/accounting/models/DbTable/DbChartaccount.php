@@ -105,4 +105,10 @@ function getAllchartaccounts($search=null){
 
 		return $db->fetchAll($sql.$where);
 }
+function getAllParentAccountByid($account_id){
+	$db=$this->getAdapter();
+	$sql="SELECT id,CONCAT(account_name_en,'-',account_name_kh) AS name FROM `ln_account_name` WHERE status =1 
+			     AND option_type=3 AND account_type=$account_id";
+	return $db->fetchAll($sql);
+}
 }

@@ -13,8 +13,6 @@ Class Accounting_Form_FrmGeneraljurnal extends Zend_Dojo_Form {
 				'class'=>'fullside',
 				'required'=>true
 		));
-      		
-      
 		$db = new Application_Model_DbTable_DbGlobal();
 		$rows = $db->getAllBranchName();
 		$options='';
@@ -22,7 +20,19 @@ Class Accounting_Form_FrmGeneraljurnal extends Zend_Dojo_Form {
 			$options[$row['br_id']]=$row['branch_namekh'];
 		}
 		$Brance->setMultiOptions($options);
+      	
+		$parent = new Zend_Dojo_Form_Element_FilteringSelect('parent');
+		$parent->setAttribs(array(
+				'dojoType'=>'dijit.form.FilteringSelect',
+				'class'=>'fullside',
+				'required'=>true,
+				'onchange'=>'getAllAccountNameByParents();'
 		
+		));
+		
+		$db = new Accounting_Model_DbTable_DbChartaccount();
+		$option = $db->getAllchartaccount(3,1);
+		$parent->setMultiOptions($option);
 		
 		$Add_Date = new Zend_Dojo_Form_Element_DateTextBox('add_date');
 		$Add_Date->setAttribs(array(
@@ -50,19 +60,19 @@ Class Accounting_Form_FrmGeneraljurnal extends Zend_Dojo_Form {
 		}
 		$Account_Number->setMultiOptions($opt);
 		
-		$Account_name = new Zend_Dojo_Form_Element_FilteringSelect('account_name');
-		$Account_name->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'class'=>'fullside'
-		));
+// 		$Account_name = new Zend_Dojo_Form_Element_FilteringSelect('account_name');
+// 		$Account_name->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'class'=>'fullside'
+// 		));
 		
-		$opt = '';
-		if(!empty($rows)){
-			foreach($rows as $row){
-				$opt[$row['id']]=$row['account_name_en'];
-			}
-		}
-		$Account_name->setMultiOptions($opt);
+// 		$opt = '';
+// 		if(!empty($rows)){
+// 			foreach($rows as $row){
+// 				$opt[$row['id']]=$row['account_name_en'];
+// 			}
+// 		}
+// 		$Account_name->setMultiOptions($opt);
 		
 		
 		$Note = new Zend_Dojo_Form_Element_TextBox('note');
@@ -85,7 +95,7 @@ Class Accounting_Form_FrmGeneraljurnal extends Zend_Dojo_Form {
 		));
 		$Credit->setValue(0);
 		
-		$this->addElements(array($Add_Date,$Account_Number,$Account_name,$Note,$Debit,$Credit,$Brance));
+		$this->addElements(array($parent,$Add_Date,$Account_Number,$Note,$Debit,$Credit,$Brance));
 		return $this;
 		
 	}	

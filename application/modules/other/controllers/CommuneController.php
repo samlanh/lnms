@@ -60,8 +60,9 @@ class Other_CommuneController extends Zend_Controller_Action {
 		$frm = $fm->FrmAddCommune();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_commune = $frm;
-	 $db= new Application_Model_DbTable_DbGlobal();
-	 $this->view->district = $db->getAllDistricts();	
+// 	 $db= new Application_Model_DbTable_DbGlobal();
+// 	 $this->view->district = $db->getAllDistricts();	
+// 	 print_r($db->getAllDistricts());
 	
 	}
 	public function editAction(){
@@ -86,8 +87,8 @@ class Other_CommuneController extends Zend_Controller_Action {
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_commune = $frm;
 		
-		$db= new Application_Model_DbTable_DbGlobal();
-		$this->view->district = $db->getAllDistricts();
+// 		$db= new Application_Model_DbTable_DbGlobal();
+// 		$this->view->district = $db->getAllDistricts();
 	}
 	public function addNewcommuneAction(){
 		if($this->getRequest()->isPost()){
@@ -99,4 +100,14 @@ class Other_CommuneController extends Zend_Controller_Action {
 			exit();
 		}
 	}
+	/*function getCommuneAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$data['status']=1;
+			$db_com = new Other_Model_DbTable_DbCommune();
+			$id = $db_com->addCommune($data);
+			print_r(Zend_Json::encode($id));
+			exit();
+		}
+	}*/
 }

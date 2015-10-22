@@ -49,7 +49,7 @@ class Tellerandexchange_XchangesController extends Zend_Controller_Action
 			//$this->view->to_date=$session_transfer->to_date;
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
-			echo $e->getMessage();
+			echo $e->getMessage();exit();
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 		$frm = new Application_Form_FrmAdvanceSearch();

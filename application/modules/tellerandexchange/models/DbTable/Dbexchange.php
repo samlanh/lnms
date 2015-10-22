@@ -92,7 +92,7 @@ class Tellerandexchange_Model_DbTable_Dbexchange extends Zend_Db_Table_Abstract
 		$to_date = (empty($search['to_date']))? '1': "e.statusDate <= '".$search['to_date']." 23:59:59'";
 		$where = " WHERE ".$from_date." AND ".$to_date;
 		if($search['user_id']>0){
-			$where.=" AND user_id = ".$search['user_id'];
+			$where.=" AND e.userid = ".$search['user_id'];
 		}
 		$sql = "SELECT
 		e.`id`,

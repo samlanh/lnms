@@ -34,11 +34,17 @@ Class Accounting_Form_Frmincome extends Zend_Dojo_Form {
 		$_branch_id = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
 		$_branch_id->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
+				'required' =>'true',
 				'class'=>'fullside',
-				'required' =>'true'
-			  
+				'onchange'=>'filterClient();'
 		));
-		$options= array(1=>"សាខា កណ្តាល",2=>"សាខា ទី១");
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$rows = $db->getAllBranchName();
+		$options=array(''=>'---Select Branch---');
+		if(!empty($rows))foreach($rows AS $row){
+			$options[$row['br_id']]=$row['branch_namekh'];
+		}
 		$_branch_id->setMultiOptions($options);
 		
 		$_stutas = new Zend_Dojo_Form_Element_FilteringSelect('Stutas');

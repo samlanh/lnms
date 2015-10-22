@@ -30,18 +30,20 @@ Class Accounting_Form_Frmexpense extends Zend_Dojo_Form {
 		));
 		$_Date->setValue(date('Y-m-d'));
 		
-		
-
-		
-		
-        $_branch_id = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
+		$_branch_id = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
 		$_branch_id->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
+				'required' =>'true',
 				'class'=>'fullside',
-				'required' =>'true' 
-	    
+				'onchange'=>'filterClient();'
 		));
-		$options= array(1=>"សាខា កណ្តាល",2=>"សាខា ទី១");
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$rows = $db->getAllBranchName();
+		$options=array(''=>'---Select Branch---');
+		if(!empty($rows))foreach($rows AS $row){
+			$options[$row['br_id']]=$row['branch_namekh'];
+		}
 		$_branch_id->setMultiOptions($options);
 		
 		
@@ -80,9 +82,6 @@ Class Accounting_Form_Frmexpense extends Zend_Dojo_Form {
 			$_Date->setValue($data['date']);
 			$_stutas->setValue($data['status']);
 			$id->setValue($data['id']);
-			
-				
-			
 		}
 		
 		$this->addElements(array($account_id,$_Date ,$_stutas,$_Description,
