@@ -554,7 +554,6 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       	}
       	//$where='';
       	$order = " ORDER BY currency_type";
-      	print_r( $db->fetchAll($sql.$where.$order));
       	return $db->fetchAll($sql.$where.$order);
       }
       public function getALLLoanPayoff($search=null){
@@ -612,7 +611,6 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       
       	//$where='';
       	$order = " ORDER BY currency_type";
-      	echo $sql.$where.$order;
       	return $db->fetchAll($sql.$where.$order);
       }
       public function getALLLoanExpectIncome($search=null){
