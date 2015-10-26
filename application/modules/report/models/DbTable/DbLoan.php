@@ -390,7 +390,7 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
     	}
     	
     	if(!empty($search['start_date']) or !empty($search['end_date'])){
-    		$where.=" AND date_payment BETWEEN '$start_date' AND '$end_date'";
+    		$where.=" AND date_input BETWEEN '$start_date' AND '$end_date'";
     	}
     	if($search['client_name']>0){
     		$where.=" AND client_id = ".$search['client_name'];
@@ -404,7 +404,6 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
     	//$where='';
     	$order="";
 //     	$order = " ORDER BY lcrm.currency_type";
-    	//echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
       }
       
@@ -534,27 +533,28 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
 // 				g.date_release
 // 				FROM ln_loan_member AS m, `ln_loan_group` AS g WHERE m.group_id = g.g_id AND m.`status`=1";
 		$where ='';
-//       	if(!empty($search['advance_search'])){
-//       		//print_r($search);
-//       		$s_where = array();
-//       		$s_search = $search['advance_search'];
-//       		$s_where[] = "m.loan_number LIKE '%{$s_search}%'";
-//       		$s_where[] = "m.admin_fee LIKE '%{$s_search}%'";
-//       		$s_where[] = "m.other_fee LIKE '%{$s_search}%'";
-//       		$where .=' AND ('.implode(' OR ',$s_where).')';
-//       	}
-//       	if($search['branch_id']>0){
-//       		$where.=" AND m.`branch_id`= ".$search['branch_id'];
-//       	}
+      	if(!empty($search['advance_search'])){
+      		$s_where = array();
+      		$s_search = addslashes(trim($search['advance_search']));
+      		$s_where[] = " loan_number LIKE '%{$s_search}%'";
+      		$s_where[] = " client_name LIKE '%{$s_search}%'";
+      		$s_where[] = " total_capital LIKE '%{$s_search}%'";
+      		$s_where[] = " admin_fee LIKE '%{$s_search}%'";
+      		$s_where[] = " other_fee LIKE '%{$s_search}%'";
+      		$where .=' AND ('.implode(' OR ',$s_where).')';
+      	}
+      	if($search['branch_id']>0){
+      		$where.=" AND `branch_id`= ".$search['branch_id'];
+      	}
 //       	if($search['status']!=""){
-//       		$where.= " AND m.status = ".$search['status'];
+//       		$where.= " AND status = ".$search['status'];
 //       	}
-//       	if(!empty($search['start_date']) or !empty($search['end_date'])){
-//       		$where.=" AND g.date_release BETWEEN '$start_date' AND '$end_date'";
-//       	}
+      	if(!empty($search['start_date']) or !empty($search['end_date'])){
+      		$where.=" AND date_release BETWEEN '$start_date' AND '$end_date'";
+      	}
       	//$where='';
       	$order = " ORDER BY currency_type";
-      	//echo $sql.$where.$order;
+      	print_r( $db->fetchAll($sql.$where.$order));
       	return $db->fetchAll($sql.$where.$order);
       }
       public function getALLLoanPayoff($search=null){

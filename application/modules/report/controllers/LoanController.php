@@ -496,15 +496,7 @@ function rptPaymentschedulesAction(){
  	$key = new Application_Model_DbTable_DbKeycode();
  	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
  	if($this->getRequest()->isPost()){
- 	$search = $this->getRequest()->getPost();
- 	if(isset($search['btn_submit'])){
-  			$this->view->LoanCollectionco_list =$db->getALLLoanIcome($search);
-  			$this->view->LoanFee_list =$db->getALLLFee($search);
- 	}else {
- 	$collumn = array("id","branch","co_name","receipt_no","loan_number","team_group","total_principal_permonth"
-  				,"total_interest","penalize_amount","amount_payment","service_charge","date_pay"	);
-   						$this->exportFileToExcel('ln_client_receipt_money',$db->getALLLoanIcome(),$collumn);
- 	}
+ 		$search = $this->getRequest()->getPost();
  	}else{
  	$search = array(
  	'adv_search' => '',
@@ -515,9 +507,11 @@ function rptPaymentschedulesAction(){
 				'co_id'		=> -1,
 				'paymnet_type'	=> -1,
  			'status'=>"",);
-			$this->view->LoanCollectionco_list =$db->getALLLoanIcome($search);
-			$this->view->LoanFee_list =$db->getALLLFee($search);
+			
  	}
+ 	$this->view->LoanCollectionco_list =$db->getALLLoanIcome($search);
+ 	$this->view->LoanFee_list =$db->getALLLFee($search);
+ 	
  	$this->view->list_end_date=$search;
  	$frm = new Loan_Form_FrmSearchGroupPayment();
  	$fm = $frm->AdvanceSearch();
