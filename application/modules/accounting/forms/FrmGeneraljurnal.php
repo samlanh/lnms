@@ -7,15 +7,22 @@ Class Accounting_Form_FrmGeneraljurnal extends Zend_Dojo_Form {
 	}
 	public function FrmGeneraljurnal($data=null){
 		
-		$Brance = new Zend_Dojo_Form_Element_FilteringSelect('brance');
+		$Brance = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
 		$Brance->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-				'required'=>true
+				'required'=>true,
+				'onchange'=>'getJurnalcode();'
 		));
 		$db = new Application_Model_DbTable_DbGlobal();
 		$rows = $db->getAllBranchName();
 		$options='';
+		if(!empty($rows))foreach($rows AS $row){
+			$options[$row['br_id']]=$row['branch_namekh'];
+		}
+		
+		$rows = $db->getAllBranchName();
+		$options=array(''=>'---Select Branch---');
 		if(!empty($rows))foreach($rows AS $row){
 			$options[$row['br_id']]=$row['branch_namekh'];
 		}
@@ -43,22 +50,23 @@ Class Accounting_Form_FrmGeneraljurnal extends Zend_Dojo_Form {
 		$Add_Date->setValue(date('Y-m-d'));
 		
 		
-		$Account_Number=new Zend_Dojo_Form_Element_FilteringSelect('account_number');
+		$Account_Number=new Zend_Dojo_Form_Element_TextBox('journal_code');
 		$Account_Number->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
+				'dojoType'=>'dijit.form.TextBox',
 				'class'=>'fullside',
+				'readOnly'=>'readOnly',
 				'required'=>'true'
 		));
 		$db= new Application_Model_DbTable_DbGlobal();
-		$sql="SELECT id,account_name_en,account_code FROM ln_account_name WHERE status=1";
-		$rows = $db->getGlobalDb($sql);
-		$opt = '';
-		if(!empty($rows)){
-			foreach($rows as $row){
-				$opt[$row['id']]=$row['account_code'];
-			}
-		}
-		$Account_Number->setMultiOptions($opt);
+// 		$sql="SELECT id,account_name_en,account_code FROM ln_account_name WHERE status=1";
+// 		$rows = $db->getGlobalDb($sql);
+// 		$opt = '';
+// 		if(!empty($rows)){
+// 			foreach($rows as $row){
+// 				$opt[$row['id']]=$row['account_code'];
+// 			}
+// 		}
+// 		$Account_Number->setMultiOptions($opt);
 		
 // 		$Account_name = new Zend_Dojo_Form_Element_FilteringSelect('account_name');
 // 		$Account_name->setAttribs(array(
@@ -84,14 +92,16 @@ Class Accounting_Form_FrmGeneraljurnal extends Zend_Dojo_Form {
 		$Debit = new Zend_Dojo_Form_Element_TextBox('debit');
 		$Debit->setAttribs(array(
 				'dojoType'=>'dijit.form.TextBox',
-				'class'=>'fullside'
+				'class'=>'fullside',
+				'readonly'=>'readonly'
 		));
 		$Debit->setValue(0);
 		
 		$Credit = new Zend_Dojo_Form_Element_TextBox('credit');
 		$Credit->setAttribs(array(
 				'dojoType'=>'dijit.form.TextBox',
-				'class'=>'fullside'
+				'class'=>'fullside',
+				'readonly'=>'readonly'
 		));
 		$Credit->setValue(0);
 		

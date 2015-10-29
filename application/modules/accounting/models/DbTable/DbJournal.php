@@ -73,10 +73,61 @@ class Accounting_Model_DbTable_DbJournal extends Zend_Db_Table_Abstract
 		}
 		
 	}
-	function getAllAccountByParrents($parents){
+	function getAllAccountByParrents($parents='',$opt=null){
 		$db=$this->getAdapter();
 		$sql = "SELECT id,account_code,CONCAT(account_name_en,'-',account_name_kh,'-',account_code) AS name FROM `ln_account_name` WHERE STATUS =1 AND 
-				option_type=1 AND parent_id = $parents ";
-		return $db->fetchAll($sql);
+				option_type=1 ";
+		if($parents!=''){
+			$sql.=" AND parent_id =".$parents;
+		}
+		$row= $db->fetchAll($sql);
+		
+		if($opt!=null){
+			$option = '';
+			foreach($row as $r){
+				$option .= '<option value="'.$r['id'].'">'.htmlspecialchars($r['name'], ENT_QUOTES).'</option>';
+			}
+			return $option;
+		}else{
+			return $row;
+		}
+	}
+	function getAllParrentAccount($opt = null,$type=3){
+		$db=$this->getAdapter();
+		$sql = "SELECT id,account_code,CONCAT(account_name_en,'-',account_name_kh,'-',account_code) AS name FROM `ln_account_name` WHERE STATUS =1 AND
+		option_type=$type";
+		$rows = $db->fetchAll($sql);
+		if($opt!=null){
+			$option = '<option value="">--- Select ---</option>';
+			   	foreach($rows as $row){
+			   			
+			   		$option .= '<option value="'.$row['id'].'">'.htmlspecialchars($row['name'], ENT_QUOTES).'</option>';
+			   	}
+			   	return $option;
+			
+		}else{
+			return $rows;
+		}
+		
+	}
+	function getJEntryCode($branch_id){
+		$db=$this->getAdapter();
+		$sql = "SELECT COUNT(id) FROM `ln_journal` WHERE branch_id= $branch_id ";
+		
+		$acc_no = $db->fetchOne($sql);
+		$new_acc_no= (int)$acc_no+1;
+		$acc_no= strlen((int)$acc_no+1);
+		$pre = $this->getPrefixCode($branch_id)."J";
+		
+		for($i = $acc_no;$i<5;$i++){
+			$pre.='0';
+		}
+		return $pre.$new_acc_no;
+		
+	}
+	function getPrefixCode($branch_id){
+		$db  = $this->getAdapter();
+		$sql = " SELECT prefix FROM `ln_branch` WHERE br_id = $branch_id  LIMIT 1";
+		return $db->fetchOne($sql);
 	}
 }

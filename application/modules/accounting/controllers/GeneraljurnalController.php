@@ -11,6 +11,10 @@ class accounting_GeneraljurnalController extends Zend_Controller_Action {
 		$frm = $fm->FrmGeneraljurnal();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_fixedasset = $frm;
+		$db = new Accounting_Model_DbTable_DbJournal();
+		$this->view->row_parents = $db->getAllParrentAccount(1);
+		$this->view->row_accountname = $db->getAllParrentAccount(1,1);
+		
 	}
 	public function indexAction(){
 		if($this->getRequest()->isPost()){
@@ -23,7 +27,25 @@ class accounting_GeneraljurnalController extends Zend_Controller_Action {
 		}
 		
 	}
-	function getParentaccountAction(){
+	function getJcodeAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Accounting_Model_DbTable_DbJournal();
+			$acc_names = $db->getJEntryCode($data['branch_id']);
+			print_r(Zend_Json::encode($acc_names));
+			exit();
+		}
+	}
+	function getParentptionAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Accounting_Model_DbTable_DbJournal();
+			$option = $db->getAllAccountByParrents($data['parent'],1);
+			print_r(Zend_Json::encode($option));
+			exit();
+		}
+	}
+	function getParentaccountAction(){//2 request
 		if($this->getRequest()->isPost()){
 			$data = $this->getRequest()->getPost();
 			$db = new Accounting_Model_DbTable_DbJournal();
