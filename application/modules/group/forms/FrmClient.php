@@ -162,22 +162,22 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 		));
-		$opt_client_d_type= $db->getVewOptoinTypeByType(23,1);
-		$client_d_type->setMultiOptions($opt_client_d_type);
+// 		$opt_client_d_type= $db->getVewOptoinTypeByType(23,1);
+// 		$client_d_type->setMultiOptions($opt_client_d_type);
 		
 		$join_d_type = new Zend_Dojo_Form_Element_FilteringSelect('join_d_type');
 		$join_d_type->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 		));
-		$join_d_type->setMultiOptions($opt_client_d_type);
+// 		$join_d_type->setMultiOptions($opt_client_d_type);
 		
 		$guarantor_d_type = new Zend_Dojo_Form_Element_FilteringSelect('guarantor_d_type');
 		$guarantor_d_type->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 		));
-		$guarantor_d_type->setMultiOptions($opt_client_d_type);
+// 		$guarantor_d_type->setMultiOptions($opt_client_d_type);
 		
 		$guarantor_address = new Zend_Dojo_Form_Element_TextBox('guarantor_address');
 		$guarantor_address->setAttribs(array(
@@ -203,10 +203,10 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 		
 		
 		$_district = new Zend_Dojo_Form_Element_FilteringSelect('district');
-		$rows =  $db->getAllDistrict();
-		$options=array(''=>"------Select------",-1=>"Add New");
-		if(!empty($rows))foreach($rows AS $row) $options[$row['dis_id']]=$row['district_name'];
-		$_district->setMultiOptions($options);
+// 		$rows =  $db->getAllDistrict();
+// 		$options=array(''=>"------Select------",-1=>"Add New");
+// 		if(!empty($rows))foreach($rows AS $row) $options[$row['dis_id']]=$row['district_name'];
+// 		$_district->setMultiOptions($options);
 		$_district->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
@@ -214,9 +214,9 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 		));
 		
 		$_commune = new Zend_Dojo_Form_Element_FilteringSelect('commune');
-		$rows =  $db->getCommune();
+// 		$rows =  $db->getCommune();
 		$options=array(''=>"------Select------",-1=>"Add New");
-		if(!empty($rows))foreach($rows AS $row) $options[$row['com_id']]=$row['commune_name'];
+// 		if(!empty($rows))foreach($rows AS $row) $options[$row['com_id']]=$row['commune_name'];
 		$_commune->setMultiOptions($options);
 		$_commune->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
@@ -249,14 +249,14 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 				//'required' =>'true'
 		));
 		
-		$_id_type = new Zend_Dojo_Form_Element_FilteringSelect('id_type');
-		$_id_type->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'class'=>'fullside',
-				'required' =>'true'
-		));
-		$rows =  $db->GetAllIDType();
-		$_id_type->setMultiOptions($rows);
+// 		$_id_type = new Zend_Dojo_Form_Element_FilteringSelect('id_type');
+// 		$_id_type->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'class'=>'fullside',
+// 				'required' =>'true'
+// 		));
+// 		$rows =  $db->GetAllIDType();
+// 		$_id_type->setMultiOptions($rows);
 		
 		$_id_no = new Zend_Dojo_Form_Element_TextBox('id_no');
 		$_id_no->setAttribs(array(
@@ -305,8 +305,8 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 		));
 // 		$_id=new Zend_Form_Element_Hidden('id');
 		$_id = new Zend_Form_Element_Hidden("id");
-		$_desc = new Zend_Dojo_Form_Element_Textarea('desc');
-		$_desc->setAttribs(array('dojoType'=>'dijit.form.SimpleTextarea','class'=>'fullside',
+		$_desc = new Zend_Dojo_Form_Element_TextBox('desc');
+		$_desc->setAttribs(array('dojoType'=>'dijit.form.TextBox','class'=>'fullside',
 				'style'=>'width:96%;min-height:50px;'));
 		
 		$_status=  new Zend_Dojo_Form_Element_FilteringSelect('status');
@@ -332,7 +332,7 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 			$_village->setValue($data['village_id']);
 			$_house->setValue($data['house']);
 			$_street->setValue($data['street']);
-			$_id_type->setValue($data['id_type']);
+// 			$_id_type->setValue($data['id_type']);
 			$_id_no->setValue($data['id_number']);
 			$_phone->setValue($data['phone']);
 			$_spouse->setValue($data['spouse_name']);
@@ -362,7 +362,7 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 // 			print_r($data);
 		}
 		$this->addElements(array($client_d_type,$join_d_type,$guarantor_d_type,$guarantor_address,$_relate_tel,$_guarantor_tel,$_guarantor_with,$_releted,$_join_nation_id,$_join_with,$spouse_nationid,$_id,$photo,$_spouse,$job,$national_id,$chackcall,$_group_code,$_branch_id,$_member,$_group,$_namekh,$_nameen,$_sex,$_situ_status,
-				$_province,$_district,$_commune,$_village,$_house,$_street,$_id_type,$_id_no,
+				$_province,$_district,$_commune,$_village,$_house,$_street,$_id_no,
 				$_phone,$_spouse,$_desc,$_status,$_clientno,$_dob,$dob_join_acc,$_dob_Guarantor,$clienttype_namekh,$clienttype_nameen));
 		return $this;
 		

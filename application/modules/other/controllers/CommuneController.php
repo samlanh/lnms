@@ -100,6 +100,16 @@ class Other_CommuneController extends Zend_Controller_Action {
 			exit();
 		}
 	}
+      function getCommuneAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Other_Model_DbTable_DbCommune();
+			$rows = $db->getCommuneBydistrict($data['district_id']);
+			array_unshift($rows, array ( 'id' => -1, 'name' => 'បន្ថែម​អ្នក​ទទួល​ថ្មី') );
+			print_r(Zend_Json::encode($rows));
+			exit();
+		}
+	}
 	/*function getCommuneAction(){
 		if($this->getRequest()->isPost()){
 			$data = $this->getRequest()->getPost();

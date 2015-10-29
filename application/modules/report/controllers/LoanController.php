@@ -99,7 +99,7 @@ function rptLoanDisburseAction(){//release all loan
   	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
   	if (!empty($id)){
   		$this->view->loanmember_list =$db->getALLGroupDisburse($id);
-  		print_r($db->getALLGroupDisburse($id));
+  		//print_r($db->getALLGroupDisburse($id));
     }
   }
  

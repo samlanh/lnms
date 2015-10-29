@@ -41,8 +41,17 @@ class Group_ChangecollteralController extends Zend_Controller_Action {
 				$from_array='';
 				$to_array='';
 				foreach($rows as $key =>$row){
-					$from_array.=$row['from_collateral']. ' ,';
-					$to_array.=$row['collateral']. ' ,';
+//
+                                        if(!empty($rows[$key+1])){
+                                                $to_array.=$row['collateral']. ' ,';
+                                                $from_array.=$row['from_collateral']. ' ,';
+					}else{
+                                                $to_array.=$row['collateral'];
+                                                $from_array.=$row['from_collateral'];
+					}
+					
+
+//
 				}
 				$arr[$index]['from']=$from_array;
 				$arr[$index]['to']=$to_array;

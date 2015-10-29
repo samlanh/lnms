@@ -270,24 +270,21 @@ class Application_Form_FrmPopupGlobal extends Zend_Dojo_Form
 	}
 	public function frmPopupCommune(){
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$frm = new Other_Form_FrmCommune();
-		$frm = $frm->FrmAddCommune();
-		Application_Model_Decorator::removeAllDecorator($frm);
 		$str='<div class="dijitHidden">
 				<div data-dojo-type="dijit.Dialog"  id="frm_commune" >
 					<form id="form_commune" >';
 			$str.='<table style="margin: 0 auto; width: 100%;" cellspacing="7">
 					<tr>
 						<td>Commune Name EN</td>
-						<td>'.$frm->getElement('commune_nameen').'</td>
+						<td>'.'<input dojoType="dijit.form.ValidationTextBox" required="true" class="fullside" id="commune_nameen" name="commune_nameen" value="" type="text">'.'</td>
 					</tr>
 					<tr>
 						<td>Commune KH</td>
-						<td>'.$frm->getElement('commune_namekh').'</td>
+						<td>'.'<input dojoType="dijit.form.ValidationTextBox" required="true" class="fullside" id="commune_namekh" name="commune_namekh" value="" type="text">'.'</td>
 					</tr>
 					<tr>
-						<td>District Name</td>
-						<td>'.$frm->getElement('district_nameen').'</td>
+						<td></td>
+						<td>'.'<input dojoType="dijit.form.TextBox" required="true" class="fullside" id="district_nameen" name="district_nameen" value="" type="hidden">'.'</td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
@@ -302,9 +299,6 @@ class Application_Form_FrmPopupGlobal extends Zend_Dojo_Form
 	}
 	public function frmPopupVillage(){
 		$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-		$frm = new Other_Form_FrmVillage();
-		$frm = $frm->FrmAddVillage();
-		Application_Model_Decorator::removeAllDecorator($frm);
 		$str='<div class="dijitHidden">
 				<div data-dojo-type="dijit.Dialog"  id="frm_village" >
 					<form id="form_village" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
@@ -319,32 +313,24 @@ class Application_Form_FrmPopupGlobal extends Zend_Dojo_Form
 		$str.='<table style="margin: 0 auto; width: 95%;" cellspacing="10">
 					    <tr>
 							<td>'.$tr->translate("VILLAGE_KH").'</td>
-							<td>'.$frm->getElement('village_namekh').'</td>
+							<td>'.'<input dojoType="dijit.form.ValidationTextBox" required="true" missingMessage="Invalid Module!" class="fullside" id="village_namekh" name="village_namekh" value="" type="text">'.'</td>
 						</tr>
 						<tr>
 							<td>'.$tr->translate("VILLAGE_NAME").'</td>
-							<td>'.$frm->getElement('village_name').'</td>
+							<td>'.'<input dojoType="dijit.form.ValidationTextBox" required="true" missingMessage="Invalid Module!" class="fullside" id="village_name" name="village_name" value="" type="text">'.'</td>
 						</tr>
 						<tr>
 							<td>'. $tr->translate("DISPLAY_BY").'</td>
-							<td>'.$frm->getElement('display').'</td>
+							<td>'.'<select name="display" id="display" dojoType="dijit.form.FilteringSelect" class="fullside">
+									    <option value="1" label="Name KH">Name KH</option>
+									    <option value="2" label="Name EN">Name EN</option>
+									</select>'.'</td>
 						</tr>
 						<tr>
-							<td>'.$tr->translate("PROVINCE_NAME").'</td>
-							<td>'. $frm->getElement('province_name').'</td>
-						</tr>
-						<tr>
-							<td>'.$tr->translate("DISTRICT_NAME").'</td>
-							<td>'.$frm->getElement('district_name').'
-							</td>
-						</tr>
-						<tr>
-							<td>'.$tr->translate("COMMUNE_NAME").'</td>
-							<td>'.$frm->getElement('commune_name').'</td>
-						</tr>
-						<tr>
-							<td>'.$tr->translate("STATUS").'</td>
-							<td>'.$frm->getElement('statusd').'</td>
+							<td>'.'<input dojoType="dijit.form.TextBox" class="fullside" id="province_name" name="province_name" value="" type="hidden">
+								<input dojoType="dijit.form.TextBox" id="district_name" name="district_name" value="" type="hidden">
+							'.'</td>
+							<td>'.'<input dojoType="dijit.form.TextBox" id="commune_name" name="commune_name" value="" type="hidden">'.'</td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center">

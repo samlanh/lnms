@@ -48,7 +48,7 @@ class Other_VillageController extends Zend_Controller_Action {
 	}
 	public function addAction(){
 		if($this->getRequest()->isPost()){
-			$db = new Other_Model_DbTable_DbVillage();
+			$db = new Other_Model_DbTable_Dbvillage();
 			$_data = $this->getRequest()->getPost();
 			try{
 				$db->addVillage($_data);
@@ -73,7 +73,7 @@ class Other_VillageController extends Zend_Controller_Action {
 		$this->view->commune_name = $db->getCommune();
 	}
 	public function editAction(){
-		$db = new Other_Model_DbTable_DbVillage();
+		$db = new Other_Model_DbTable_Dbvillage();
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			try{
@@ -106,7 +106,7 @@ class Other_VillageController extends Zend_Controller_Action {
 			$data = $this->getRequest()->getPost();
 			$data['status']=1;
 			$data['commune_name']=$data['popup_commune_name'];
-			$db_vill = new Other_Model_DbTable_DbVillage();
+			$db_vill = new Other_Model_DbTable_Dbvillage();
 			$id = $db_vill->addVillage($data);
 			print_r(Zend_Json::encode($id));
 			exit();
@@ -116,9 +116,19 @@ class Other_VillageController extends Zend_Controller_Action {
 		if($this->getRequest()->isPost()){
 			$data = $this->getRequest()->getPost();
 			$data['status']=1;
-			$db_vill = new Other_Model_DbTable_DbVillage();
+			$db_vill = new Other_Model_DbTable_Dbvillage();
 			$id = $db_vill->addVillageByAjax($data);
 			print_r(Zend_Json::encode($id));
+			exit();
+		}
+	}
+      function getAllvillageAction(){
+		if($this->getRequest()->isPost()){
+			$data = $this->getRequest()->getPost();
+			$db = new Other_Model_DbTable_Dbvillage();
+			$rows = $db->getAllvillagebyCommune($data['commune_id']);
+			array_unshift($rows, array ( 'id' => -1, 'name' => 'បន្ថែម​អ្នក​ទទួល​ថ្មី') );
+			print_r(Zend_Json::encode($rows));
 			exit();
 		}
 	}

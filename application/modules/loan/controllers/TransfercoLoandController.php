@@ -1,5 +1,5 @@
 <?php
-class Loan_TransfercoLoandController extends Zend_Controller_Action {
+class Loan_TransfercoloandController extends Zend_Controller_Action {
 	
 	public function init()
 	{

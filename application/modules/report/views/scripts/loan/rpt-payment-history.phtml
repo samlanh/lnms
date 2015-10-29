@@ -111,7 +111,7 @@ th{padding: 5px;}
 	                <?php }?>
                 
                 <?php //if(!empty($this->loantotalcollect_list)) foreach ($this->loantotalcollect_list as $index => $rs){ ?>
-                <?php $balance=$rs["amount_payment"]-$rs["total_payment"];?>
+                <?php $balance=$rs["total_payment"]-($rs["recieve_amount"]-$rs["return_amount"]);//$rs["total_payment"];?>
                  <?php 
 		               if($rs['currency_type']==1){
 		               		$principle_r = $principle_r+$rs['total_principal_permonth'];
@@ -141,23 +141,16 @@ th{padding: 5px;}
                 <tr class="style" style="font-family: 'Khmer OS Content';">
                		<td style="text-align: center;">&nbsp;<?php echo $i++; ?>&nbsp;</td>
                		<td>&nbsp;&nbsp;<?php echo $rs["branch_name"];?></td>
-               		
-               		               		
-               		
-               		
                		<td>&nbsp;&nbsp;<?php echo number_format( $rs["total_principal_permonth"],2).' '.$rs['currency_typeshow'];?></td>               		
                		<td>&nbsp;&nbsp;<?php echo number_format($rs["total_interest"],2).' '.$rs['currency_typeshow'];?></td>
-               		
                		<td>&nbsp;&nbsp;<?php echo number_format($rs["penalize_amount"],2).' '.$rs['currency_typeshow'];?></td>
                		<td>&nbsp;&nbsp;<?php echo number_format($rs["service_charge"],2).' '.$rs['currency_typeshow'];?></td>
                		<td>&nbsp;&nbsp;<?php echo number_format($rs["total_payment"],2);?>
                		<td>&nbsp;&nbsp;<?php echo $rs["date_pay"];?></td>
                		<td>&nbsp;&nbsp;<?php echo $rs["receipt_no"];?></td>
-               		
-               		</td>
-               		<td>&nbsp;&nbsp;<?php echo number_format($rs["amount_payment"],2);?></td>
+               		<td>&nbsp;&nbsp;<?php echo number_format(($rs["recieve_amount"]-$rs["return_amount"]),2);?></td>
                		<td>&nbsp;&nbsp;<?php echo number_format($rs["return_amount"],2);?></td>
-               		<td>&nbsp;&nbsp;<?php   if($balance<0){echo '('.abs($balance).')';}else {echo $balance=0;};?></td>
+               		<td>&nbsp;&nbsp;<?php  if($balance<0){echo '('.abs($balance).')';}else {echo $balance;};?></td>
                		<td>&nbsp;&nbsp;<?php echo $rs["date_input"];?></td>
                 </tr>
                 <?php }}?>
@@ -180,7 +173,7 @@ th{padding: 5px;}
                     <td colspan="2">&nbsp;<?php echo number_format($interst_d,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($penalize_d,2);?>&nbsp;</td>
 					<td colspan="2">&nbsp;<?php echo number_format($service_charge_d,2);?>&nbsp;</td>
-               		<td colspan="2">&nbsp;<?php if($balane_d<0){echo '('.abs($balane_d).')';}else {echo $balane_d=0;};?>&nbsp;</td>
+               		<td colspan="2">&nbsp;<?php if($balane_d<0){echo '('.abs($balane_d).')';}else {echo $balane_d;};?>&nbsp;</td>
                 </tr>
                 <tr class="style" style=" line-height: 24px; font-size:11px;font-family: 'Khmer OS Content';">
                     <td colspan="2">&nbsp;<?php echo $tr->translate("REILS");?></td>
@@ -188,7 +181,7 @@ th{padding: 5px;}
                     <td colspan="2">&nbsp;<?php echo number_format($interst_r,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($penalize_r,2);?>&nbsp;</td>
 					<td colspan="2">&nbsp;<?php echo number_format($service_charge_r,2);?>&nbsp;</td>
-               		<td colspan="2">&nbsp;<?php  if($balane_r<0){echo '('.abs($balane_r).')';}else {echo $balane_r=0;};?>&nbsp;</td>
+               		<td colspan="2">&nbsp;<?php if($balane_r<0){echo '('.abs($balane_r).')';}else {echo $balane_r;};?>&nbsp;</td>
                 </tr>
                 <tr class="style" style=" line-height: 24px; font-size:11px;font-family: 'Khmer OS Content';">
                     <td colspan="2">&nbsp;<?php echo $tr->translate("BATH");?></td>
@@ -196,7 +189,7 @@ th{padding: 5px;}
                     <td colspan="2">&nbsp;<?php echo number_format($interst_b,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($penalize_b,2);?>&nbsp;</td>
 					<td colspan="2">&nbsp;<?php echo number_format($service_charge_b,2);?>&nbsp;</td>
-               		<td colspan="2">&nbsp;<?php if($balane_b<0){echo '('.abs($balane_b).')';}else {echo $balane_b=0;};?>&nbsp;</td>
+               		<td colspan="2">&nbsp;<?php echo $balane_b; if($balane_b<0){echo '('.abs($balane_b).')';}else {echo $balane_b=0;};?>&nbsp;</td>
                 </tr>
                 
             </table>

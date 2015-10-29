@@ -150,7 +150,7 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       		$where .=' AND '.implode(' OR ',$s_where).'';
       	
       	}
-      	echo $sql.$where.$Other;
+      	//echo $sql.$where.$Other;
       	return $db->fetchAll($sql.$where.$Other);
       }
      
@@ -349,7 +349,7 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       		$where .=' AND '.implode(' OR ',$s_where).'';
       	}
       	$order=" ORDER BY date_input DESC ";
-      	echo $sql.$where.$order;
+      	//echo $sql.$where.$order;
       	return $db->fetchAll($sql.$where.$order);
       }
       public function getALLLoanIcome($search=null){
@@ -743,7 +743,7 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       		$where .=' AND ('.implode(' OR ',$s_where).' )';
       	}
 //       	$order = ' ORDER BY `cash_type` ';
-echo $sql.$where;
+//echo $sql.$where;
       	return $db->fetchAll($sql.$where);
       }
       public function getALLNPLLoan($search=null){
@@ -852,7 +852,7 @@ echo $sql.$where;
       		$s_where[] = " loan_type LIKE '%{$s_search}%'";
       		$where .=' AND '.implode(' OR ',$s_where).'';
       	}
-      	echo $sql.$where;
+      	//echo $sql.$where;
       	return $db->fetchAll($sql.$where);
       }
       public function getAllLoanByCo($search=null){
@@ -928,7 +928,7 @@ echo $sql.$where;
       		$s_where[] = " lm.total_capital LIKE '%{$s_search}%'";
       		$where .=' AND ('.implode(' OR ',$s_where).')';
       	}
-       	echo $sql.$where.$group_by.$order;
+       	//echo $sql.$where.$group_by.$order;
       	return $db->fetchAll($sql.$where.$group_by.$order);
       }
       public function getAllTransferoan($search = null){//rpt-loan-released/

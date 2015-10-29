@@ -117,7 +117,7 @@ class Loan_Model_DbTable_DbBadloan extends Zend_Db_Table_Abstract
     }
     function getbadloanbyid($id){
     	$db = $this->getAdapter();
-    	$sql="SELECT id,branch,client_code,client_name,number_code,date,loss_date,cash_type,total_amount,intrest_amount
+    	$sql="SELECT id,branch,client_code,client_name,loan_number AS number_code,date,loss_date,cash_type,total_amount,intrest_amount
     	,tem,note,status FROM  $this->_name where id=$id AND status = 1";
     	return $db->fetchRow($sql);
     }

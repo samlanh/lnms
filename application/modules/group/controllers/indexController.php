@@ -98,8 +98,6 @@ class Group_indexController extends Zend_Controller_Action {
 			}
 		}
 		$db = new Application_Model_DbTable_DbGlobal();
-		$this->view->allclient = $db->getAllClient();// for filter
-		$this->view->allclient_number = $db->getAllClientNumber();//for filter
 		
 		$client_type = $db->getclientdtype();
 		array_unshift($client_type,array(
@@ -107,27 +105,6 @@ class Group_indexController extends Zend_Controller_Action {
 		'name' => '---Add New ---',
 		 ) );
 		$this->view->clienttype = $client_type;
-		
-		$districts = $db->getAllDistricts();
-		array_unshift($districts,array(
-		'id' => -1,
-		'name' => '---Add New ---',
-		'pro_id' => -1 ) );
-		$this->view->district = $districts;
-
-		$commune = $db->getCommune();
-		array_unshift($commune,array(
-		'id' => -1,
-		'name' => '---Add New ---',
-		'district_id' => -1 ) );
-		$this->view->commune_name = $commune;
-		
-		$village = $db->getVillage();
-		array_unshift($village,array( 
-				'id' => -1, 
-			    'name' => '---Add New Village Name---',
-				'commune_id' => -1 ) );
-		$this->view->village_name =$village;
 		
 		$fm = new Group_Form_FrmClient();
 		
@@ -143,9 +120,7 @@ class Group_indexController extends Zend_Controller_Action {
 		
 	}
 	public function editAction(){
-		
 		$db = new Group_Model_DbTable_DbClient();
-		
 		if($this->getRequest()->isPost()){
 			try{
 				$data = $this->getRequest()->getPost();
@@ -164,7 +139,7 @@ class Group_indexController extends Zend_Controller_Action {
 		}
 		$id = $this->getRequest()->getParam("id");
 		$row = $db->getClientById($id);
-	    $this->view->row=$row;
+	        $this->view->row=$row;
 		$this->view->photo = $row['photo_name'];
 		if(empty($row)){
 			$this->_redirect("/group/client");
@@ -174,10 +149,11 @@ class Group_indexController extends Zend_Controller_Action {
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_client = $frm;
 		
-		$db= new Application_Model_DbTable_DbGlobal();
-		$this->view->district = $db->getAllDistricts();
-		$this->view->commune_name = $db->getCommune();
-		$this->view->village_name = $db->getVillage();
+		$dbpop = new Application_Form_FrmPopupGlobal();
+		$this->view->frm_popup_village = $dbpop->frmPopupVillage();
+		$this->view->frm_popup_comm = $dbpop->frmPopupCommune();
+		$this->view->frm_popup_district = $dbpop->frmPopupDistrict();
+		$this->view->frm_popup_clienttype = $dbpop->frmPopupclienttype();
 	}
 	function viewAction(){
 		$id = $this->getRequest()->getParam("id");

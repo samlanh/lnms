@@ -2,7 +2,7 @@
 
 class RsvAcl_UserController extends Zend_Controller_Action
 {
-	const REDIRECT_URL = '/user';
+	const REDIRECT_URL = '/rsvacl';
 	const MAX_USER = 20;
 	private $activelist = array('មិនប្រើ​ប្រាស់', 'ប្រើ​ប្រាស់');
 	private $user_typelist = array();
@@ -182,4 +182,3 @@ class RsvAcl_UserController extends Zend_Controller_Action
 	}
 
 }
-
