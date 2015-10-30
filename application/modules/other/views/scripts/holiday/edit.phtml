@@ -2,6 +2,10 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('EDIT_HOLIDAY'));
 ?>	
+<script>
+dojo.require("dijit.form.DateTextBox");
+dojo.require("dijit/form/NumberTextBox");
+</script>
 <?php  $holiday= $this->frm_holiday;?>
 <form  id='add_techer' action="<?php echo $this->url(array('module'=>'other','controller'=>'holiday','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
  <script type="dojo/method" event="onSubmit">			

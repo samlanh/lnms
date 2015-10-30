@@ -3,6 +3,10 @@
 	echo $this->headTitle($tr->translate('ADD_HOLIDAY'));
 ?>	
 <?php  $holiday= $this->frm_holiday;?>
+<script>
+       dojo.require("dijit.form.DateTextBox");
+       dojo.require("dijit/form/NumberTextBox");
+</script>
 <form  id='add_techer' action="<?php echo $this->url(array('module'=>'other','controller'=>'holiday','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post"
  enctype="application/x-www-form-urlencoded">
  <script type="dojo/method" event="onSubmit">			
@@ -60,9 +64,6 @@
 <?php $base_url = Application_Form_FrmMessage::getUrl("/"); ?>
 <script src="<?php echo $base_url;?>js/moment.min.js"  type="text/javascript"></script>
 <script>
-function CalculateDate(){
-	
-}
 function CalculateDate(){
 	pay_type = dijit.byId('start_date').value;
 	amount_day = dijit.byId('amount_day').get('value');

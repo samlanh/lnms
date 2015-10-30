@@ -4,10 +4,7 @@
 ?>	
 <?php  $commune = $this->frm_village;?>
 <script type="text/javascript">
-dojo.require("dojo.data.ItemFileWriteStore");  
-dojo.require("dojo.store.Memory");
 dojo.require("dojo.data.ObjectStore");
-
 dojo.ready(function(){
 	var district_data = new dojo.store.Memory({
 	       data: <?php print_r(Zend_Json::encode($this->district));?>

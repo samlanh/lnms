@@ -2,7 +2,12 @@
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 echo $this->headTitle($tr->translate("Group Disburse"));
 $frm = $this->frm_search;
+$baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();
 ?>
+<script src="<?php echo $baseurl;?>/js/help.js"></script>
+<script type="text/javascript">
+	dojo.require("dijit.form.DateTextBox");
+</script>
 <form id="list" name="list" action="<?php echo $this->url(array('module'=>'loan','controller'=>'groupdisburse','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
  <table width="100%">
    		<tr>
@@ -25,9 +30,6 @@ $frm = $this->frm_search;
    			<td><?php echo $frm->getElement("btn_search");?></td>
    			<td colspan="3"></td>
    		</tr>
-   		<tr>
-   			<td colspan="5"><?php echo $this->list;?></td>
-   		</tr>
    </table>
-   
 </form>
+<?php echo $this->list;?>

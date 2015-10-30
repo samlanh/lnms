@@ -22,15 +22,13 @@ $frms=$this->frm_client;
    	  <td></td>
    	  <td></td>
    </tr>
-   <tr>
-   	<td colspan="6">
-   		<?php echo $this->list;?>
-   	</td>
-   </tr>
-</table>   
+</table>  
+<?php echo $this->list;?> 
 </form>
 <script type="text/javascript">
 dojo.require("dojo.data.ObjectStore");
+dojo.require("dijit.form.DateTextBox");
+
 dojo.ready(function(){
 	dijit.byId('province').attr('value',<?php echo $this->result['province_id'];?>);	
 	var district_data = new dojo.store.Memory({

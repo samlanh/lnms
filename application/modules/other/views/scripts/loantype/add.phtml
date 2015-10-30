@@ -2,6 +2,9 @@
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->Form_Frmcallecterall;
 ?>
+<script>
+	dojo.require("dijit.form.DateTextBox");
+</script>
 <title> <?php echo $tr->translate("LOAN_TYPE")?></title>
 <form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'other','controller'=>'loantype','action'=>'add')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">

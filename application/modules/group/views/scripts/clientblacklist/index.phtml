@@ -3,6 +3,9 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 echo $this->headTitle($tr->translate("Client Black List"));
 $frm = $this->frm_search;
 ?>
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <form id="list" name="list" action="<?php echo $this->url(array('module'=>'group','controller'=>'clientblacklist','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
    <table>
    		<tr>

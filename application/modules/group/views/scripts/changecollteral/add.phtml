@@ -3,6 +3,9 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->frm_changeCollteral;
 echo $this->headTitle($tr->translate("CHANGE_COLLTERAL_INFO"));
 ?>
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <style>	
 .collteral{
 	color:blue;
@@ -91,10 +94,6 @@ dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlenco
 	</tr>	
 </table>
 </form>
-<?php 
-echo $this->frmpupopclient;
-echo $this->frmPopupCO;
-?>
 <script type="text/javascript">
 dojo.require("dojo.data.ObjectStore");
 dojo.require("dojo.NodeList-manipulate");

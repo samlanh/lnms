@@ -3,7 +3,9 @@
 	echo $this->headTitle($tr->translate("CHANGE_COLLTERAL_INFO"));
 	$frm=$this->frm_changeCollteral;
 ?>
-
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <form id="list" name="list" action="<?php echo $this->url(array('module'=>'group','controller'=>'changecollteral','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
 	<table>
 		<tr>

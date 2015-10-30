@@ -1,7 +1,6 @@
 <?php print_r($this->result['province_name']);?>
 <script type="text/javascript">  
 dojo.require("dojo.data.ObjectStore");
-
 dojo.ready(function(){
 	dijit.byId('province_name').attr('value',<?php echo $this->result['province_name'];?>);
 	var district_data = new dojo.store.Memory({
@@ -72,7 +71,5 @@ $frm = $this->frm_village;
 		    <td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
    	   </tr>
    </table>
-   
-   
     <?php echo $this->list;?>
 </form>

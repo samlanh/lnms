@@ -2,6 +2,9 @@
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->Form_Frmcallecterall;
 ?>
+<script>
+	dojo.require("dijit.form.DateTextBox");
+</script>
 <title> <?php echo $tr->translate("COLLECTERALL_TYPE")?></title>
 <form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'other','controller'=>'callecteralltype','action'=>'edit')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
@@ -45,7 +48,3 @@ $frm = $this->Form_Frmcallecterall;
 	</tr>	
 </table>
 </form>
-<script type="text/javascript">
-dojo.require("dijit.form.Textarea");
-dojo.require("dijit.form.NumberTextBox");
-</script>
