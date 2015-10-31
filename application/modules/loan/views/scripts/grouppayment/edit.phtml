@@ -10,14 +10,15 @@
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 	$graiceperiod = $this->graiceperiod;
 ?>
-<style>	
-	.dojoxGridSortNode{
-		text-align: center;	
-		height: 30px;		
-	}
-</style>
 <script src="<?php echo $baseurl;?>/js/help.js"></script>
-
+<script>
+	require(["dijit/form/DateTextBox",
+		"dijit/form/NumberTextBox","dojo/number","dijit/Dialog","dijit/layout/TabContainer"]);
+		dojo.require("dojo.NodeList-manipulate");
+		dojo.require("dojo.html");
+		dojo.require("dojo.data.ItemFileWriteStore"); 
+		
+</script>
 <form id='frm_add_group_pay' action="<?php echo $this->url(array('module'=>'loan','controller'=>'grouppayment','action'=>'edit')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			
@@ -338,9 +339,6 @@
 	</div>
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
-
-<?php $baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();?>
-<script src="<?php echo $baseurl;?>/js/help.js"></script>
 <script type="text/javascript">
 function showReciept(){
 	var client_id = dijit.byId('client_code').get('value');
@@ -370,15 +368,6 @@ function showReciept(){
 		dijit.byId('frm_client').show();
 	}
 }
-
-
-dojo.require("dojo.NodeList-manipulate");
-dojo.require("dojo.html");
-dojo.require("dojo.data.ItemFileWriteStore"); 
-dojo.require("dijit.form.Textarea");
-dojo.require("dojo.store.Memory");
-dojo.require("dojo.data.ObjectStore");
-
     var tran_store  = getDataStorefromJSON('','name',null);
 	var tran_status = {};
 	function print(){
@@ -609,7 +598,7 @@ function getGroupPaymentDetail(){
 	    tem += '<td style="width:3%;">&nbsp;'+curr+' '+dojo.number.format(<?php echo $r["principal_permonth"];?>)+' &nbsp;<input type="hidden" name="sub_principal_permonth_'+<?php echo $inx;?>+'" id="sub_principal_permonth_'+<?php echo $inx;?>+'" value="'+<?php echo $r["principal_permonth"];?>+'" /></td>';
 	    tem += '<td style="white-space: nowrap;width:3%;">&nbsp;'+curr+' '+dojo.number.format(<?php echo $r["total_interest"];?>)+' &nbsp;<input type="hidden" name="sub_interest_'+<?php echo $inx;?>+'" id="sub_interest_'+<?php echo $inx;?>+'" value="'+<?php echo $r["total_interest"];?>+'" /></td>';
 	    tem += '<td style="width:4%;">&nbsp;<?php echo $r["pay_after"];?>&nbsp;<input type="hidden" name="multiplier_'+<?php echo $inx;?>+'" id="multiplier_'+<?php echo $inx;?>+'" value="'+<?php echo $r["pay_after"];?>+'" /></td>';
-		tem += '<td><label id="lb_sub_penelize_'+<?php echo $inx;?>+'">'+<?php echo $r["penelize_amount"];?>+'</label>&nbsp;<input required ="true" class="fullside" type="hidden" id="sub_penelize_'+<?php echo $inx;?>+'" name="sub_penelize_'+<?php echo $inx;?>+'" value="'<?php echo $r["penelize_amount"];?>'" style="width:93%;margin:3px 0" onKeyUp="doPenelizeAmount('+<?php echo $inx;?>+');"/><input type="hidden" id="old_sub_penelize_'<?php echo $inx;?>'" name="old_sub_penelize_'+<?php echo $inx;?>+'" value="'<?php echo $r["penelize_amount"];?>'" /></td>';
+		tem += '<td><label id="lb_sub_penelize_'+<?php echo $inx;?>+'">'+<?php echo $r["penelize_amount"];?>+'</label>&nbsp;<input required ="true" class="fullside" type="hidden" id="sub_penelize_'+<?php echo $inx;?>+'" name="sub_penelize_'+<?php echo $inx;?>+'" value="'<?php echo $r["penelize_amount"];?>'"  onKeyUp="doPenelizeAmount('+<?php echo $inx;?>+');"/><input type="hidden" id="old_sub_penelize_'<?php echo $inx;?>'" name="old_sub_penelize_'+<?php echo $inx;?>+'" value="'<?php echo $r["penelize_amount"];?>'" /></td>';
 		tem += '<td><label id="lb_sub_service_charge_'+<?php echo $inx;?>+'">'+<?php echo $r["service_charge"];?>+'</label>&nbsp;<input class="fullside" type="hidden" id="sub_service_charge_'+<?php echo $inx;?>+'" name="sub_service_charge_'+<?php echo $inx;?>+'" value="'<?php echo $r["service_charge"];?>'" style="width:93%;" onKeyUp="doServiceChargeAmount('+<?php echo $inx;?>+');"/><input type="hidden" id="old_sub_service_charge_'<?php echo $inx;?>'" name="old_sub_service_charge_'+<?php echo $inx;?>+'" value="'<?php echo $r["service_charge"];?>'"/></td>';
 		tem += '<td>&nbsp;<label id="lb_subpayment_'+<?php echo $inx;?>+'">'+<?php echo $r["total_payment"];?>+'</label><input type="hidden" name="sub_payment_'+<?php echo $inx;?>+'" id="sub_payment_'+<?php echo $inx;?>+'" value="'<?php echo $r["total_payment"];?>'" style="width:93%;margin:3px 0"/><input type="hidden" name="old_sub_payment_'+<?php echo $inx;?>+'" id="old_sub_payment_'+<?php echo $inx;?>+'" value="'<?php echo $r["total_payment"];?>'" /></td>';
 		tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_recive_amount_'+<?php echo $inx;?>+'" name="sub_recive_amount_'+<?php echo $inx;?>+'" style="width:93%;" OnChange="netRecieveAmount('+<?php echo $inx;?>+');" value="'<?php echo $r["total_recieve"];?>'"/><input type="hidden" name="old_recieve_amount_'+<?php echo $inx;?>+'" id="old_recieve_amount_'+<?php echo $inx;?>+'" value="'+<?php echo $r["total_recieve"];?>+'"/></td>';

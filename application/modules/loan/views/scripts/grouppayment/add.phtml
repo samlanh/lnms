@@ -8,14 +8,15 @@
 	$base_url = Application_Form_FrmMessage::getUrl("/");
 	$graiceperiod = $this->graiceperiod;
 ?>
-<style>	
-	.dojoxGridSortNode{
-		text-align: center;	
-		height: 30px;		
-	}
-</style>
-<script src="<?php echo $baseurl;?>/js/help.js"></script>
 
+<script src="<?php echo $baseurl;?>/js/help.js"></script>
+<script>
+	require(["dijit/form/DateTextBox",
+		"dijit/form/NumberTextBox","dojo/number","dijit/Dialog","dijit/layout/TabContainer"]);
+		dojo.require("dojo.NodeList-manipulate");
+		dojo.require("dojo.html");
+		//dojo.require("dojo.data.ObjectStore");
+</script>
 <form id='frm_add_group_pay' action="<?php echo $this->url(array('module'=>'loan','controller'=>'grouppayment','action'=>'add')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded" >
 <script type="dojo/method" event="onSubmit">			
@@ -344,9 +345,6 @@
 	</div>
 </div>
 <iframe name=print_frame width=0 height=0 frameborder=0 src=about:blank></iframe>
-
-<?php $baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();?>
-<script src="<?php echo $baseurl;?>/js/help.js"></script>
 <script type="text/javascript">
 function showReciept(){
 	var client_id = dijit.byId('client_code').get('value');
@@ -378,15 +376,6 @@ function showReciept(){
 		
 	}
 }
-
-
-dojo.require("dojo.NodeList-manipulate");
-dojo.require("dojo.html");
-dojo.require("dojo.data.ItemFileWriteStore"); 
-dojo.require("dijit.form.Textarea");
-dojo.require("dojo.store.Memory");
-dojo.require("dojo.data.ObjectStore");
-
     var tran_store  = getDataStorefromJSON('','name',null);
 	var tran_status = {};
 	function print(){
