@@ -447,6 +447,8 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
 				  crm.`receipt_no`,
 				  crm.`date_input`,
 				crm.`co_id`,
+				crm.`payment_option`,
+				crm.`recieve_amount`,
 				crmd.`loan_number`,
 				  (SELECT c.`phone` FROM ln_client AS c WHERE c.`client_id`=crmd.`client_id`) AS phone,
 				  (SELECT b.`branch_namekh` FROM `ln_branch` AS b WHERE b.`br_id`=crm.`branch_id`) AS branch,
