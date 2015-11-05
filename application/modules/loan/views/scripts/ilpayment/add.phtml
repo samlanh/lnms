@@ -1120,6 +1120,7 @@ function calculateTotal(index){
 								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));
 			  	  	  			}else if(payOption==3){
 				  	  	  			total_interest_late = total_interest_late + 0;
+				  	  	  		total_interest = 0;
 			  	  	  				totalAmount = totalAmount + parseFloat(principlePerMonth)+parseFloat(total_interest_late)+penelize+service_charge;
 			  	  	  			document.getElementById('lb_penelize_'+arrays[i]).innerHTML = total_penelize.toFixed(2);
 								$('#penelize_'+arrays[i]).val(total_penelize.toFixed(2));

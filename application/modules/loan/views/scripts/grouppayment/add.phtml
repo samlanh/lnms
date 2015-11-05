@@ -973,6 +973,7 @@ function calculateTotal(index){
 				  	  	  				$('#old_recieve_amount_'+arrays[i]).val(total_payments.toFixed(2));
 				  	  	  			}else if(payOption==3){
 					  	  	  			total_interest_late =  0;
+					  	  	  			total_interest = 0;
 				  	  	  				totalAmount = totalAmount + parseFloat(principlePerMonth)+parseFloat(total_interest_late)+parseFloat(penelize)+parseFloat(service_charge);
 				  	  	  				total_payments = parseFloat(totalPay)+parseFloat(total_interest_late)+parseFloat(penelize)+parseFloat(service_charge);
 				  	  	  				$('#sub_recive_amount_'+arrays[i]).val(total_payments.toFixed(2));
