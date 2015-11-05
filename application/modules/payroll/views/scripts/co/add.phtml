@@ -3,7 +3,10 @@
 	echo $this->headTitle($tr->translate('ADD_STAFF'));
 ?>	
 <?php  $techer= $this->frm_co;?>
-
+<script>
+	dojo.require("dijit/form/DateTextBox");
+	dojo.require("dijit/form/NumberTextBox");
+</script>
 <form  id='add_techer' action="<?php echo $this->url(array('module'=>'payroll','controller'=>'co','action'=>'add')); ?>" dojoType="dijit.form.Form" method="post" enctype="multipart/form-data">
 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {
@@ -26,7 +29,7 @@
 						<tr>
 							<td><?php echo $tr->translate("BRANCH")?></td>
 							<td><?php  echo $techer->getElement('branch_id');?></td>
-							<td><?php echo $tr->translate("CODE_NUMBER")?></td>
+							<td><?php echo $tr->translate("STAFF_CODE")?></td>
 							<td><?php  echo $techer->getElement('co_id'); echo $techer->getElement('id');?></td>
 							<td><?php echo $tr->translate("NAME_EN")?></td>
 							<td><?php  echo $techer->getElement('first_name');?></td>
@@ -190,5 +193,27 @@ dojo.require("dojo.html");
 				alert("Your message could not be sent, please try again!.");
 				}
 			});
+	}
+var url_staffcode = '<?php echo $this->url(array('module'=>'payroll','controller'=>'co','action'=>'getstaffcode')); ?>';
+	function getStaffCode(){
+		branch_id = dijit.byId('branch_id').get('value');
+		dijit.byId('co_id').attr('value','');
+		if(branch_id==''){
+			alert('Please Select Branch');
+			dijit.byId('branch_id').focus();
+			return false;
+		}
+		dojo.xhrPost({
+			url:url_staffcode,	
+			content:{ 
+			    'branch_id':branch_id,
+			},		    
+			handleAs:"json",
+			load: function(data) {
+				dijit.byId('co_id').attr('value',data);
+			},
+			error: function(err) {
+			}
+		});
 	}
 </script>

@@ -11,6 +11,10 @@
 		height: 30px;		
 	}
 </style>
+<script>
+	dojo.require("dijit.form.DateTextBox");
+	dojo.require("dijit.form.NumberTextBox");
+</script>
 <form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'loan','controller'=>'transferco','action'=>'add')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">			

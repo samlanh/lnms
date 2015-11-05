@@ -3,6 +3,10 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 echo $this->headTitle($tr->translate('BAD_LOAN'));
 $frm = $this->frm_loan;
 ?>
+<script>
+	dojo.require("dijit.form.DateTextBox");
+	dojo.require("dijit.form.NumberTextBox");
+</script>
 <form id="add_province" action="<?php echo $this->url(array('module'=>'loan','controller'=>'badloan','action'=>'edit')); ?>" dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 	 <script type="dojo/method" event="onSubmit">			
 			if(this.validate()) {

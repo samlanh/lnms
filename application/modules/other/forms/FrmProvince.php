@@ -16,6 +16,10 @@ Class Other_Form_FrmProvince extends Zend_Dojo_Form {
 		$_kh_province->setAttribs(array('dojoType'=>'dijit.form.TextBox','class'=>'fullside'
 		));
 		
+		$_code= new Zend_Dojo_Form_Element_TextBox('code');
+		$_code->setAttribs(array('dojoType'=>'dijit.form.TextBox','class'=>'fullside'
+		));
+		
 		$_display=  new Zend_Dojo_Form_Element_FilteringSelect('display');
 		$_display->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
@@ -35,13 +39,14 @@ Class Other_Form_FrmProvince extends Zend_Dojo_Form {
 				'missingMessage'=>'Invalid Module!',
 				'class'=>'fullside'));
 		if(!empty($data)){
+			$_code->setValue($data['code']);
 			$_en_province->setValue($data['province_en_name']);
 			$_kh_province->setValue($data['province_kh_name']);
 			$_kh_province->setValue($data['province_kh_name']);
 			$_display->setValue($data['displayby']);
 			$_status->setValue($data['status']);
 		}
-		$this->addElements(array($_en_province,$_kh_province, $_display,$_status));
+		$this->addElements(array($_code,$_en_province,$_kh_province, $_display,$_status));
 		return $this;
 		
 	}

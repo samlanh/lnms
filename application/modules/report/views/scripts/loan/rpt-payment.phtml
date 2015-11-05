@@ -1,11 +1,11 @@
 <?php 
-error_reporting(0);
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->frm_search;
-$search = $this->$search;
 ?>
 <title><?php echo $tr->translate("RPT_CLIENT_PAYMENT");?></title>
-
+<script>
+     dojo.require("dijit.form.DateTextBox");
+</script>
 <form method="post">
 <table style="font-family: 'Khmer OS Content'; margin: 0 auto;width:28.6cm;" >
 	<tr>
@@ -18,7 +18,7 @@ $search = $this->$search;
    			<td><?php echo $frm->getElement('start_date');?></td>
    			<td><?php echo $frm->getElement('end_date');?></td>
    			<td><?php echo $frm->getElement('status');?></td>   			
-   			<td><?php echo $frm->getElement("btn_search");?></td>
+   			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
    	</tr>
 </table>
 </form>
@@ -87,7 +87,7 @@ th{padding: 5px;}
 	                    <th><?php echo $tr->translate("SERVICE CHARGE");?></th>	                    
 	                    <th><?php echo $tr->translate("TOTAL");?></th>
 	                </tr>
-                <?php $amt_r1 = 0;$amt_r2 = 0;$amt_r3 = 0;$amt_r4 = 0;$amt_r5 = 0;
+                <?php $amt_r1 = 0; $amn_r2 = 0; $amn_r3 = 0;$amt_r4 = 0;$amn_r5 = 0;
                 	  $amt_d1 = 0;$amt_d2 = 0;$amt_d3 = 0;$amt_d4 = 0;$amt_d5 = 0;
                 	 $amn_b1 = 0; $amn_b2 = 0; $amn_b3 = 0; $amn_b4 = 0;$amn_b5 = 0;
                 	 $i=1;
@@ -157,9 +157,9 @@ th{padding: 5px;}
                <?php 
 		               if($rs['currency_type']==1){
 		               		$amt_r1 = $amt_r1+$principle_amount;
-		               		$amn_r2 = $amt_r2+$interest_amount;
-		               		$amn_r3 = $amt_r3+$penelize_amount;
-		               		$amn_r5 = $amt_r5+$service;
+		               		$amn_r2 = $amn_r2+$interest_amount;
+		               		$amn_r3 = $amn_r3+$penelize_amount;
+		               		$amn_r5 = $amn_r5+$service;
 		               		$total_r=$amt_r1+$amn_r2+$amn_r3+$amn_r5;
 		               }elseif($rs['currency_type']==2){
 							$amt_d1 = $amt_d1+$principle_amount;

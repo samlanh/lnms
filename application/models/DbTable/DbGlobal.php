@@ -275,6 +275,21 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	$sql = " SELECT prefix FROM `ln_branch` WHERE br_id = $branch_id  LIMIT 1";
    	return $db->fetchOne($sql);
    }
+   public function getStaffNumberByBranch($branch_id){
+   	$this->_name='ln_co';
+   	$db = $this->getAdapter();
+   		$sql = "SELECT COUNT(co_id)FROM $this->_name WHERE branch_id=".$branch_id." LIMIT 1 ";
+   		$pre = $this->getPrefixCode($branch_id)."ST-";
+   	$acc_no = $db->fetchOne($sql);
+   
+   	$new_acc_no= (int)$acc_no+1;
+   	$acc_no= strlen((int)$acc_no+1);
+   
+   	for($i = $acc_no;$i<5;$i++){
+   		$pre.='0';
+   	}
+   	return $pre.$new_acc_no;
+   }
  
    public function getClientByType($type=null,$client_id=null ,$row=null){
    $this->_name='ln_client';
@@ -520,7 +535,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   }
   public  function getclientdtype(){
   	$db = $this->getAdapter();
-  	$sql="SELECT id,key_code,CONCAT(name_kh,'-',name_en) AS name ,displayby FROM `ln_view` WHERE STATUS =1 AND type=23";
+  	$sql="SELECT id,key_code,CONCAT(name_kh,'-',name_en) AS name ,displayby FROM `ln_view` WHERE name_en!='' AND status =1 AND type=23";
   	$rows = $db->fetchAll($sql);
   	return $rows;
   }
@@ -666,18 +681,18 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	return $amount_days;//;*$amount_collect;//return all next day collect laon form customer
   }
   public function getNextPayment($str_next,$next_payment,$amount_amount,$holiday_status=null,$first_payment=null){//code make slow
+  	
   	$default_day = Date("d",strtotime($first_payment));
+  	
  for($i=0;$i<$amount_amount;$i++){
-//   		$d = new DateTime($next_payment);
-//   		$d->modify("$str_next");
-//   		echo $str_next;exit();
-//   		echo $d->format('Y-m-d');exit();
-//   		$next_payment =  $d->format('Y-m-d');
 		if($default_day>28){
 			$next_payment = date("Y-m-d", strtotime("$next_payment $str_next"));
 			$next_payment = $this->checkEndOfMonth($default_day,$next_payment , $str_next);
 // 			echo $next_payment;exit();
 		}else{
+			if($str_next!='+1 month'){
+				$default_day='d';
+			}
 	  		$next_payment = date("Y-m-$default_day", strtotime("$next_payment $str_next"));
 		}
   	}
@@ -876,24 +891,7 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	else{ 
   		return false;}
   }
-  function getAllClient($branch_id=null){
-  	$db = $this->getAdapter();
-//   	$sql = " SELECT c.`client_id` AS id  ,c.`branch_id`,
-// 	CONCAT(c.`name_en` ,',',(SELECT village_name FROM `ln_village` WHERE vill_id = village_id  LIMIT 1) ,',',
-// 	(SELECT commune_name FROM `ln_commune` WHERE c.com_id = com_id  LIMIT 1) ,',',
-// 	(SELECT district_name FROM `ln_district` AS ds WHERE c.dis_id = ds.dis_id  LIMIT 1) ,',',
-// 	(SELECT province_en_name FROM `ln_province` WHERE province_id= c.pro_id  LIMIT 1) ) AS name		
-//   	FROM `ln_client` AS c WHERE c.`name_en`!='' AND c.status=1  " ;
-  	$sql = " SELECT c.`client_id` AS id  ,c.`branch_id`,
-  	CONCAT(c.`name_en`,'-',c.`name_kh`) AS name , client_number
-  	FROM `ln_client` AS c WHERE c.`name_en`!='' AND c.status=1  " ;
-  	if($branch_id!=null){
-  		$sql.=" AND c.`branch_id`= $branch_id ";
-  		
-  	}
-  	$sql.=" ORDER BY id DESC";
-  	return $db->fetchAll($sql);
-  }
+  
   function getAllClientGroup($branch_id=null){
   	$db = $this->getAdapter();
   	$sql = " SELECT c.`client_id` AS id  ,c.`branch_id`,
@@ -921,10 +919,28 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   function getAllClientNumber($branch_id=null){
   	$db = $this->getAdapter();
   	$sql = " SELECT c.`client_id` AS id  ,c.client_number AS name, c.`branch_id`
-  	FROM `ln_client` AS c WHERE c.`name_en`!='' AND c.status=1 " ;
+  	FROM `ln_client` AS c WHERE c.`name_en`!='' AND c.client_number !='' AND c.status=1  " ;
   	if($branch_id!=null){
   		$sql.=" AND c.`branch_id`= $branch_id ";
   	}
+  	return $db->fetchAll($sql);
+  }
+  function getAllClient($branch_id=null){
+  	$db = $this->getAdapter();
+  	//   	$sql = " SELECT c.`client_id` AS id  ,c.`branch_id`,
+  	// 	CONCAT(c.`name_en` ,',',(SELECT village_name FROM `ln_village` WHERE vill_id = village_id  LIMIT 1) ,',',
+  	// 	(SELECT commune_name FROM `ln_commune` WHERE c.com_id = com_id  LIMIT 1) ,',',
+  	// 	(SELECT district_name FROM `ln_district` AS ds WHERE c.dis_id = ds.dis_id  LIMIT 1) ,',',
+  	// 	(SELECT province_en_name FROM `ln_province` WHERE province_id= c.pro_id  LIMIT 1) ) AS name
+  	//   	FROM `ln_client` AS c WHERE c.`name_en`!='' AND c.status=1  " ;
+  	$sql = " SELECT c.`client_id` AS id  ,c.`branch_id`,
+  	CONCAT(c.`name_en`,'-',c.`name_kh`) AS name , client_number
+  	FROM `ln_client` AS c WHERE c.`name_en`!='' AND c.status=1  " ;
+  	if($branch_id!=null){
+  		$sql.=" AND c.`branch_id`= $branch_id ";
+  
+  	}
+//   	$sql.=" ORDER BY id DESC";
   	return $db->fetchAll($sql);
   }
   function getClientIdBYMemberId($member_id){

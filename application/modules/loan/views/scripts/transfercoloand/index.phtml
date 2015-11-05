@@ -5,6 +5,9 @@ echo $this->headTitle($tr->translate("TRANSFER_CO"));
 $frm = $this->frm_transfer;
 
 ?>
+<script>
+	dojo.require("dijit.form.DateTextBox");
+</script>
 <form id="list" name="list" action="<?php echo $this->url(array('module'=>'loan','controller'=>'transfercoloand','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
   <table>
   	<tr>
@@ -20,11 +23,11 @@ $frm = $this->frm_transfer;
   	    <td><?php echo $frm->getElement('status');?></td>
   		<td><?php echo $frm->getElement('start_date');?></td>
   		<td><?php echo $frm->getElement('end_date');?></td>
-  		<td><?php echo $frm->getElement('btn_search');?></td>
+  		<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
   	</tr>
   </table>
-   <?php echo $this->list;?>
 </form>
+ <?php echo $this->list;?>
 <script type="text/javascript">
 require(["dojo/ready"], function(ready){
 	 ready(function(){

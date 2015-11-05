@@ -3,6 +3,9 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 echo $this->headTitle($tr->translate('BAD_LOAN'));
  $frm = $this->frm_loan;
 ?>
+<script>
+	dojo.require("dijit.form.DateTextBox");
+</script>
 <form id="list" name="list" action="<?php echo $this->url(array('module'=>'loan','controller'=>'badloan','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">	<table>
 	<table>	
 		<tr>
@@ -18,9 +21,9 @@ echo $this->headTitle($tr->translate('BAD_LOAN'));
 			<td><?php echo $frm->getElement('start_date');?></td>
 			<td><?php echo $frm->getElement('end_date');?></td>
 			<td><?php echo $frm->getElement('status');?></td>
-			<td><?php echo $frm->getElement('btn_search');?></td>
+			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 			<td></td>
 		</tr>
 	</table>
-<?php echo $this->list;?>
 </form>
+<?php echo $this->list;?>

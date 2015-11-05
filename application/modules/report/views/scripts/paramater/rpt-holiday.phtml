@@ -2,6 +2,9 @@
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->frm_holiday;
 ?>
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <title><?php echo $tr->translate("LIST HOLIDAY");?></title>
  <form name="frm_rptholiday" action="<?php echo $this->url(array('module'=>'report','controller'=>'paramater','action'=>'rpt-holiday')); ?>" dojoType="dijit.form.Form" method="post">
 <table style="float: right;">
@@ -14,11 +17,6 @@ $frm = $this->frm_holiday;
    	  </tr>
 </table>
  </form> 
-<div dojoType="dijit.layout.BorderContainer" style="width: 100%; ">
- <div dojoType="dijit.layout.ContentPane" region="top" >
-
- </div>
-</div>
 <div style=" width:22cm;min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.5cm">
 <table style="font-family: 'Khmer OS Content'; width:100%;">	
 	<tr>

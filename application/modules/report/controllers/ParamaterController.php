@@ -38,20 +38,11 @@ class Report_ParamaterController extends Zend_Controller_Action {
   }
   function  rptVillageAction(){
   	$db  = new Report_Model_DbTable_DbParamater();
-  	$this->view->village_list = $db->getAllVillage();
-  	//print_r($db->getAllstaff());
+  
   	$key = new Application_Model_DbTable_DbKeycode();
   	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
   	if($this->getRequest()->isPost()){
   		$search = $this->getRequest()->getPost();
-  		//
-  		if(isset($search['btn_search'])){
-  			//print_r($search);exit();
-  			$this->view->village_list = $db->getAllVillage($search);
-  		}else{
-  		$collumn = array("vill_id","village_namekh","village_name","displayby","commune_name","district_name","province_en_name","modify_date","status","user_name");
-  		$this->exportFileToExcel('ln_village',$db->getAllVillage(),$collumn);
-  		} 		
   	}else {
   		$search = array('adv_search' => '',
   				'search_status' => -1,
@@ -59,14 +50,15 @@ class Report_ParamaterController extends Zend_Controller_Action {
   				'district_name'=>'',
   				'commune_name'=>'');
   	}
+  	$this->view->village_list = $db->getAllVillage($search);
   	$frm = new Other_Form_FrmVillage();
   	$frms = $frm->FrmAddVillage();
   	Application_Model_Decorator::removeAllDecorator($frms);
   	$this->view->frm_village= $frms;
   	
-  	$db= new Application_Model_DbTable_DbGlobal();
-  	$this->view->district = $db->getAllDistricts();
-  	$this->view->commune_name = $db->getCommune();
+//   	$db= new Application_Model_DbTable_DbGlobal();
+//   	$this->view->district = $db->getAllDistricts();
+//   	$this->view->commune_name = $db->getCommune();
   	$this->view->result = $search;
   }
   function rptZoneAction(){

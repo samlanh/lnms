@@ -41,7 +41,7 @@ class Group_CallteralController extends Zend_Controller_Action {
 		$this->view->frm_callteral=$frm;
 	}
 	public function addAction(){
-		$id=$this->getRequest()->getParams('id');
+		
 		$db = new Group_Model_DbTable_DbClient();
 		$id = $this->getRequest()->getParam("id");
 		$row = $db->getClientById($id);
@@ -84,6 +84,7 @@ class Group_CallteralController extends Zend_Controller_Action {
 		$db = new Application_Model_GlobalClass();
 		$this->view->collect_option = $db->getCollecteralOption();
 		$this->view->owner_type = $db->getCollecteralTypeOption();
+		
 		
 	}
 	public function editAction()

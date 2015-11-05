@@ -83,7 +83,6 @@ function rptLoanDisburseAction(){//release all loan
   		$row = $dbs->getAllLnClient($search);
   		$this->view->tran_schedule=$row;
   		
-	  	$db = new Application_Model_DbTable_DbGlobal();
 	  	$frm = new Loan_Form_FrmSearchLoan();
 	  	$frm = $frm->AdvanceSearch();
 	  	Application_Model_Decorator::removeAllDecorator($frm);
@@ -130,9 +129,7 @@ function rptLoanDisburseAction(){//release all loan
 	$this->view->frm_search = $frm;
   }
   function rptLoanLateAction(){
-  	$db  = new Report_Model_DbTable_DbLoan();  	
-  	$key = new Application_Model_DbTable_DbKeycode();
-  	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+
   	if($this->getRequest()->isPost()){
   		$search = $this->getRequest()->getPost();
 //   			$collumn = array("id","branch_name","name_kh","total_principal","principal_permonth","total_interest","total_payment",
@@ -147,6 +144,11 @@ function rptLoanDisburseAction(){//release all loan
   				'branch_id'		=>	0,
   		);
   	}
+  	
+  	$db  = new Report_Model_DbTable_DbLoan();
+  	$key = new Application_Model_DbTable_DbKeycode();
+  	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+  	
   	$this->view->list_end_date = $search["end_date"];
   	$this->view->loanlate_list =$db->getALLLoanlate($search);
   	$frm = new Loan_Form_FrmSearchLoan();
@@ -241,18 +243,9 @@ function rptLoanDisburseAction(){//release all loan
   	$this->view->frm_search = $fm;
   }
   function rptLoanCollectioncoAction(){
-  	$db  = new Report_Model_DbTable_DbLoan();
-  	$key = new Application_Model_DbTable_DbKeycode();
-  	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+  	
   	if($this->getRequest()->isPost()){
   		$search = $this->getRequest()->getPost();
-  		if(isset($search['btn_submit'])){
-  			$this->view->LoanCollectionco_list =$db->getALLLoanCollectionco($search);
-  		}else {
-  		$collumn = array("id","branch","co_name","receipt_no","loan_number","team_group","total_principal_permonth"
-  				,"total_interest","penalize_amount","amount_payment","service_charge","date_pay");
-  		$this->exportFileToExcel('ln_client_receipt_money',$db->getALLLoanCollectionco(),$collumn);
-  		}
   	}else{
 			$search = array(
 				'adv_search' => '',
@@ -263,8 +256,13 @@ function rptLoanDisburseAction(){//release all loan
 				'co_id'		=> -1,
 				'paymnet_type'	=> -1,
 				'status'=>"",);
-			$this->view->LoanCollectionco_list =$db->getALLLoanCollectionco($search);
+			
 	}
+	$db  = new Report_Model_DbTable_DbLoan();
+	$key = new Application_Model_DbTable_DbKeycode();
+	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
+	
+	$this->view->LoanCollectionco_list =$db->getALLLoanCollectionco($search);
 	$this->view->date_show=$search['end_date'];
 	$this->view->start_date=$search['start_date'];
   	$frm = new Loan_Form_FrmSearchGroupPayment();
@@ -499,14 +497,14 @@ function rptPaymentschedulesAction(){
  		$search = $this->getRequest()->getPost();
  	}else{
  	$search = array(
- 	'adv_search' => '',
- 	'client_name' => -1,
- 	'start_date'=> date('Y-m-d'),
- 	'end_date'=>date('Y-m-d'),
- 			'branch_id'		=>	-1,
-				'co_id'		=> -1,
-				'paymnet_type'	=> -1,
- 			'status'=>"",);
+	 	'adv_search' => '',
+	 	'client_name' => -1,
+	 	'start_date'=> date('Y-m-d'),
+	 	'end_date'=>date('Y-m-d'),
+ 		'branch_id'		=>	-1,
+		'co_id'		=> -1,
+		'paymnet_type'	=> -1,
+ 		'status'=>"",);
 			
  	}
  	$this->view->LoanCollectionco_list =$db->getALLLoanIcome($search);
@@ -653,9 +651,6 @@ function rptPaymentschedulesAction(){
  	$this->view->data=$key->getKeyCodeMiniInv(TRUE);
  	if($this->getRequest()->isPost()){
  		$search = $this->getRequest()->getPost();
- 		if(isset($search['btn_search'])){
- 			$this->view->loantotalcollect_list=$db->getALLLoanPayment($search);
- 		}
  	}else {
  		$search = array(
  				'adv_search' => '',
@@ -667,8 +662,8 @@ function rptPaymentschedulesAction(){
  				'start_date' =>date('Y-m-d'),
  				'end_date' => date('Y-m-d'),
  		);
- 		$this->view->loantotalcollect_list =$rs=$db->getALLLoanPayment($search);
  	}
+ 	$this->view->loantotalcollect_list =$rs=$db->getALLLoanPayment($search);
  	$this->view->list_end_date=$search;
  	$frm = new Loan_Form_FrmSearchLoan();
  	$frm = $frm->AdvanceSearch();

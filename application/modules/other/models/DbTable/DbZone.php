@@ -38,16 +38,17 @@ class Other_Model_DbTable_DbZone extends Zend_Db_Table_Abstract
 	function getAllZoneArea($search=null){
 		$db = $this->getAdapter();
 		$sql = "SELECT
-				zone_id,zone_name,zone_num,modify_date,status,
+				zone_id,zone_name,zone_num,modify_date,
+				(SELECT name_en FROM ln_view WHERE TYPE=3 AND key_code = status LIMIT 1) AS status,
 				(SELECT first_name FROM rms_users WHERE id=user_id LIMIT 1) As user_name
 				FROM $this->_name ";
-		$where = ' WHERE 1 ';
+		$where = ' WHERE zone_name!="" ';
 		if($search['search_status']>-1){
 			$where.= " AND status = ".$search['search_status'];
 		}
 		if(!empty($search['adv_search'])){
 			$s_where = array();
-			$search = $search['adv_search'];
+			$search = addslashes(trim($search['adv_search']));
 			$s_where[] = " zone_name LIKE '%{$search}%'";
 			$s_where[] = "zone_num LIKE '%{$search}%'";
 			$where.=' AND ('.implode(' OR ',$s_where).')';

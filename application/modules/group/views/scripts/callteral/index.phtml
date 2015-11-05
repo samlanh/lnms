@@ -14,7 +14,7 @@ dojo.require("dijit.form.DateTextBox");
 			<td><?php echo $frm->getElement('start_date');?></td>
 			<td><?php echo $frm->getElement('end_date');?></td>
 			<td><?php echo $frm->getElement('status_search');?></td>
-			<td><?php echo $frm->getElement('btn_search');?></td>
+			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 		</tr>
 	</table>
 	<?php echo $this->list;?>

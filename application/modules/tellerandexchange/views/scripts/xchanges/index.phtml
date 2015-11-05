@@ -10,10 +10,6 @@
 		text-align: center;	
 	}
 </style>
-<?php 
-	//User Access level for redirct url
-	$url = Application_Form_FrmMessage::getUrl("/telleranexchange/xchanges/edited?exchange_id=");
-?>
 <script>
 
 	function formatDispaly(f){
@@ -32,7 +28,9 @@
 		dijit.byId("viewcounter").show();
 	}
 </script>
-
+<script>
+	dojo.require("dijit.form.DateTextBox");
+</script>
 <form name="frmlist_mt" action="<?php echo $this->url(array('module'=>'tellerandexchange','controller'=>'xchanges','action'=>'index')); ?>" dojoType="dijit.form.Form" method="post">
 <table class="fullside">	  
 	  <tr>

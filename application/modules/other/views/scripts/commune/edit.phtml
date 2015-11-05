@@ -5,7 +5,7 @@
 <?php  $commune = $this->frm_commune;?>
 <script src="<?php echo $this->baseUrl();?>/js/help.js"  type="text/javascript"></script>
 <script type="text/javascript">
-dojo.require("dojo.data.ObjectStore");
+//dojo.require("dojo.data.ObjectStore");
 dojo.require("dojo.data.ItemFileWriteStore");  
 dojo.require("dijit.Dialog");
 
@@ -62,7 +62,11 @@ function filterDistrict(){
 					
 					<table style="margin: 0 auto; width: 95%;" cellspacing="10">
 					<tr>
-							<td><?php echo $tr->translate("COMMUNE_NAME_KH")?></td>
+							<td><?php echo $tr->translate("COMMUNE_CODE")?></td>
+							<td><?php  echo $commune->getElement('code');?></td>
+						</tr>
+					<tr>
+						<td><?php echo $tr->translate("COMMUNE_NAME_KH")?></td>
 							<td><?php  echo $commune->getElement('commune_namekh');?></td>
 						</tr>
 						<tr>

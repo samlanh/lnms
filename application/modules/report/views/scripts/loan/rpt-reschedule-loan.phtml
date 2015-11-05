@@ -2,9 +2,12 @@
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <meta charset="utf-8">
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <title><?php echo $tr->translate("RESCHEDULE_RPT");?></title>
 <form method="post">
-	<table width="100%">
+	<table style="width:29cm;margin:0 auto;">
 		<tr>
 			<td><?php echo $filter->getElement('adv_search');?></td>
 			<td><?php echo $filter->getElement('branch_id');?></td>
@@ -15,7 +18,7 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 		    <td><?php echo $filter->getElement('pay_every');?></td>
 			<td><?php echo $filter->getElement('start_date');?></td>
 			<td><?php echo $filter->getElement('end_date');?></td>
-			<td><?php echo $filter->getElement('btn_search');?></td>
+			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 		</tr>
 	</table>
 	</form>

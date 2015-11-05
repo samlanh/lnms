@@ -27,7 +27,7 @@ $baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();
    		</tr>
    		<tr>
    			<td><?php echo $frm->getElement('end_date');?></td>
-   			<td><?php echo $frm->getElement("btn_search");?></td>
+   			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
    			<td colspan="3"></td>
    		</tr>
    </table>

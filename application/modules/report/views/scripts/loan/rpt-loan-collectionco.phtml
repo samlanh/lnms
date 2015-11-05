@@ -1,34 +1,29 @@
 <?php 
-//error_reporting(0);
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
-//echo $this->headTitle($tr->translate("IL Payment"));
 $frm = $this->frm_search;
 $end_dat=$this->date_show;
 ?>
 <title><?php echo $tr->translate("REPORT_COLLECT_BY_CO");?></title>
-<script type="text/javascript">
-
-require(["dijit/form/DateTextBox"]);
-
-      </script>
+<script>
+     dojo.require("dijit.form.DateTextBox");
+</script>
 <form method="post">
-<table style="font-family: 'Khmer OS Content';float: right;" >
-	<tr>
+<table style="font-family: 'Khmer OS Content'; width:28cm;margin:0 auto;" >
+	  <tr>
    			<td><?php echo $frm->getElement("advance_search");?></td>
    			<td><?php echo $frm->getElement('client_name');?></td>
    			<td><?php echo $frm->getElement('start_date');?></td>
    			<td><?php echo $frm->getElement('end_date');?></td>
-   		</tr>
-   		<tr>
+   	  </tr>
+   	 <tr>
    			<td><?php echo $frm->getElement('branch_id');?></td>
    			<td><?php echo $frm->getElement('status');?></td>
    			<td><?php echo $frm->getElement('co_id');?></td>
    			<td><?php echo $frm->getElement('paymnet_type');?></td>
-   			<td><?php echo $frm->getElement("btn_submit");?></td>
-   	</tr>
+   			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
+   	  </tr>
 </table>
 </form>
-
 <div style="width:100%; margin:0 auto; clear:both;">
 <div style=" width:28cm;min-height:22cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.5cm">
 <div id="divPrint">
@@ -179,9 +174,6 @@ $free_day=$key_code['value'];
                		<td style="font-size: 11px;"><?php echo number_format($penelize_amount,2).' '.$rs['currency_type'];?></td>
                		<td style="font-size: 11px;"><?php echo number_format($service,2).' '.$rs['currency_type'];?></td>
                		<td style="font-size: 11px;"><?php echo number_format($recieve,2).' '.$rs['currency_type'];?></td>
-               		
-               		
-               			
                			<?php 
 					   if($rs['curr_type']==1){
 		               		$amt_r1 = $amt_r1+$principle_amount;

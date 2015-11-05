@@ -170,7 +170,15 @@ class Payroll_CoController extends Zend_Controller_Action {
    		print_r(Zend_Json::encode($id));
    		exit();
    	}
-   
+   }
+   function getstaffcodeAction(){
+   	if($this->getRequest()->isPost()){
+   		$db = new Application_Model_DbTable_DbGlobal();
+   		$_data = $this->getRequest()->getPost();
+   		$id = $db->getStaffNumberByBranch($_data['branch_id']);
+   		print_r(Zend_Json::encode($id));
+   		exit();
+   	}
    }
 }
 

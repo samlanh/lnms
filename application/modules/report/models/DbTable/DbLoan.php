@@ -584,11 +584,11 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
 
       		$s_where = array();
       		$s_search = $search['advance_search'];
-      		$s_where[] = "lcrm.`loan_number` LIKE '%{$s_search}%'";
-      		$s_where[] = " lcrm.`receipt_no` LIKE '%{$s_search}%'";
-      		$s_where[] = " lcrm.`total_payment` LIKE '%{$s_search}%'";
-      		$s_where[] = " lcrm.`total_interest` LIKE '%{$s_search}%'";
-      		$s_where[] = " lcrm.`penalize_amount` LIKE '%{$s_search}%'";
+      		$s_where[] = " `loan_number` LIKE '%{$s_search}%'";
+      		$s_where[] = " `receipt_no` LIKE '%{$s_search}%'";
+      		$s_where[] = " `total_payment` LIKE '%{$s_search}%'";
+      		$s_where[] = " `total_interest` LIKE '%{$s_search}%'";
+      		$s_where[] = " `penalize_amount` LIKE '%{$s_search}%'";
       		$where .=' AND ('.implode(' OR ',$s_where).')';
       	}
       	if($search['status']!=""){
@@ -599,14 +599,14 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
 //       		$where.=" AND lcrm.`date_input` BETWEEN '$start_date' AND '$end_date'";
 //       	}
       	if($search['client_name']>0){
-      		$where.=" AND lcrm.`group_id`= ".$search['client_name'];
+      		$where.=" AND `group_id`= ".$search['client_name'];
       	}
       	if($search['branch_id']>0){
-      		$where.=" AND lcrm.`branch_id`= ".$search['branch_id'];
+      		$where.=" AND `branch_id`= ".$search['branch_id'];
       	}
-      	if($search['co_id']>0){
-      		$where.=" AND lcrm.`co_id`= ".$search['co_id'];
-      	}
+//       	if($search['co_id']>0){
+//       		$where.=" AND `co_id`= ".$search['co_id'];
+//       	}
 //       	if($search['paymnet_type']>0){
 //       		$where.=" AND lcrm.`payment_option`= ".$search['paymnet_type'];
 //       	}

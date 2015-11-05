@@ -2,6 +2,9 @@
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
 <meta charset="utf-8">
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <title><?php echo $tr->translate("LOAN_DISBURSE_BY_CO");?></title>
 <form method="post">
 	<table style="font-family: 'Khmer OS Content'; margin: 0 auto;width:28.6cm;" >
@@ -15,7 +18,7 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 			<td><?php echo $filter->getElement('pay_every');?></td>
 			<td><?php echo $filter->getElement('start_date');?></td>
 			<td><?php echo $filter->getElement('end_date');?></td>
-			<td><?php echo $filter->getElement('btn_search');?></td>
+			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 		</tr>
 	</table>
 	</form>

@@ -154,6 +154,14 @@ class Group_indexController extends Zend_Controller_Action {
 		$this->view->frm_popup_comm = $dbpop->frmPopupCommune();
 		$this->view->frm_popup_district = $dbpop->frmPopupDistrict();
 		$this->view->frm_popup_clienttype = $dbpop->frmPopupclienttype();
+		
+		$db = new Application_Model_DbTable_DbGlobal();
+		$client_type = $db->getclientdtype();
+		array_unshift($client_type,array(
+				'id' => -1,
+				'name' => '---Add New ---',
+		) );
+		$this->view->clienttype = $client_type;
 	}
 	function viewAction(){
 		$id = $this->getRequest()->getParam("id");

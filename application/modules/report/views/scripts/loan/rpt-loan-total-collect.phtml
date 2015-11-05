@@ -4,6 +4,9 @@ $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->frm_search;
 ?>
 <title><?php echo $tr->translate("LIST_LOAN_TOTAL_COLLECT");?></title>
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <form method="post">
 <table style="font-family: 'Khmer OS Content';float: right;" >
 	<tr>
@@ -16,7 +19,7 @@ $frm = $this->frm_search;
    			<td><?php echo $frm->getElement('start_date');?></td>
    			<td><?php echo $frm->getElement('end_date');?></td>
    			<td><?php echo $frm->getElement('status');?></td>   			
-   			<td><?php echo $frm->getElement("btn_search");?></td>
+   			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
    	</tr>
 </table>
 </form>

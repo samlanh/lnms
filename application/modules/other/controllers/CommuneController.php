@@ -20,17 +20,14 @@ class Other_CommuneController extends Zend_Controller_Action {
 						'search_status' => -1);
 			}
 			$rs_rows= $db->getAllCommune($search);
-			$glClass = new Application_Model_GlobalClass();
-			$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
 			$list = new Application_Form_Frmtable();
-			$collumns = array("COMMUNENAME_KH","COMMUNENAME_EN","DISTRICT_NAME","DATE","STATUS","BY");
+			$collumns = array("COMMUNE_CODE","COMMUNENAME_KH","COMMUNENAME_EN","DISTRICT_NAME","DATE","STATUS","BY");
 			$link=array(
 					'module'=>'other','controller'=>'commune','action'=>'edit',
 			);
-			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('commune_namekh'=>$link,'district_name'=>$link,'commune_name'=>$link));
+			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('code'=>$link,'commune_namekh'=>$link,'district_name'=>$link,'commune_name'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
-			echo $e->getMessage();
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 		$frm = new Other_Form_FrmCommune();
@@ -60,10 +57,6 @@ class Other_CommuneController extends Zend_Controller_Action {
 		$frm = $fm->FrmAddCommune();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_commune = $frm;
-// 	 $db= new Application_Model_DbTable_DbGlobal();
-// 	 $this->view->district = $db->getAllDistricts();	
-// 	 print_r($db->getAllDistricts());
-	
 	}
 	public function editAction(){
 		$id = $this->getRequest()->getParam('id');
@@ -86,9 +79,6 @@ class Other_CommuneController extends Zend_Controller_Action {
 		$frm = $fm->FrmAddCommune($row);
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_commune = $frm;
-		
-// 		$db= new Application_Model_DbTable_DbGlobal();
-// 		$this->view->district = $db->getAllDistricts();
 	}
 	public function addNewcommuneAction(){
 		if($this->getRequest()->isPost()){

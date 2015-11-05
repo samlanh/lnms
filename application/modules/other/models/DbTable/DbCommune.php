@@ -11,6 +11,7 @@ class Other_Model_DbTable_DbCommune extends Zend_Db_Table_Abstract
     }
 	public function addCommune($_data,$id=null){
 		$_arr=array(
+				'code' => $_data['code'],
 				'district_id' => $_data['district_name'],
 				'commune_namekh'=> $_data['commune_namekh'],
 				'commune_name'=> $_data['commune_name'],
@@ -42,7 +43,7 @@ class Other_Model_DbTable_DbCommune extends Zend_Db_Table_Abstract
 	
 	public function getCommuneById($id){
 		$db = $this->getAdapter();
-		$sql=" SELECT c.com_id,c.district_id,c.commune_name,commune_namekh,displayby,c.modify_date,c.status,c.user_id,
+		$sql=" SELECT c.com_id,c.code,c.district_id,c.commune_name,commune_namekh,displayby,c.modify_date,c.status,c.user_id,
 				(SELECT pro_id FROM `ln_district` WHERE dis_id =c.district_id LIMIT 1 ) as pro_id
 				FROM ln_commune AS c WHERE c.com_id = $id  LIMIT 1";
 		$row=$db->fetchRow($sql);
@@ -50,17 +51,17 @@ class Other_Model_DbTable_DbCommune extends Zend_Db_Table_Abstract
 	}
 	function getAllCommune($search=null){
 		$db = $this->getAdapter();
-		$sql = " SELECT com_id,
+		$sql = " SELECT com_id,code,
 					commune_namekh,commune_name,
 					(SELECT district_name FROM `ln_district` WHERE district_id = dis_id) AS district_name,
-					modify_date,status,
+					modify_date,(SELECT name_en FROM ln_view WHERE TYPE=3 AND key_code = status LIMIT 1) AS status_name,
        				(SELECT first_name FROM rms_users WHERE id=user_id LIMIT 1) AS user_name
 				FROM $this->_name ";
 		$where = ' WHERE 1 ';
-		
 		if(!empty($search['adv_search'])){
 			$s_where = array();
-			$s_search = $search['adv_search'];
+			$s_search = addslashes(trim($search['adv_search']));
+			$s_where[] = " code LIKE '%{$s_search}%'";
 			$s_where[] = " commune_name LIKE '%{$s_search}%'";
 			$s_where[]=" commune_namekh LIKE '%{$s_search}%'";
 			$where .=' AND ('.implode(' OR ',$s_where).')';

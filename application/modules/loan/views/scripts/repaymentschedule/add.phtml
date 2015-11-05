@@ -8,6 +8,11 @@
 	$graiceperiod = $this->graiceperiod;
 ?>
 <script src="<?php echo $baseurl;?>/js/help.js"></script>
+<script>
+dojo.require("dojo.data.ObjectStore");
+dojo.require("dojo.html");
+require(["dijit/form/DateTextBox","dijit/form/NumberTextBox","dojo/number","dijit/Dialog"]);
+</script>
 <form id='frm_add_tran' action="<?php echo $this->url(array('module'=>'loan','controller'=>'repaymentschedule','action'=>'add')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded">
 <script type="dojo/method" event="onSubmit">
@@ -254,9 +259,6 @@
 	
 </script>
 <script type="text/javascript">
-dojo.require("dojo.data.ObjectStore");
-dojo.require("dojo.NodeList-manipulate");
-dojo.require("dojo.html");
 
 require(["dojo/ready"], function(ready){
 	 ready(function(){

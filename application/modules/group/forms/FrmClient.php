@@ -165,18 +165,18 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 // 		$opt_client_d_type= $db->getVewOptoinTypeByType(23,1);
 // 		$client_d_type->setMultiOptions($opt_client_d_type);
 		
-		$join_d_type = new Zend_Dojo_Form_Element_FilteringSelect('join_d_type');
-		$join_d_type->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'class'=>'fullside',
-		));
+// 		$join_d_type = new Zend_Dojo_Form_Element_FilteringSelect('join_d_type');
+// 		$join_d_type->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'class'=>'fullside',
+// 		));
 // 		$join_d_type->setMultiOptions($opt_client_d_type);
 		
-		$guarantor_d_type = new Zend_Dojo_Form_Element_FilteringSelect('guarantor_d_type');
-		$guarantor_d_type->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'class'=>'fullside',
-		));
+// 		$guarantor_d_type = new Zend_Dojo_Form_Element_FilteringSelect('guarantor_d_type');
+// 		$guarantor_d_type->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'class'=>'fullside',
+// 		));
 // 		$guarantor_d_type->setMultiOptions($opt_client_d_type);
 		
 		$guarantor_address = new Zend_Dojo_Form_Element_TextBox('guarantor_address');
@@ -352,8 +352,8 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 			$_guarantor_with->setValue($data['guarantor_with']);
 			$_guarantor_tel->setValue($data['guarantor_tel']);
             $client_d_type->setValue($data['client_d_type']);
-			$join_d_type->setValue($data['join_d_type']);
-			$guarantor_d_type->setValue($data['guarantor_d_type']);
+// 			$join_d_type->setValue($data['join_d_type']);
+// 			$guarantor_d_type->setValue($data['guarantor_d_type']);
 			$guarantor_address->setValue($data['guarantor_address']);
 
 			$_dob_Guarantor->setValue($data['dob_guarantor']);
@@ -361,7 +361,7 @@ Class Group_Form_FrmClient extends Zend_Dojo_Form {
 			$_dob->setValue($data['dob']);
 // 			print_r($data);
 		}
-		$this->addElements(array($client_d_type,$join_d_type,$guarantor_d_type,$guarantor_address,$_relate_tel,$_guarantor_tel,$_guarantor_with,$_releted,$_join_nation_id,$_join_with,$spouse_nationid,$_id,$photo,$_spouse,$job,$national_id,$chackcall,$_group_code,$_branch_id,$_member,$_group,$_namekh,$_nameen,$_sex,$_situ_status,
+		$this->addElements(array($client_d_type,$guarantor_address,$_relate_tel,$_guarantor_tel,$_guarantor_with,$_releted,$_join_nation_id,$_join_with,$spouse_nationid,$_id,$photo,$_spouse,$job,$national_id,$chackcall,$_group_code,$_branch_id,$_member,$_group,$_namekh,$_nameen,$_sex,$_situ_status,
 				$_province,$_district,$_commune,$_village,$_house,$_street,$_id_no,
 				$_phone,$_spouse,$_desc,$_status,$_clientno,$_dob,$dob_join_acc,$_dob_Guarantor,$clienttype_namekh,$clienttype_nameen));
 		return $this;

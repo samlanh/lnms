@@ -5,6 +5,9 @@ echo $this->headTitle($tr->translate("LIST_LOAN_INCOME"));
 $frm = $this->frm_search;
 ?>
 <form method="post">
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <table style="font-family: 'Khmer OS Content'; margin: 0 auto;width:28.6cm;" >
 	<tr>
    			<td><?php echo $frm->getElement("advance_search");?></td>
@@ -16,7 +19,7 @@ $frm = $this->frm_search;
    			<td><?php echo $frm->getElement('status');?></td>
    			<td><?php echo $frm->getElement('start_date');?></td>
    			<td><?php echo $frm->getElement('end_date');?></td>
-   			<td><?php echo $frm->getElement("btn_submit");?></td>
+   			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
    	</tr>
 </table>
 </form>

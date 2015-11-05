@@ -1,28 +1,29 @@
 <?php 
-$tr = Application_Form_FrmLanguages::getCurrentlanguage();
+	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 ?>
-<?php $tran = $this->tran_schedule;
-$client = $this->client;
-$frm = $this->frm_search;
+<?php 
+    $tran = $this->tran_schedule;
+	$client = $this->client;
+	$frm = $this->frm_search;
 ?>
+<script>
+	dojo.require("dijit.form.DateTextBox");
+</script>
 <meta charset="utf-8">
 <title><?php echo $tr->translate("LOAN_LATE");?></title>
 <form method="post">
-<table style="font-family: 'Khmer OS Content';float: right;" >
+<table style="font-family: 'Khmer OS Content';width:28.2cm; margin:0 auto;" >
 	<tr>
    			<td><?php echo $frm->getElement("adv_search");?></td>
    			<td><?php echo $frm->getElement('branch_id');?></td>
    			<td><?php //echo $frm->getElement('start_date');?></td>
    			<td><?php echo $frm->getElement('end_date');?></td>
    			<td><?php echo $frm->getElement('status');?></td>
-   			<td><?php echo $frm->getElement("btn_search");?></td>
+   			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
    	</tr>
 </table>
 </form>
 <br/>
-<div dojoType="dijit.layout.BorderContainer" style="width: 100%; height:50px;">
- 
-</div>
 <div style=" width:28.2cm; margin:0 auto; border: 1px dotted #ccc; padding: 0 0.2cm;">
 <div id="divPrint">
 <style>

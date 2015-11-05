@@ -1,5 +1,6 @@
 <script type="text/javascript">
 dojo.require("dojo.data.ObjectStore");
+dojo.require("dijit.form.DateTextBox");
 dojo.ready(function(){
 	dijit.byId('province').attr('value',<?php echo $this->result['province'];?>);	
 	var district_data = new dojo.store.Memory({

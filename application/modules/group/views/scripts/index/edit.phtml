@@ -1,12 +1,13 @@
 <?php
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('Edit Client '));
+	//print_r($this->row);
 ?>	
 <?php  $frm = $this->frm_client;?>
 <script src="<?php echo $this->baseUrl();?>/js/help.js"  type="text/javascript"></script>
 <script>
 dojo.require("dojo.data.ItemFileWriteStore");  
-dojo.require("dojo.data.ObjectStore");
+//dojo.require("dojo.data.ObjectStore");
 dojo.require("dijit.form.DateTextBox");
 dojo.require("dijit.form.CheckBox");
 dojo.require("dijit.Dialog");
@@ -67,7 +68,7 @@ dojo.require("dijit.Dialog");
 						</tr>
 						<tr>
 							<td><?php echo $tr->translate("NATIONAL_ID")?></td>
-							<td><?php  echo $frm->getElement('client_d_type');?></td>
+							<td><input id="client_d_type" required="true"/><?php  //echo $frm->getElement('client_d_type');?></td>
 							<td>No</td>
 							<td><?php  echo $frm->getElement('national_id');?></td>
 							<td><?php echo $tr->translate("JOB_TYPE")?></td>
@@ -105,7 +106,7 @@ dojo.require("dijit.Dialog");
 						    <td><?php echo $tr->translate("JOIN_WITH")?></td>
 							<td><?php  echo $frm->getElement('join_with');?></td>
 							<td><?php echo $tr->translate("NATIONAL_ID")?></td>
-							<td><?php  echo $frm->getElement('join_d_type');?></td>
+							<td><input id="join_d_type" /><?php  //echo $frm->getElement('join_d_type');?></td>
 							<td>No</td>
 							<td><?php  echo $frm->getElement('join_nation_id');?></td>
 						</tr>
@@ -124,7 +125,7 @@ dojo.require("dijit.Dialog");
 							<td><?php echo $tr->translate("SPOUSE_NAME")?></td>
 							<td><?php echo $frm->getElement('spouse');?></td>
 							<td><?php echo $tr->translate("NATIONAL_ID")?></td>
-							<td><?php echo $frm->getElement('guarantor_d_type');?></td>
+							<td><input id="guarantor_d_type" /><?php //echo $frm->getElement('guarantor_d_type');?></td>
 							<td></td>
 							<td><?php echo $frm->getElement('spouse_nationid');?></td>						
 						</tr>
@@ -183,7 +184,6 @@ var commune_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::
 var village_store  = getDataStorefromJSON('id','name', <?php print_r(Zend_Json::encode(array()));?> );
 dojo.ready(function(){
 	
-	 
 	new dijit.form.FilteringSelect({
 	store: district_store,
 	autoComplete: true,
@@ -243,9 +243,66 @@ dojo.ready(function(){
 			}
 }
 	}, "village");
+
+	new dijit.form.FilteringSelect({
+		store: d_datastore,
+		autoComplete: true,          
+		required: false,		           
+		name: "client_d_type",
+		id: "client_d_type",
+		searchAttr: "name",
+		class: 'fullside',
+		value: "<?php echo $this->row['client_d_type'];?>",
+		missingMessage:"អ្នក​ភ្លេច​បំពេញ​ ឈ្មោះភូមិ!",	
+			onChange: function() {
+				client_d_type = dijit.byId('client_d_type').get('value');
+				if(client_d_type==-1){
+					doc_type=1;
+					showPopupclientdtype();
+				}
+			}
+		}, "client_d_type");
+
+	new dijit.form.FilteringSelect({
+		store: d_datastore,
+		autoComplete: true,           
+		required: false,		           
+		name: "join_d_type",
+		id: "join_d_type",
+		searchAttr: "name",
+		class: 'fullside',
+		value: "<?php echo $this->row['join_d_type'];?>",
+			onChange: function() {
+				client_d_type = dijit.byId('join_d_type').get('value');
+				if(client_d_type==-1){
+					doc_type=2;
+					showPopupclientdtype();
+				}
+			}
+		}, "join_d_type");
+
+	new dijit.form.FilteringSelect({
+		store: d_datastore,//dojo.data.ObjectStore({objectStore: d_data}),
+		autoComplete: true,
+		required: false,		           
+		name: "guarantor_d_type",
+		id: "guarantor_d_type",
+		searchAttr: "name",
+		class: 'fullside',
+		value: <?php echo $this->row['guarantor_d_type'];?>,
+			onChange: function() {
+				client_d_type = dijit.byId('guarantor_d_type').get('value');
+				if(client_d_type==-1){
+					doc_type=3;
+					showPopupclientdtype();
+				}
+			}
+		}, "guarantor_d_type");
+	
 	filterDistrict();
 	filterCommune();
 	filterVillage();
+
 });
 url_getdistrict = '<?php echo $this->url(array('module'=>'other','controller'=>'district','action'=>'get-district'));?>';
 function filterDistrict(){

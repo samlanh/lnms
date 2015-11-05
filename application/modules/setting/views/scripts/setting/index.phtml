@@ -3,7 +3,10 @@
 	echo $this->headTitle();
 	$data =$this->data;
 ?>
- 
+ <script>
+	 dojo.require("dijit/form/CheckBox");
+	 dojo.require("dijit/form/NumberTextBox");
+ </script>
 	<table cellspacing="20" width="100%">
 		<tr>
 			<td>
@@ -63,7 +66,14 @@
 											dojoType="dijit.form.TextBox" value="<?php echo $this->data['reschedule_postfix'];?>"
 											require="true" class='fullside'/>
 										</td>
-										
+									</tr>
+									<tr>
+										<td>Prefix CO Staff(eg.ST-001)</td>
+										<td>
+											<input type="text" name="co_prefix" 
+											dojoType="dijit.form.TextBox" value="<?php echo $this->data['co_prefix'];?>"
+											require="true" class='fullside'/>
+										</td>
 									</tr>
 									<tr>
 										<td>

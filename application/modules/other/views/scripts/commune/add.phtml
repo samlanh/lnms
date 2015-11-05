@@ -57,6 +57,10 @@ function filterDistrict(){
 					
 					<table style="margin: 0 auto; width: 95%;" cellspacing="10">
 						<tr>
+							<td><?php echo $tr->translate("COMMUNE_CODE")?></td>
+							<td><?php  echo $commune->getElement('code');?></td>
+						</tr>
+						<tr>
 							<td><?php echo $tr->translate("COMMUNE_NAME_KH")?></td>
 							<td><?php  echo $commune->getElement('commune_namekh');?></td>
 						</tr>

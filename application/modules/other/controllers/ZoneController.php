@@ -22,8 +22,6 @@ class Other_ZoneController extends Zend_Controller_Action {
 						'search_status' => -1);
 			}
 			$rs_rows= $db->getAllZoneArea($search);
-			$glClass = new Application_Model_GlobalClass();
-			$rs_rows = $glClass->getImgActive($rs_rows, BASE_URL, true);
 			$list = new Application_Form_Frmtable();
 			$collumns = array("ZONE_NAME","ZONE_NUMBER","DATE","STATUS","BY");
 			$link=array(
@@ -32,17 +30,12 @@ class Other_ZoneController extends Zend_Controller_Action {
 			$this->view->list=$list->getCheckList(0, $collumns, $rs_rows,array('zone_name'=>$link,'zone_num'=>$link));
 		}catch (Exception $e){
 			Application_Form_FrmMessage::message("Application Error");
-			echo $e->getMessage();
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
 			$frm = new Other_Form_FrmZone();
    			$frm_co=$frm->FrmAddZone();
    			Application_Model_Decorator::removeAllDecorator($frm_co);
    			$this->view->frm_zone = $frm_co;
-   			
-   			$db= new Application_Model_DbTable_DbGlobal();
-   			$this->view->district = $db->getAllDistricts();
-   			$this->view->commune_name = $db->getCommune();
    			$this->view->result = $search;
 	}
    function addAction(){

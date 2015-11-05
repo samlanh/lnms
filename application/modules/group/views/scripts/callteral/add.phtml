@@ -172,7 +172,7 @@ function filterClient(){
 	branch_id = dijit.byId('branch_id').get('value');
 	dijit.byId('client_name').query.branch_id = branch_id;
 	dijit.byId('client_code').query.branch_id = branch_id;
-	dijit.byId('client_code').reset();
+	//dijit.byId('client_code').reset();
 }
 function getClientInfo(type){
 	if(type==1){
@@ -238,7 +238,6 @@ function getClientInfomation(){
 		},
 		error: function(err) {
 			alert(err);
-		alert("Your message could not be sent, please try again!.");
 				        
 		}
 	});

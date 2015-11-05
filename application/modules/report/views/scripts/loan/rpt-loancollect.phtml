@@ -13,8 +13,10 @@ $free_day=$key_code['value'];
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title><?php  echo $tr->translate("REPORT_LOAN_COLLECT");?></title>
-<div dojoType="dijit.layout.BorderContainer" style="width: 100%; height:105px;">
- <div dojoType="dijit.layout.ContentPane" region="top" style="height: auto;">
+<script>
+     dojo.require("dijit.form.DateTextBox");
+</script>
+ <div style="height: auto; width:29cm; margin: 0 auto;">
  <form method="post">
 	<table width="100%">
 		<tr>
@@ -27,18 +29,11 @@ $free_day=$key_code['value'];
 			
 			<td><?php echo $filter->getElement('start_date');?></td>
 			<td><?php echo $filter->getElement('end_date');?></td>
-			<td><?php echo $filter->getElement('btn_search');?></td>
+			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
 		</tr>
 	</table>
 	</form>
  </div>
-</div>
-
-<div dojoType="dijit.layout.BorderContainer" style="width: 100%; ">
- <div dojoType="dijit.layout.ContentPane" region="top" >
-
- </div>
-</div>
 <div style=" width:29cm; min-height:25cm; margin:0 auto; border: 1px dotted #ccc; padding: 0 5px;">
 	<div id="divPrint">
 	<style>

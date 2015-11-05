@@ -11,6 +11,7 @@ class Other_Model_DbTable_DbProvince extends Zend_Db_Table_Abstract
     }
     public function addNewProvince($_data){
     	$_arr=array(
+    			'code' 			   => $_data['code'],
     			'province_en_name' => $_data['en_province'],
     			'province_kh_name' => $_data['kh_province'],
     			'displayby'	       => $_data['display'],
@@ -30,6 +31,7 @@ class Other_Model_DbTable_DbProvince extends Zend_Db_Table_Abstract
 	}
     public function updateProvince($_data,$id){
     	$_arr=array(
+    			'code' 			   => $_data['code'],
     			'province_en_name' => $_data['en_province'],
     			'province_kh_name' => $_data['kh_province'],
     			'displayby'	       => $_data['display'],
@@ -42,7 +44,10 @@ class Other_Model_DbTable_DbProvince extends Zend_Db_Table_Abstract
     }
     function getAllProvince($search=null){
     	$db = $this->getAdapter();
-    	$sql = " SELECT province_id AS id,province_en_name,province_kh_name,displayby,modify_date,status,
+    	$sql = " SELECT province_id AS id,code,province_en_name,province_kh_name,
+    	(SELECT name_en FROM ln_view WHERE TYPE=4 AND key_code = displayby LIMIT 1) AS displayby,
+    	modify_date,
+    	     (SELECT name_en FROM ln_view WHERE TYPE=3 AND key_code = status LIMIT 1) AS status_name,
     	(SELECT CONCAT(last_name,' ',first_name) FROM rms_users WHERE id=user_id )AS user_name
     	FROM $this->_name
     	WHERE 1 ";
@@ -50,11 +55,10 @@ class Other_Model_DbTable_DbProvince extends Zend_Db_Table_Abstract
     	$where = '';
     	if(!empty($search['title'])){
     		$s_where=array();
-    		$s_search=$search['title'];
+    		$s_search=addslashes(trim($search['title']));
+    		$s_where[]=" code LIKE '%{$s_search}%'";
     		$s_where[]=" province_en_name LIKE '%{$s_search}%'";
     		$s_where[]=" province_kh_name LIKE '%{$s_search}%'";
-    		//$where.=" AND ( province_en_name LIKE '%".$search['title']."%' OR province_kh_name LIKE '%".$search['title']."%') ";
-    		//$where.=" AND user_id LIKE '%{$search['title']}%'";
     		$where.=' AND ('.implode(' OR ', $s_where).')';
     	}
     	if($search['status']>-1){

@@ -25,7 +25,6 @@ Class Other_Form_FrmCO extends Zend_Dojo_Form {
 				));
 		$_title->setValue($request->getParam("adv_search"));
 		
-		
 		$_status_search=  new Zend_Dojo_Form_Element_FilteringSelect('status_search');
 		$_status_search->setAttribs(array('dojoType'=>$this->filter));
 		$_status_opt = array(
@@ -40,20 +39,22 @@ Class Other_Form_FrmCO extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.Button',
 				'iconclass'=>'dijitIconSearch'
 		));
-		
-		
+		$db = new Application_Model_DbTable_DbGlobal();
 		$_co_id = new Zend_Dojo_Form_Element_TextBox('co_id');
-		$_co_id->setAttribs(array('dojoType'=>$this->tvalidate,'required'=>'true','class'=>'fullside',));
+		$_co_id->setAttribs(array('dojoType'=>$this->tvalidate,'required'=>'true','class'=>'fullside','readOnly'=>true));
+		$_co_id->setValue($db->getStaffNumberByBranch(1));
+		
 		
 		$_branch_id = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
 		$_branch_id->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
-				'required' =>'true'
+				'required' =>'true',
+				'Onchange'=>'getStaffCode();'
 		));
-		$db = new Application_Model_DbTable_DbGlobal();
+		
 		$rows = $db->getAllBranchName();
-		$options='';
+		$options=array(''=>'---Select Branch---');
 		if(!empty($rows))foreach($rows AS $row){
 			$options[$row['br_id']]=$row['branch_namekh'];
 		}
@@ -117,7 +118,7 @@ Class Other_Form_FrmCO extends Zend_Dojo_Form {
 // 		if(preg_match($pattern,$_email));
 
 		$_national_id = new Zend_Dojo_Form_Element_TextBox('national_id');
-		$_national_id->setAttribs(array('dojoType'=>'dijit.form.NumberTextBox','class'=>'fullside',));
+		$_national_id->setAttribs(array('dojoType'=>'dijit.form.TextBox','class'=>'fullside',));
 		
 		
 		$_address = new Zend_Dojo_Form_Element_TextBox('address');

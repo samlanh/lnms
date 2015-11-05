@@ -52,6 +52,11 @@ Class Other_Form_FrmCommune extends Zend_Dojo_Form {
 				'required'=>'true','missingMessage'=>'Invalid Module!','class'=>'fullside'
 		));
 		
+		$code = new Zend_Dojo_Form_Element_TextBox('code');
+		$code->setAttribs(array('dojoType'=>'dijit.form.TextBox',
+				'missingMessage'=>'Invalid Module!','class'=>'fullside'
+		));
+		
 		$communekh = new Zend_Dojo_Form_Element_TextBox('commune_namekh');
 		$communekh->setAttribs(array('dojoType'=>'dijit.form.ValidationTextBox',
 				'required'=>'true','missingMessage'=>'Invalid Module!','class'=>'fullside'
@@ -113,6 +118,7 @@ Class Other_Form_FrmCommune extends Zend_Dojo_Form {
 				'class'=>'fullside'));
 		if(!empty($data)){
 			$commune->setValue($data['commune_name']);
+			$code->setValue($data['code']);
 // 			echo $data['commune_namekh'];exit();
 			$communekh->setValue($data['commune_namekh']);
 			$_display->setValue($data['displayby']);
@@ -120,7 +126,7 @@ Class Other_Form_FrmCommune extends Zend_Dojo_Form {
 			$_province->setValue($data['pro_id']);
 			$_status->setValue($data['status']);
 		}
-		$this->addElements(array($district_nameen,$commune_en,$_btn_search,$_status_search,$_title,$commune,$district_name,$communekh,$_province, $_status, $_display));
+		$this->addElements(array($code,$district_nameen,$commune_en,$_btn_search,$_status_search,$_title,$commune,$district_name,$communekh,$_province, $_status, $_display));
 		return $this;
 		
 	}

@@ -7,9 +7,9 @@ $client = $this->client;
 
 <meta charset="utf-8">
 <title><?php echo $tr->translate("REPORT_LOAN_XCHANGE");?></title>
-<style>
-
-</style>
+<script>
+dojo.require("dijit.form.DateTextBox");
+</script>
 <form method="post">
 <table style="font-family: 'Khmer OS Content';float: left;" >
 	<tr>
@@ -19,7 +19,7 @@ $client = $this->client;
    			<td><?php echo $frm->getElement('start_date');?></td>
    			<td><?php echo $frm->getElement('end_date');?></td>
    			<td><?php //echo $frm->getElement('status');?></td>
-   			<td><?php echo $frm->getElement("btn_search");?></td>
+   			<td><button iconclass="dijitIconSearch" dojoType="dijit.form.Button" showLabel="true" type="submit"><?php echo $tr->translate("SEARCH");?></button></td>
    	</tr>
 </table>
 </form>
