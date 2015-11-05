@@ -1107,32 +1107,37 @@ function doServiceChargeAmount(index){
 }
 
 function doTotalBypene(){
+	option_pay = dijit.byId('option_pay').get('value');
+	old_total_pay = dijit.byId('oldTotalPay').get('value');
 	old_penelize = dijit.byId('old_penelize').get('value');
 	old_penelize = old_penelize==""?0:old_penelize;
-	
 	penelize = dijit.byId('penalize_amount').get('value');
 	penelize=isNaN(penelize)?0:penelize;
-	
 	service_charge = dijit.byId('service_charge').get('value');
 	service_charge=isNaN(service_charge)?0:service_charge;
-
-	var netTotal=0;
-	all_total=0;
-	var rowId = dijit.byId('identity').get('value');
-	var rowIDArray = rowId.split(',');
-	for(var n = 0; n < rowIDArray.length; n++) {
-		netTotal += Number($('#sub_recive_amount_'+rowIDArray[n]).val());
-		all_total +=Number($('#sub_payment_'+rowIDArray[n]).val()); 
+	if(option_pay==1 || option_pay == 4){
+		var netTotal=0;
+		all_total=0;
+		var rowId = dijit.byId('identity').get('value');
+		var rowIDArray = rowId.split(',');
+		for(var n = 0; n < rowIDArray.length; n++) {
+			netTotal += Number($('#sub_recive_amount_'+rowIDArray[n]).val());
+			all_total +=Number($('#sub_payment_'+rowIDArray[n]).val()); 
+		}
+		total_pay = parseFloat(netTotal)+parseFloat(penelize)+parseFloat(service_charge);
+		all_total = parseFloat(all_total)+parseFloat(penelize)+parseFloat(service_charge);
+	}else{
+		all_total = parseFloat(old_total_pay)+parseFloat(service_charge)+parseFloat(penelize);
+		total_pay = parseFloat(old_total_pay)+parseFloat(service_charge)+parseFloat(penelize);
 	}
 	
-	total_pay = parseFloat(netTotal)+parseFloat(penelize)+parseFloat(service_charge);
-
-	all_total = parseFloat(all_total)+parseFloat(penelize)+parseFloat(service_charge);
 	dijit.byId('total_payment').attr('value',all_total.toFixed(2));
 	dijit.byId('amount_receive').attr('value',total_pay.toFixed(2));
 	dijit.byId('old_penelize').attr('value',penelize);
 }
 function doTotalByServ(){
+	option_pay = dijit.byId('option_pay').get('value');
+	old_total_pay = dijit.byId('oldTotalPay').get('value');
 	old_service_charge = dijit.byId('old_service_charge').get('value');
 	old_service_charge=isNaN(old_service_charge)?0:old_service_charge;
 	service_charge = dijit.byId('service_charge').get('value');
@@ -1140,16 +1145,22 @@ function doTotalByServ(){
 	penelize = dijit.byId('penalize_amount').get('value');
 	penelize=isNaN(penelize)?0:penelize;
 
-	var netTotal=0;
-	all_total=0;
-	var rowId = dijit.byId('identity').get('value');
-	var rowIDArray = rowId.split(',');
-	for(var n = 0; n < rowIDArray.length; n++) {
-		netTotal += Number($('#sub_recive_amount_'+rowIDArray[n]).val());
-		all_total +=Number($('#sub_payment_'+rowIDArray[n]).val()); 
+	if(option_pay==1 || option_pay == 4){
+		var netTotal=0;
+		all_total=0;
+		var rowId = dijit.byId('identity').get('value');
+		var rowIDArray = rowId.split(',');
+		for(var n = 0; n < rowIDArray.length; n++) {
+			netTotal += Number($('#sub_recive_amount_'+rowIDArray[n]).val());
+			all_total +=Number($('#sub_payment_'+rowIDArray[n]).val()); 
+		}
+		all_total = parseFloat(all_total)+parseFloat(service_charge)+parseFloat(penelize);
+		total_pay = parseFloat(netTotal)+parseFloat(service_charge)+parseFloat(penelize);
+	}else{
+		all_total = parseFloat(old_total_pay)+parseFloat(service_charge)+parseFloat(penelize);
+		total_pay = parseFloat(old_total_pay)+parseFloat(service_charge)+parseFloat(penelize);
 	}
-	all_total = parseFloat(all_total)+parseFloat(service_charge)+parseFloat(penelize);
-	total_pay = parseFloat(netTotal)+parseFloat(service_charge)+parseFloat(penelize);
+	
 	dijit.byId('total_payment').attr('value',all_total.toFixed(2));
 	dijit.byId('amount_receive').attr('value',total_pay.toFixed(2));
 	dijit.byId('old_service_charge').attr('value',service_charge);
