@@ -958,6 +958,7 @@ function calculateTotal(index){
 	   graice_period = '<?php echo $graiceperiod["value"]?>';
 	   
 		if(arrays!=""){
+			is_set = 0;
 			for(var i=0;i<arrays.length;i++) {
 				last_payment_date=0;
 				var oneDay = 24*60*60*1000;
@@ -1054,7 +1055,9 @@ function calculateTotal(index){
 					  	  	  		total_interest = 0;
 						  	  	  	priciple_amount = 0;
 					  	  	  		os_amounts=0;
-						  	  	  	installment_date=old_installment_date==""?new Date($('#old_release_date').val()):installment_date;
+						  	  	  	//installment_date=old_installment_date==""?new Date($('#old_release_date').val()):installment_date;
+						  	  	  	last_date_pay = new Date($('#date_payment_'+arrays[0]).val());
+						  	  	  	installment_date=old_installment_date==""?last_date_pay:installment_date;
 						  	  	  	practical_date  = Math.round((date_collect - installment_date)/(oneDay));
 						  	  	  	
 							  	  	var ids =dijit.byId('record_id').get('value');
@@ -1089,7 +1092,9 @@ function calculateTotal(index){
 					  	  	  		total_interest = 0;
 						  	  	  	priciple_amount = 0;
 					  	  	  		os_amounts=0;
-						  	  	  	installment_date=old_installment_date==""?new Date($('#old_release_date').val()):installment_date;
+						  	  	  	//installment_date=old_installment_date==""?new Date($('#old_release_date').val()):installment_date;
+						  	  	  	last_date_pay = new Date($('#date_payment_'+arrays[0]).val());
+						  	  	  	installment_date=old_installment_date==""?last_date_pay:installment_date;
 						  	  	  	practical_date  = Math.round((date_collect - installment_date)/(oneDay));
 						  	  	  	
 							  	  	var ids =dijit.byId('record_id').get('value');
@@ -1123,9 +1128,10 @@ function calculateTotal(index){
 					  	  	  		total_interest = 0;
 						  	  	  	priciple_amount = 0;
 					  	  	  		os_amounts=0;
-						  	  	  	installment_date=old_installment_date==""?new Date($('#old_release_date').val()):installment_date;
+						  	  	  		last_date_pay = new Date($('#date_payment_'+arrays[0]).val());
+						  	  	  	installment_date=old_installment_date==""?last_date_pay:installment_date;
 						  	  	  	practical_date  = Math.round((date_collect - installment_date)/(oneDay));
-						  	  	  	
+						  	  	  
 							  	  	var ids =dijit.byId('record_id').get('value');
 								  	  var arraysn = ids.split(',');
 								  	  for(var j=0;j<arraysn.length;j++){
