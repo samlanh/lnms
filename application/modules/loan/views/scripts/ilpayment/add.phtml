@@ -1419,7 +1419,8 @@ function doTotalBypene(){
 		old_penelize = dijit.byId('old_penelize').get('value');
 		penelize = dijit.byId('penalize_amount').get('value');
 		old_total_pay = dijit.byId('total_payment').get('value');
-		penelize = penelize==""?0:penelize;
+		//penelize = penelize==""?0:penelize;
+		penelize=isNaN(penelize)?0:penelize;
 		service_charge = dijit.byId('service_charge').get('value');
 		total_pay = parseFloat(old_total_pay - old_penelize)+parseFloat(penelize);
 		dijit.byId('total_payment').attr('value',total_pay.toFixed(2));
@@ -1430,7 +1431,8 @@ function doTotalByServ(){
 		old_service_charge = dijit.byId('old_service_charge').get('value');
 		service_charge = dijit.byId('service_charge').get('value');
 		old_total_pay = dijit.byId('total_payment').get('value');
-		service_charge = service_charge==""?0:service_charge;
+		service_charge=isNaN(service_charge)?0:service_charge;
+		//service_charge = service_charge==""?0:service_charge;
 		penelize = dijit.byId('penalize_amount').get('value');
 		total_pay = parseFloat(old_total_pay - old_service_charge)+parseFloat(service_charge);
 		dijit.byId('total_payment').attr('value',total_pay.toFixed(2));

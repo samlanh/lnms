@@ -15,8 +15,11 @@
 		"dijit/form/NumberTextBox","dojo/number","dijit/Dialog","dijit/layout/TabContainer"]);
 		dojo.require("dojo.NodeList-manipulate");
 		dojo.require("dojo.html");
+		dojo.require("dojo.data.ItemFileWriteStore"); 
 		//dojo.require("dojo.data.ObjectStore");
 </script>
+
+
 <form id='frm_add_group_pay' action="<?php echo $this->url(array('module'=>'loan','controller'=>'grouppayment','action'=>'add')); ?>" 
 				dojoType="dijit.form.Form" method="post" enctype="application/x-www-form-urlencoded" >
 <script type="dojo/method" event="onSubmit">			
@@ -593,7 +596,6 @@ function getLaonPayment(){
 		});
 }
 function getAllLaonPayment(){
-	
 	var loan_number = dijit.byId('loan_number').get('value');
 	var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'grouppayment','action'=>'get-all-loannumber')); ?>';
 	dojo.xhrPost({
@@ -742,7 +744,8 @@ function getdataPaymentToForm(data){//use
 	dijit.byId('load_level').attr('value',data.level);
 	var today = new Date();
 	dijit.byId('collect_date').attr('value',today);
-	//totalReturn();
+	totalReturn();
+	//doRemain();
 }
 function popupCheckCO(){
 }
@@ -795,7 +798,7 @@ function calculateTotal(index){
 		   principle=0;
 			if(arrays!=""){
 				for(var i=0;i<arrays.length;i++) {
-					last_payment_date=0;
+					//last_payment_date=0;
 					var oneDay = 24*60*60*1000;
 					if($('#mfdid_'+arrays[i]).attr('checked')){
 						var ps = $('#multiplier_'+arrays[i]).val();
@@ -1107,34 +1110,46 @@ function doTotalBypene(){
 	old_penelize = old_penelize==""?0:old_penelize;
 	
 	penelize = dijit.byId('penalize_amount').get('value');
-	penelize = penelize==""?0:penelize;
+	penelize=isNaN(penelize)?0:penelize;
 	
-	old_total_pay = dijit.byId('total_payment').get('value');
-	old_total_pay = old_total_pay==""?0:old_total_pay;
-
 	service_charge = dijit.byId('service_charge').get('value');
-	service_charge = service_charge==""?0:service_charge;
+	service_charge=isNaN(service_charge)?0:service_charge;
+
+	var netTotal=0;
+	all_total=0;
+	var rowId = dijit.byId('identity').get('value');
+	var rowIDArray = rowId.split(',');
+	for(var n = 0; n < rowIDArray.length; n++) {
+		netTotal += Number($('#sub_recive_amount_'+rowIDArray[n]).val());
+		all_total +=Number($('#sub_payment_'+rowIDArray[n]).val()); 
+	}
 	
-	total_pay = parseFloat(old_total_pay - old_penelize)+parseFloat(penelize);
-	dijit.byId('total_payment').attr('value',total_pay.toFixed(2));
+	total_pay = parseFloat(netTotal)+parseFloat(penelize)+parseFloat(service_charge);
+
+	all_total = parseFloat(all_total)+parseFloat(penelize)+parseFloat(service_charge);
+	dijit.byId('total_payment').attr('value',all_total.toFixed(2));
 	dijit.byId('amount_receive').attr('value',total_pay.toFixed(2));
 	dijit.byId('old_penelize').attr('value',penelize);
 }
 function doTotalByServ(){
 	old_service_charge = dijit.byId('old_service_charge').get('value');
-	old_service_charge = old_service_charge==""?0:old_service_charge;
-	
+	old_service_charge=isNaN(old_service_charge)?0:old_service_charge;
 	service_charge = dijit.byId('service_charge').get('value');
-	service_charge = service_charge==""?0:service_charge;
-
-	old_total_pay = dijit.byId('total_payment').get('value');
-	old_penelize = old_penelize==""?0:old_penelize;
-	
+	service_charge=isNaN(service_charge)?0:service_charge;
 	penelize = dijit.byId('penalize_amount').get('value');
-	penelize = penelize==""?0:penelize;
-	
-	total_pay = parseFloat(old_total_pay - old_service_charge)+parseFloat(service_charge);
-	dijit.byId('total_payment').attr('value',total_pay.toFixed(2));
+	penelize=isNaN(penelize)?0:penelize;
+
+	var netTotal=0;
+	all_total=0;
+	var rowId = dijit.byId('identity').get('value');
+	var rowIDArray = rowId.split(',');
+	for(var n = 0; n < rowIDArray.length; n++) {
+		netTotal += Number($('#sub_recive_amount_'+rowIDArray[n]).val());
+		all_total +=Number($('#sub_payment_'+rowIDArray[n]).val()); 
+	}
+	all_total = parseFloat(all_total)+parseFloat(service_charge)+parseFloat(penelize);
+	total_pay = parseFloat(netTotal)+parseFloat(service_charge)+parseFloat(penelize);
+	dijit.byId('total_payment').attr('value',all_total.toFixed(2));
 	dijit.byId('amount_receive').attr('value',total_pay.toFixed(2));
 	dijit.byId('old_service_charge').attr('value',service_charge);
 }
@@ -1153,6 +1168,7 @@ function netTotal() {
 	returnAmount = returnAmount<0?0:returnAmount;
 	dijit.byId('amount_return').attr('value',returnAmount);
 	dijit.byId('total_payment').attr('value',netTotal);
+	doRemain();
 }
 
 function netRecieveAmount(index){
@@ -1185,6 +1201,15 @@ function totalReturn(){
 	amonut_return = amonut_return<0?0:amonut_return;
 	dijit.byId('amount_return').attr('value',amonut_return);
 }
+
+// function doRemain(){
+// 	receive_amount = dijit.byId('amount_receive').get('value');
+// 	total_payment = dijit.byId('total_payment').get('value');
+// 	amonut_remain = total_payment-receive_amount;
+// 	alert(receive_amount+"-"+total_payment);
+// 	//amonut_remain = amonut_remain<0?0:amonut_remain;
+// 	dijit.byId('remain').attr('value',amonut_remain);
+// }
 
 function payOption(){
 	var ids =dijit.byId('record_id').get('value');

@@ -693,7 +693,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 // 		$id = new Zend_Form_Element_Text('id');
 // 		$id->setAttrib('dojoType', 'dijit.form.TextBox');
 		
-		$installment_date = new Zend_Form_Element_Text("installment_date");
+		$installment_date = new Zend_Form_Element_Hidden("installment_date");
 		$installment_date->setAttribs(array(
 				'dojoType'=>'dijit.form.TextBox',
 				'class'=>'fullside',
@@ -705,7 +705,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 		$release_date = new Zend_Dojo_Form_Element_TextBox("release_date");
 		$release_date->setAttribs(array('dojoType'=>'dijit.form.TextBox','class'=>'fullside','readOnly'=>'readOnly'));
 		
-		$old_release_date = new Zend_Form_Element_Text("old_release_date");
+		$old_release_date = new Zend_Form_Element_Hidden("old_release_date");
 		$old_release_date->setAttribs(array('dojoType'=>'dijit.form.TextBox','class'=>'fullside','readOnly'=>'readOnly'));
 		
 		$loan_level= new Zend_Dojo_Form_Element_TextBox("load_level");
@@ -735,7 +735,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 				'required' =>true
 		));
 		
-		$_last_payment_date = new Zend_Form_Element_Text("last_payment_date");
+		$_last_payment_date = new Zend_Form_Element_Hidden("last_payment_date");
 		$_last_payment_date->setAttribs(array(
 				'dojoType'=>'dijit.form.TextBox',
 				'class'=>'fullside',

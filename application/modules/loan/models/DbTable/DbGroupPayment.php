@@ -387,7 +387,7 @@ function getLoanPaymentByLoanNumber($data){
     				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQuery());
     				Zend_Debug::dump($db->getProfiler()->getLastQueryProfile()->getQueryParams());
     				$db->getProfiler()->setEnabled(false);
-    				if($option_pay==1 and $option_pay==4){
+    				if($option_pay==1){
 	    				if($sub_recieve_amount>=$sub_total_payment){
 		    				 
 		    				$arr_update_fun_detail = array(
