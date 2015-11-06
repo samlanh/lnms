@@ -16,7 +16,7 @@
 		dojo.require("dojo.NodeList-manipulate");
 		dojo.require("dojo.html");
 		dojo.require("dojo.data.ItemFileWriteStore"); 
-		//dojo.require("dojo.data.ObjectStore");
+		dojo.require("dojo.data.ObjectStore");
 </script>
 
 
@@ -93,7 +93,7 @@
 							<td><?php echo $tr->translate("BRANCH_NAME")?></td>
 							<td><?php echo $frm->getElement('branch_id');?></td>
 							<td><?php echo $tr->translate("LOAN_NO")?></td>
-							<td><?php echo $frm->getElement('loan_number');?></td>
+							<td><?php //echo $frm->getElement('loan_number');?><input id="loan_number"/></td>
 							<td><?php echo $tr->translate("LOAN_DATE")?></td>
 							<td><?php echo $frm->getElement('release_date');echo $frm->getElement('old_release_date');?></td>
 						</tr>
@@ -463,6 +463,29 @@ function keyPress(){ // don't submit when press enter
 	window.event.keyCode =0;
 	} 
 dojo.ready(function(){	
+	
+	var loan_data = new dojo.store.Memory({
+	    data: <?php print_r(Zend_Json::encode($this->loan_number));?>
+	});
+	new dijit.form.FilteringSelect({
+		store: dojo.data.ObjectStore({objectStore: loan_data}),
+		autoComplete: true,
+		query: {
+			branch_id: "-1"
+		},            
+		required: false,		           
+		name: "loan_number",
+		id: "loan_number",
+		searchAttr: "name",
+		class: 'fullside',
+		onChange: function() {
+			getLaonPayment();
+			 getAllLaonPayment();
+			 getPaymentHasByLoan();
+		}
+	}, "loan_number");
+
+
 	dijit.byId('loan_number').focus();
 	document = dojo.byId("loan_number");
 	dojo.connect(document, "onkeyup", function(event) {
@@ -474,6 +497,7 @@ dojo.ready(function(){
 		}
 		
 	});
+	
 
 // 	var clientCode_data = new dojo.store.Memory({
 //	       data: <?php //print_r(Zend_Json::encode($this->clientCode));?>
@@ -496,6 +520,9 @@ dojo.ready(function(){
 // 	}, "client_code");
 
 });
+function filterLoanNumber(){
+	 dijit.byId('loan_number').query.branch_id = dijit.byId('branch_id').get('value');
+}
 // function filterClient(){
 // 	branch_id = dijit.byId('branch_id').get('value');
 // 	dijit.byId('client_code').query.branch_id = branch_id;
@@ -562,7 +589,7 @@ function getLaonPayment(){
 						    tem += '<td>&nbsp;<label id="lb_sub_penelize_'+inx+'">'+respone[i].penelize+'</label>&nbsp;<input type="hidden" name="sub_penelize_'+inx+'" id="sub_penelize_'+inx+'" value="'+respone[i].penelize+'" onKeyUp="doPenelizeAmount('+inx+');"/><input type="hidden" name="old_sub_penelize_'+inx+'" id="old_sub_penelize_'+inx+'" value="'+respone[i].penelize+'" /></td>';
 						    tem += '<td>&nbsp;<label id="lb_sub_service_charge_'+inx+'">'+respone[i].service_charge+'</label>&nbsp;<input type="hidden" name="sub_service_charge_'+inx+'" id="sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'" onKeyUp="doServiceChargeAmount('+inx+');"/><input type="hidden" name="old_sub_service_charge_'+inx+'" id="old_sub_service_charge_'+inx+'" value="'+respone[i].service_charge+'" /></td>';
 						    tem += '<td>&nbsp;<label id="lb_subpayment_'+inx+'">'+dojo.number.format(total_pay,2)+'</label>&nbsp;<input type="hidden" name="sub_payment_'+inx+'" id="sub_payment_'+inx+'" value="'+dojo.number.format(total_pay)+'" /><input type="hidden" name="old_sub_payment_'+inx+'" id="old_sub_payment_'+inx+'" value="'+dojo.number.format(total_pay,2)+'" /></td>';
-						    tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_recive_amount_'+inx+'" name="sub_recive_amount_'+inx+'" style="width:93%;" OnChange="netRecieveAmount('+inx+');"/><input type="hidden" name="old_recieve_amount_'+inx+'" id="old_recieve_amount_'+inx+'" /></td>';
+						    tem += '<td>&nbsp;<input class="fullside" type="text" id="sub_recive_amount_'+inx+'" name="sub_recive_amount_'+inx+'" style="width:80%;" OnChange="netRecieveAmount('+inx+');"/><input type="hidden" name="old_recieve_amount_'+inx+'" id="old_recieve_amount_'+inx+'" /></td>';
 							if(respone[i].is_completed==1){
 								status = '<label style="color:blue;"><?php echo $tr->translate('COMPLETED');?></label>';
 								if(respone[i].is_approved==1){is_appr='<label style="color:blue;">Approved</label>';}

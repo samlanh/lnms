@@ -14,6 +14,17 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 	{
 		$this->tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	}
+	public function getLoanNumberByBranch($type){
+		$db = $this->getAdapter();
+		if($type==1){
+			$sql="SELECT m.`loan_number` AS id,m.`loan_number` AS `name`,g.`branch_id` FROM `ln_loan_member` AS m,`ln_loan_group` AS g WHERE m.`group_id`= g.`g_id` AND m.`is_completed`=0 AND g.`loan_type`=1";
+			return $db->fetchAll($sql);
+		}else{
+			$sql="SELECT m.`loan_number` AS id,m.`loan_number` AS `name`,g.`branch_id` FROM `ln_loan_member` AS m,`ln_loan_group` AS g WHERE m.`group_id`= g.`g_id` AND m.`is_completed`=0 AND g.`loan_type`=2 GROUP BY m.`loan_number` ";
+			return $db->fetchAll($sql);
+		}
+		
+	}
 	public function getGlobalDb($sql)
   	{
   		$db=$this->getAdapter();

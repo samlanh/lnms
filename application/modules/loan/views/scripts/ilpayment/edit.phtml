@@ -15,7 +15,6 @@
 	$user_name = $this->user_name;
 	$graiceperiod = $this->graiceperiod;
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
-	//print_r($ilPaymentById);
 	
 ?>
 <script src="<?php echo $baseurl;?>/js/help.js"></script>
@@ -111,7 +110,8 @@
 							<td><?php echo $tr->translate("BRANCH_NAME")?></td>
 							<td><?php echo $frm->getElement('branch_id');?></td>
 							<td><?php echo $tr->translate("LOAN_NO")?></td>
-							<td><?php echo $frm->getElement('loan_number');echo $frm->getElement('old_loan_number');?></td>
+							<td><input id="loan_number"/><?php //echo $frm->getElement('loan_number'); 
+								echo $frm->getElement('old_loan_number');?></td>
 							<td><?php echo $tr->translate("LOAN_DATE")?></td>
 							<td><?php echo $frm->getElement('release_date');echo $frm->getElement('old_release_date');?></td>
 						</tr>
@@ -435,6 +435,28 @@ function showReciept(){
 	}
 }
 dojo.ready(function(){	
+	var loan_data = new dojo.store.Memory({
+	    data: <?php print_r(Zend_Json::encode($this->loan_numbers));?>
+	});
+	new dijit.form.FilteringSelect({
+		store: dojo.data.ObjectStore({objectStore: loan_data}),
+		autoComplete: true,
+		query: {
+			branch_id: "<?php echo $ilPaymentById["branch_id"];?>"
+		},            
+		required: false,		           
+		name: "loan_number",
+		id: "loan_number",
+		searchAttr: "name",
+		value: "<?php echo $ilPaymentById["loan_numbers"];?>",
+		class: 'fullside',
+		onChange: function() {
+			//getLaonHasPayByLoanNumber(1);
+			//getLaonPayment(1);
+			//getAllLaonPayment(1);
+		}
+	}, "loan_number");
+	
 	var client_data = new dojo.store.Memory({
 	       data: <?php print_r(Zend_Json::encode($this->client));?>
 	});
@@ -495,6 +517,9 @@ dojo.ready(function(){
 
 	
 });
+function filterLoanNumber(){
+	 dijit.byId('loan_number').query.branch_id = dijit.byId('branch_id').get('value');
+}
 function filterClient(){
 	branch_id = dijit.byId('branch_id').get('value');
 	dijit.byId('client_id').query.branch_id = branch_id;
@@ -598,6 +623,8 @@ dojo.ready(function(){
 	$("#option_pay option[value='4']").attr("disabled","disabled");
 });
 function getLoanPaymentbyId(){
+	//alert(1);
+	getPayment();
 	var total_pay = <?php echo $ilPaymentById["total_payment"];?>;
 	var recieve_amount =<?php echo $ilPaymentById["recieve_amount"];?>;
 	var return_amount = <?php echo $ilPaymentById["return_amount"];?>;
@@ -610,7 +637,7 @@ function getLoanPaymentbyId(){
 	$('#installment_date').val('<?php echo $ilPaymentById["last_paydate"];?>');
 	dijit.byId('interest_rate').attr('value','<?php echo $ilPaymentById["interest_rate"];?>');
 	dijit.byId('branch_id').attr('value','<?php echo $ilPaymentById["branch_id"];?>');
-	dijit.byId('loan_number').attr('value','<?php echo $ilPaymentById["loan_numbers"];?>');
+	//dijit.byId('loan_number').attr('value','<?php //echo $ilPaymentById["loan_numbers"];?>');
 	dijit.byId('old_loan_number').attr('value','<?php echo $ilPaymentById["loan_numbers"];?>');
 	dijit.byId('priciple_amount').attr('value','<?php echo number_format($ilPaymentById["principal_amount"],2);?>');
 	dijit.byId('os_amount').attr('value','<?php echo number_format($ilPaymentById["total_principal_permonth"],2);?>');
@@ -634,11 +661,12 @@ function getLoanPaymentbyId(){
 	dijit.byId('co_id').attr('value','<?php echo $ilPaymentById["co_id"];?>');
 	dijit.byId('note').attr('value','<?php echo $ilPaymentById["note"];?>');
 	dijit.byId('reciept_no').attr('value','<?php echo $ilPaymentById["receipt_no"];?>');
-	getPayment();
+	//getPayment();
 	doTotalBypene();
 	doTotalByServ();
 }
 function getPayment(){
+	//alert(1);
 	try{
 	status='<label style="color:red;">នៅឡើយ</lable>';
 	tem='';	//is_set=0;
@@ -1584,8 +1612,8 @@ function doTotalByServ(type){
 
 function getdataPaymentToForm(data){//use
 	is_change = 1;
-	dijit.byId('loan_number').attr('value',data.loan_number);
-	dijit.byId('branch_id').attr('value',data.branch_id);
+	//dijit.byId('loan_number').attr('value',data.loan_number);
+	//dijit.byId('branch_id').attr('value',data.branch_id);
 	dijit.byId('client_id').attr('value',data.client_id);
 	dijit.byId('client_code').attr('value',data.client_id);
 	dijit.byId('co_id').attr('value',data.co_id);

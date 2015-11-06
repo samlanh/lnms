@@ -13,7 +13,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				$formdata=$this->getRequest()->getPost();
 				$search = array(
 						'advance_search' 	=>  $formdata['advance_search'],
-						'client_name'		=>	$formdata['client_name'],
+						'client_name'		=>	$formdata['g_client_name'],
 						'start_date'		=>	$formdata['start_date'],
 						'end_date'			=>	$formdata['end_date'],
 						'status'			=>	$formdata['status'],
@@ -25,7 +25,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				$search = array(
 						'adv_search' => '',
 						'client_name' => -1,
-						'start_date'=> date('Y-m-01'),
+						'start_date'=> date('Y-m-d'),
 						'end_date'=>date('Y-m-d'),
 						'branch_id'		=>	-1,
 						'co_id'		=> -1,
@@ -34,7 +34,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 			$rs_rows= $db->getAllGroupPPayment($search);
 
 			$list = new Application_Form_Frmtable();
-			$collumns = array("Recirpt No","Loan No","Group Client","Total Principle","Total Payment","Recieve Amount","Total Interest","Penalize Amount","Date Pay","Due Date","CO Name","Branch",
+			$collumns = array("Branch","Recirpt No","Loan No","Group Client","Total Principle","Total Interest","Penalize Amount","Total Payment","Recieve Amount","Payment Date","Due Date","CO Name"
 				);
 			$link=array(
 					'module'=>'loan','controller'=>'grouppayment','action'=>'edit',
@@ -53,6 +53,7 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 	function addAction()
 	{
 		$db = new Loan_Model_DbTable_DbGroupPayment();
+		$db_global = new Application_Model_DbTable_DbGlobal();
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$identify = $_data["identity"];
@@ -84,11 +85,14 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				
 		$session_user=new Zend_Session_Namespace('auth');
 		$this->view->user_name = $session_user->last_name .' '. $session_user->first_name;
+		
+		$this->view->loan_number = $db_global->getLoanNumberByBranch(2);
 	}
 	function editAction()
 	{
 		$id = $this->getRequest()->getParam("id");
 		$db = new Loan_Model_DbTable_DbGroupPayment();
+		$db_global = new Application_Model_DbTable_DbGlobal();
 		if($this->getRequest()->isPost()){
 			$_data = $this->getRequest()->getPost();
 			$identity = $_data["identity"];
@@ -128,6 +132,8 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 		$rs_receipt_detail = $db->getGroupPaymentDetail($id);
 		$this->view->reciept_moneyDetail = $rs_receipt_detail;
 		$this->view->group_id = $rs["group_id"];
+		
+		$this->view->loan_numbers = $db_global->getLoanNumberByBranch(2);
 	}
 	
 	function cancelPaymentAction()

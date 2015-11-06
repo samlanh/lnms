@@ -93,7 +93,7 @@
 							<td><?php echo $tr->translate("BRANCH_NAME")?></td>
 							<td><?php echo $frm->getElement('branch_id');?></td>
 							<td><?php echo $tr->translate("LOAN_NO")?></td>
-							<td><?php echo $frm->getElement('loan_number');?></td>
+							<td><?php //echo $frm->getElement('loan_number');?><input id="loan_number" /> </td>
 							<td><?php echo $tr->translate("LOAN_DATE")?></td>
 							<td><?php echo $frm->getElement('release_date');echo $frm->getElement('old_release_date');?></td>
 						</tr>
@@ -417,6 +417,27 @@ function showReciept(){
 	}
 }
 dojo.ready(function(){	
+		var loan_data = new dojo.store.Memory({
+		    data: <?php print_r(Zend_Json::encode($this->loan_number));?>
+		});
+		new dijit.form.FilteringSelect({
+			store: dojo.data.ObjectStore({objectStore: loan_data}),
+			autoComplete: true,
+			query: {
+				branch_id: "-1"
+			},            
+			required: false,		           
+			name: "loan_number",
+			id: "loan_number",
+			searchAttr: "name",
+			class: 'fullside',
+			onChange: function() {
+				getLaonHasPayByLoanNumber(1);
+				getLaonPayment(1);
+				getAllLaonPayment(1);
+			}
+		}, "loan_number");
+		
 	var client_data = new dojo.store.Memory({
 	       data: <?php print_r(Zend_Json::encode($this->client));?>
 	});
@@ -474,6 +495,9 @@ dojo.ready(function(){
 	});	
 });
 
+function filterLoanNumber(){
+	 dijit.byId('loan_number').query.branch_id = dijit.byId('branch_id').get('value');
+}
 is_change=0;
 function filterClient(){
 	branch_id = dijit.byId('branch_id').get('value');
@@ -1384,7 +1408,7 @@ function checkAll(index){
 function getdataPaymentToForm(data){//use
 	is_change = 1;
 	dijit.byId('loan_number').attr('value',data.loan_number);
-	dijit.byId('branch_id').attr('value',data.branch_id);
+	//dijit.byId('branch_id').attr('value',data.branch_id);
 	dijit.byId('client_id').attr('value',data.client_id);
 	dijit.byId('client_code').attr('value',data.client_id);
 	dijit.byId('co_id').attr('value',data.co_id);

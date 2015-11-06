@@ -17,6 +17,7 @@
 		dojo.require("dojo.NodeList-manipulate");
 		dojo.require("dojo.html");
 		dojo.require("dojo.data.ItemFileWriteStore"); 
+		dojo.require("dojo.data.ObjectStore");
 		
 </script>
 <form id='frm_add_group_pay' action="<?php echo $this->url(array('module'=>'loan','controller'=>'grouppayment','action'=>'edit')); ?>" 
@@ -91,7 +92,8 @@
 							<td><?php echo $tr->translate("BRANCH_NAME")?></td>
 							<td><?php echo $frm->getElement('branch_id');?></td>
 							<td><?php echo $tr->translate("LOAN_NO")?></td>
-							<td><?php echo $frm->getElement('loan_number'); echo $frm->getElement('old_loan_number');?></td>
+							<td><input id="loan_number"/> <?php //echo $frm->getElement('loan_number'); 
+									echo $frm->getElement('old_loan_number');?></td>
 							<td><?php echo $tr->translate("LOAN_DATE")?></td>
 							<td><?php echo $frm->getElement('release_date');echo $frm->getElement('old_release_date');?></td>
 						</tr>
@@ -488,6 +490,29 @@ function AddNewCo(){
 	});
 }
 dojo.ready(function(){	
+
+	var loan_data = new dojo.store.Memory({
+	    data: <?php print_r(Zend_Json::encode($this->loan_numbers));?>
+	});
+	new dijit.form.FilteringSelect({
+		store: dojo.data.ObjectStore({objectStore: loan_data}),
+		autoComplete: true,
+		query: {
+			branch_id: "<?php echo $reciept_money["branch_id"];?>"
+		},            
+		required: false,		           
+		name: "loan_number",
+		id: "loan_number",
+		searchAttr: "name",
+		value: "<?php echo $reciept_money["loan_numbers"];?>",
+		class: 'fullside',
+		onChange: function() {
+			getPaymentHasByLoan(1);
+			getLaonPayment(1);
+			getAllLaonPayment(1);
+		}
+	}, "loan_number");
+	
 	date_pay = new Date('<?php echo $reciept_money["date_input"];?>');
 	loan_number = '<?php echo $reciept_money["loan_numbers"];?>';
 	new_loanNumber = dijit.byId('loan_number').get('value');
@@ -499,7 +524,13 @@ dojo.ready(function(){
 // 		dijit.byId('collect_date').attr('onchange',"");
 // 	}
 	getGroupPayment();
+	getAllLaonPayment(1);
+	getPaymentHasByLoan(1);
 });
+
+function filterLoanNumber(){
+	 dijit.byId('loan_number').query.branch_id = dijit.byId('branch_id').get('value');
+}
 function filterClient(){
 	branch_id = dijit.byId('branch_id').get('value');
 	dijit.byId('client_code').query.branch_id = branch_id;
@@ -624,6 +655,7 @@ function getGroupPaymentDetail(){
 }
 
 function getLaonPaymentDetail(){
+	alert(1);
 	var loan_number = dijit.byId('loan_number').get('value');
 	var option_pay = dijit.byId('option_pay').get('value');
 	var url_submit = '<?php echo $this->url(array('module'=>'loan','controller'=>'grouppayment','action'=>'get-loan-payment'), null, true);?>';

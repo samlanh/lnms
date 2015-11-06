@@ -1073,20 +1073,21 @@ function getLoanPaymentByLoanNumber($data){
     	$end_date = $search['end_date'];
     	
     	$db = $this->getAdapter();
-    	$sql = "SELECT lcrm.`id`,
+    	$sql = "SELECT 
+    				lcrm.`id`,
+    				(SELECT b.`branch_namekh` FROM `ln_branch` AS b WHERE b.`br_id`=lcrm.`branch_id`) AS branch,
 					lcrm.`receipt_no`,
-					lcrm.`loan_number`,
+					lcrmd.`loan_number`,
 					(SELECT c.`name_kh` FROM `ln_client` AS c WHERE c.`client_id`=lcrm.`group_id`) AS team_group ,
 					lcrm.`total_principal_permonth`,
+    				lcrm.`total_interest`,
+					lcrm.`penalize_amount`,
 					lcrm.`total_payment`,
 					lcrm.`recieve_amount`,
-					lcrm.`total_interest`,
-					lcrm.`penalize_amount`,
-					lcrm.`date_pay`,
+					lcrmd.`date_payment`,
 					lcrm.`date_input`,
-				    (SELECT co.`co_khname` FROM `ln_co` AS co WHERE co.`co_id`=lcrm.`co_id`) AS co_name,
-    				(SELECT b.`branch_namekh` FROM `ln_branch` AS b WHERE b.`br_id`=lcrm.`branch_id`) AS branch
-				FROM `ln_client_receipt_money` AS lcrm WHERE lcrm.is_group=1";
+				    (SELECT co.`co_khname` FROM `ln_co` AS co WHERE co.`co_id`=lcrm.`co_id`) AS co_name
+				FROM `ln_client_receipt_money` AS lcrm,`ln_client_receipt_money_detail` AS lcrmd WHERE lcrm.is_group=1 and lcrmd.crm_id=lcrm.id";
     	$where ='';
     	if(!empty($search['advance_search'])){
     		//print_r($search);
@@ -1117,8 +1118,9 @@ function getLoanPaymentByLoanNumber($data){
     	
     	//$where='';
     	$order = " ORDER BY receipt_no DESC";
+    	$group = " GROUP BY lcrmd.`crm_id`";
     	//echo $sql.$where.$order;
-    	return $db->fetchAll($sql.$where.$order);
+    	return $db->fetchAll($sql.$where.$group.$order);
     	
     }
     public function getGroupPaymentById($id){
@@ -1213,6 +1215,12 @@ function getLoanPaymentByLoanNumber($data){
     function getAllClient(){
     	$db = $this->getAdapter();
     	$sql = "SELECT c.`client_id` AS id ,c.`name_en` AS name ,c.`branch_id`,c.`client_number` FROM `ln_client` AS c WHERE c.`is_group`=1  AND c.`name_en`!='' " ;
+    	return $db->fetchAll($sql);
+    }
+    
+    function getIndividuleClient(){
+    	$db = $this->getAdapter();
+    	$sql = "SELECT c.`client_id` AS id ,c.`name_en` AS name ,c.`branch_id`,c.`client_number` FROM `ln_client` AS c WHERE c.`is_group`=0  AND c.`name_en`!='' " ;
     	return $db->fetchAll($sql);
     }
     

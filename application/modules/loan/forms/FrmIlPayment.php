@@ -144,7 +144,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 				'required' =>'true',
-				'OnChange'	=>	'filterClient();'
+				'OnChange'	=>	'filterLoanNumber();filterClient();'
 		));
 		
 		$rows = $db->getAllBranchName();
@@ -535,7 +535,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 				'required' =>'true',
-				//'OnChange'	=>	'filterClient();'
+				'OnChange'	=>	'filterLoanNumber();'
 		));
 		
 		$rows = $db->getAllBranchName();
