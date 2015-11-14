@@ -80,6 +80,7 @@ class Loan_IlQuickPaymentController extends Zend_Controller_Action {
   {
   	$id = $this->getRequest()->getParam("id");
   	$db = new Loan_Model_DbTable_DbLoanILPayment();
+  	$db_global = new Application_Model_DbTable_DbGlobal();
   	if($this->getRequest()->isPost()){
   		$data = $this->getRequest()->getPost();
   		//print_r($data);exit();
@@ -91,7 +92,11 @@ class Loan_IlQuickPaymentController extends Zend_Controller_Action {
   			Application_Form_FrmMessage::Sucessfull("INSERT_SUCCESS!","/loan/ilquickpayment");
   		}
   	}
-  	
+  	$last_pay_date = $db_global->getLastDatePayment($id);
+  	$current_date = $db_global->getCurrentDatePayment($id);
+  	if($current_date<$last_pay_date){
+  		Application_Form_FrmMessage::Sucessfull("WARNNING_EDIT_LOAN","/loan/ilquickpayment/");
+  	}
   	$quickPayment = $db->getIlQuickPaymentById($id);
   	$this->view->quickPayment = $quickPayment;
   	

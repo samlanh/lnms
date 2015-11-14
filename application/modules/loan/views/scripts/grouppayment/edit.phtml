@@ -538,6 +538,9 @@ function filterClient(){
 }
 function getGroupPayment(){
 	try{
+		var last_pay_date = '<?php echo $reciept_money["last_pay_date"];?>';
+		var installment_date ='<?php echo $reciept_money["installment_date"];?>';
+		var release_date ='<?php echo $reciept_money["date_release"];?>';
 		dijit.byId('id').attr('value','<?php echo $reciept_money["id"];?>');
 	dijit.byId('loan_number').attr('value','<?php echo $reciept_money["loan_numbers"];?>');
 	dijit.byId('old_loan_number').attr('value','<?php echo $reciept_money["loan_numbers"];?>');
@@ -545,7 +548,15 @@ function getGroupPayment(){
 	dijit.byId('client_code').attr('value','<?php echo $reciept_money["group_id"];?>');
 	dijit.byId('old_penelize').attr('value','<?php echo $reciept_money["penalize_amount"];?>');
 	dijit.byId('old_service_charge').attr('value','<?php echo $reciept_money["service_charge"];?>');
-	$('#installment_date').val('<?php echo $reciept_money["last_paydate"];?>');
+
+	if((last_pay_date == null || last_pay_date=="") && (installment_date == null || installment_date=="")){
+		$('#installment_date').val(release_date);
+	}else if(last_pay_date == null || last_pay_date==""){
+		$('#installment_date').val(installment_date);
+	}else{
+		$('#installment_date').val(last_pay_date);
+	}
+	
 	dijit.byId('interest_rate').attr('value','<?php echo $reciept_money["interest_rate"];?>');
 	
 	dijit.byId('priciple_amount').attr('value','<?php echo number_format($reciept_money["principal_amount"],2);?>');

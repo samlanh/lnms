@@ -109,6 +109,11 @@ class Loan_GroupPaymentController extends Zend_Controller_Action {
 				Application_Model_DbTable_DbUserLog::writeMessageError($err);
 			}
 		}
+		$last_pay_date = $db_global->getLastDatePayment($id);
+		$current_date = $db_global->getCurrentDatePayment($id);
+		if($current_date<$last_pay_date){
+			Application_Form_FrmMessage::Sucessfull("WARNNING_EDIT_LOAN","/loan/grouppayment/");
+		}
 		$rs = $db->getGroupPaymentById($id);
 		$frm = new Loan_Form_FrmIlPayment();
 		$frm_loan=$frm->FrmGroupPayment();

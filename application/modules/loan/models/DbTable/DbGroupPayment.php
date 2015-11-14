@@ -153,7 +153,8 @@ function getLoanPaymentByLoanNumber($data){
    		$loan_number = $data["loan_number"];
    		$option_pay = $data["option_pay"];
    		if($option_pay==1){
-	   		$sql="SELECT 
+	   		$sql="SELECT 	
+	   					(SELECT d.`date_payment` FROM `ln_client_receipt_money_detail` AS d WHERE d.`loan_number`='$loan_number' ORDER BY d.`date_payment` DESC LIMIT 1) AS installment_date ,
 	    				  (SELECT crm.`date_input` FROM `ln_client_receipt_money` AS crm , `ln_client_receipt_money_detail` AS crmd WHERE crm.`id`=crmd.`crm_id` AND crmd.`lfd_id`=lf.`id` AND crmd.`loan_number`=lm.`loan_number` ORDER BY `crm`.`date_input` DESC LIMIT 1) AS last_pay_date,
 						  lm.`loan_number`,
 						  lm.`currency_type`,
@@ -190,6 +191,7 @@ function getLoanPaymentByLoanNumber($data){
 						";
    		}else{
    			$sql="SELECT 
+   						(SELECT d.`date_payment` FROM `ln_client_receipt_money_detail` AS d WHERE d.`loan_number`='$loan_number' ORDER BY d.`date_payment` DESC LIMIT 1) AS installment_date ,
     				  (SELECT crm.`date_input` FROM `ln_client_receipt_money` AS crm , `ln_client_receipt_money_detail` AS crmd WHERE crm.`id`=crmd.`crm_id` AND crmd.`lfd_id`=lf.`id` AND crmd.`loan_number`=lm.`loan_number` ORDER BY `crm`.`date_input` DESC LIMIT 1) AS last_pay_date,
 					  lm.`loan_number`,
 					  lm.`currency_type`,
@@ -1128,7 +1130,8 @@ function getLoanPaymentByLoanNumber($data){
 //     	$sql_payoption = "SELECT lc.`payment_option` FROM `ln_client_receipt_money` AS lc WHERE lc.id=$id";
 //     	$pay_option = $db->fetchOne($sql_payoption);
     	$sql="SELECT 
-				(SELECT lcrm.`date_input` FROM `ln_client_receipt_money` AS lcrm,`ln_client_receipt_money_detail` AS lcrmd WHERE lcrm.`id`!=crm.id AND lcrmd.`crm_id`=lcrm.`id` AND lcrm.`loan_number`=(SELECT `loan_number` FROM `ln_client_receipt_money_detail` WHERE `crm_id`=crm.id LIMIT 1) ORDER BY lcrm.`date_input` DESC LIMIT 1) AS last_paydate ,
+				(SELECT d.`date_payment` FROM `ln_client_receipt_money_detail` AS d WHERE d.`loan_number`=(SELECT c.loan_number FROM ln_loan_member AS c WHERE c.member_id=(SELECT g.member_id FROM ln_loanmember_funddetail AS g WHERE g.id = d.lfd_id) LIMIT 1) AND d.crm_id NOT IN($id) ORDER BY d.`date_payment` DESC LIMIT 1) AS installment_date ,
+				(SELECT crm.`date_input` FROM `ln_client_receipt_money` AS crm,`ln_client_receipt_money_detail` AS crmd WHERE crm.`id`!=$id AND crm.`id`=(SELECT crl.`crm_id` FROM `ln_client_receipt_money_detail` AS crl WHERE crl.`crm_id`=crm.`id` AND crl.`loan_number`=(SELECT c.loan_number FROM `ln_client_receipt_money_detail` AS c WHERE c.`crm_id`=crmd.id AND c.`crm_id`=$id LIMIT 1) LIMIT 1)  ORDER BY crm.`date_input` DESC LIMIT 1) AS last_pay_date,
 				  crm.*,
 				  (SELECT lm.amount_collect_principal FROM `ln_loan_member` AS lm WHERE lm.`loan_number`=(SELECT `loan_number` FROM `ln_client_receipt_money_detail` WHERE `crm_id`=crm.id LIMIT 1) LIMIT 1) AS amount_term,
 				  (SELECT lm.`collect_typeterm` FROM `ln_loan_member` AS lm WHERE lm.`loan_number`=(SELECT `loan_number` FROM `ln_client_receipt_money_detail` WHERE `crm_id`=crm.id LIMIT 1) LIMIT 1) AS collect_typeterm,

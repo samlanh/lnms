@@ -11,6 +11,8 @@
 	$loan_number = $this->loan_number;
 	//print_r($loan_number);
 	$ilPaymentById = $this->ilPaymentById;
+	//print_r($ilPaymentById);
+	//print_r($ilPayent);
 	$keycode = $this->keycode;
 	$user_name = $this->user_name;
 	$graiceperiod = $this->graiceperiod;
@@ -451,9 +453,9 @@ dojo.ready(function(){
 		value: "<?php echo $ilPaymentById["loan_numbers"];?>",
 		class: 'fullside',
 		onChange: function() {
-			//getLaonHasPayByLoanNumber(1);
-			//getLaonPayment(1);
-			//getAllLaonPayment(1);
+			getLaonHasPayByLoanNumber(1);
+			getLaonPayment(1);
+			getAllLaonPayment(1);
 		}
 	}, "loan_number");
 	
@@ -508,7 +510,7 @@ dojo.ready(function(){
 		key_number = (event.keyCode);
 		if(key_number==13){
 			not_submit = 1;
-			//getLaonPayment(1);
+			getLaonPayment(1);
 			getAllLaonPayment(1);
 			//getLastPayDate();
 			getLaonHasPayByLoanNumber();
@@ -628,13 +630,23 @@ function getLoanPaymentbyId(){
 	var total_pay = <?php echo $ilPaymentById["total_payment"];?>;
 	var recieve_amount =<?php echo $ilPaymentById["recieve_amount"];?>;
 	var return_amount = <?php echo $ilPaymentById["return_amount"];?>;
+	var last_pay_date = '<?php echo $ilPaymentById["last_pay_date"];?>';
+	var installmment_date = '<?php echo $ilPaymentById["installment_date"];?>';
+	var release_date = '<?php echo $ilPaymentById["date_release"];?>';
 	
 	//alert(total_pay);
 	//$('#new_penelize').val('<?php //echo $ilPaymentById[""];?>');
 	dijit.byId('old_penelize').attr('value','<?php echo $ilPaymentById["penalize_amount"];?>');
 	dijit.byId('old_penelize').attr('value','<?php echo $ilPaymentById["penalize_amount"];?>');
 	dijit.byId('old_service_charge').attr('value','<?php echo $ilPaymentById["service_charge"];?>');
-	$('#installment_date').val('<?php echo $ilPaymentById["last_paydate"];?>');
+	
+	if(last_pay_date==""   && installmment_date==""){
+		$('#installment_date').val(release_date);
+	}else if(last_pay_date==""){
+		$('#installment_date').val(installmment_date);
+	}else{
+		$('#installment_date').val(last_pay_date);
+	}
 	dijit.byId('interest_rate').attr('value','<?php echo $ilPaymentById["interest_rate"];?>');
 	dijit.byId('branch_id').attr('value','<?php echo $ilPaymentById["branch_id"];?>');
 	//dijit.byId('loan_number').attr('value','<?php //echo $ilPaymentById["loan_numbers"];?>');
@@ -760,15 +772,16 @@ function getLaonPayment(type){
 	var client_id = '<?php echo $client_id?>';
 	var client_code = '<?php echo $client_code?>';
 	var loan_numbers = '<?php echo $loan_number?>'; 
-	if(type==3 && client_id == clientId){
-		getLoanPaymentbyId();
-		dijit.byId('client_code').attr('value',clientId);
-		dijit.byId('loan_number').attr('value',loan_number);
-	}else if(type==2 && client_code == clientCode){
-		getLoanPaymentbyId();
-		dijit.byId('client_id').attr('value',clientCode);
-		dijit.byId('loan_number').attr('value',loan_number);
-	}else if(type==1 && loan_numbers==loan_number){
+// 	if(type==3 && client_id == clientId){
+// 		getLoanPaymentbyId();
+// 		dijit.byId('client_code').attr('value',clientId);
+// 		dijit.byId('loan_number').attr('value',loan_number);
+// 	}else if(type==2 && client_code == clientCode){
+// 		getLoanPaymentbyId();
+// 		dijit.byId('client_id').attr('value',clientCode);
+// 		dijit.byId('loan_number').attr('value',loan_number);
+// 	}else 
+		if(type==1 && loan_numbers==loan_number){
 		getLoanPaymentbyId();
 		dijit.byId('client_id').attr('value',client_id);
 		dijit.byId('client_code').attr('value',client_code);
@@ -965,7 +978,13 @@ function getLoanById(type){
 							status='<label style="color:red;">នៅឡើយ</lable>';
 							if(is_set!=1){
 								getdataPaymentToForm(respone[i]);
-								$('#installment_date').val(respone[i].last_pay_date);
+								if((respone[i].last_pay_date==null)  && (respone[i].installment_date==null) ){
+									$('#installment_date').val(respone[i].release_date);
+								}else if(respone[i].last_pay_date==null || respone[i].last_pay_date==""){
+									$('#installment_date').val(respone[i].installment_date);
+								}else{
+									$('#installment_date').val(respone[i].last_pay_date);
+								}
 								is_set=1;
 							}
 							is_appr='';

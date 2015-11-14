@@ -569,6 +569,13 @@ function getLaonPayment(){
 						++num;
 						if(is_set!=1){
 							getdataPaymentToForm(respone[i]);
+							if((respone[i].last_pay_date == null || respone[i].last_pay_date=="") && (respone[i].installment_date == null || respone[i].installment_date=="")){
+								dijit.byId('installment_date').attr('value',respone[i].release_date);
+							}else if(respone[i].last_pay_date == null || respone[i].last_pay_date==""){
+								dijit.byId('installment_date').attr('value',respone[i].installment_date);
+							}else{
+								dijit.byId('installment_date').attr('value',respone[i].last_pay_date);
+							}
 							is_set=1;
 						}
 						var total_pay =parseFloat(respone[i].principle_after)+parseFloat(respone[i].total_interest_after)+parseFloat(respone[i].penelize)+parseFloat(respone[i].service_charge)
@@ -700,7 +707,7 @@ function getPaymentHasByLoan(){
 			temp='';	is_set=0;
 			temp='<table class="collape tablesorter" style="font-size:12px;" id="table" width="100%">'
 				+'<thead><tr><th class="tdheader"><?php echo $tr->translate('NO');?></th>'
-				+'<th class="tdheader"><?php echo $tr->translate('NOT_COMPLETED');?></th>'
+				+'<th class="tdheader"><?php echo $tr->translate('RECIEPT_NO');?></th>'
 				+'<th class="tdheader"><?php echo $tr->translate('LOAN_NO');?></th>'
 				+'<th class="tdheader"><?php echo $tr->translate('PAY_DATE');?></th>'
 				+'<th class="tdheader"><?php echo $tr->translate('DATE_INPUT');?></th>'
@@ -767,7 +774,7 @@ function getdataPaymentToForm(data){//use
 	dijit.byId('total_amount_loan').attr('value',data.total_capital);
 	dijit.byId('loan_period').attr('value',data.total_duration);
 	dijit.byId('payment_method').attr('value',data.payment_method);
-	dijit.byId('installment_date').attr('value',data.last_pay_date);
+	//dijit.byId('installment_date').attr('value',data.last_pay_date);
 	dijit.byId('load_level').attr('value',data.level);
 	var today = new Date();
 	dijit.byId('collect_date').attr('value',today);

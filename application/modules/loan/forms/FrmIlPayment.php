@@ -53,7 +53,8 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
  				//'onchange'=>'getLaonPayment(3);getAllLaonPayment(3);',
-				'required'=>true
+				'required'=>true,
+				'readOnly'=>'readOnly'
 				));
 		$rows = $db ->getClientByType();
 		$options=array(''=>'-----Select------');
@@ -67,7 +68,8 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
 				//'onchange'=>'getLaonHasPayByLoanNumber(2);getLaonPayment(2);getAllLaonPayment(2);',
-				'required'=>true
+				'required'=>true,
+				'readOnly'=>'readOnly'
 		));
 		
 		$option_client_number = array(''=>'-----Select------');
@@ -174,6 +176,7 @@ Class Loan_Form_FrmIlPayment extends Zend_Dojo_Form {
 		$_cocode->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
+				'readOnly'=>'readOnly',
 				//'onchange'=>'getLoan(2);'
 		));
 		$_cocode->setMultiOptions($options);

@@ -704,7 +704,13 @@ function getLaonPayment(type){
 								status='<label style="color:red;"><?php echo $tr->translate('NOT_COMPLETED');?></lable>';
 								if(is_set!=1){
 									getdataPaymentToForm(respone[i]);
-									$('#installment_date').val(respone[i].last_pay_date);
+									if((respone[i].last_pay_date==null)  && (respone[i].installment_date==null) ){
+										$('#installment_date').val(respone[i].release_date);
+									}else if(respone[i].last_pay_date==null || respone[i].last_pay_date==""){
+										$('#installment_date').val(respone[i].installment_date);
+									}else{
+										$('#installment_date').val(respone[i].last_pay_date);
+									}
 									is_set=1;
 								}
 								is_appr='';
