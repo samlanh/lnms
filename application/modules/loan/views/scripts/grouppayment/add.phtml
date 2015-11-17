@@ -588,7 +588,7 @@ function getLaonPayment(){
 						    tem += '<td>&nbsp;'+respone[i].client_code+'&nbsp;<input type="hidden" name="client_id_'+inx+'" id="client_id_'+inx+'" value="'+respone[i].client_id+'" /></td>';
 						    tem += '<td>&nbsp;'+respone[i].client_name+'&nbsp;<input type="hidden" name="loan_number_'+inx+'" id="loan_number_'+inx+'" value="'+respone[i].loan_number+'" /></td>';
 						    tem += '<td style="white-space: nowrap;">&nbsp;'+str_day+'&nbsp;</td>';
-						    tem += '<td style="white-space: nowrap;">&nbsp;'+respone[i].payment_date+'&nbsp;<input type="hidden" name="date_payment_'+inx+'" id="date_payment_'+inx+'" value="'+respone[i].date_payment+'" /><input type="hidden" name="last_paydate_'+inx+'" id="last_paydate_'+inx+'" value="'+respone[i].last_pay_date+'" /></td>';
+						    tem += '<td style="white-space: nowrap;">&nbsp;'+respone[i].payment_date+'&nbsp;<input type="hidden" name="date_payment_'+inx+'" id="date_payment_'+inx+'" value="'+respone[i].date_payment+'" /><input type="text" name="last_paydate_'+inx+'" id="last_paydate_'+inx+'" value="'+respone[i].last_pay_date+'" /></td>';
 						    tem += '<td>&nbsp;'+dojo.number.format(respone[i].total_principal)+' '+curr+'&nbsp;<input type="hidden" name="sub_total_priciple_'+inx+'" id="sub_total_priciple_'+inx+'" value="'+respone[i].total_principal+'" /></td>';
 						    tem += '<td>&nbsp;'+dojo.number.format(respone[i].principle_after)+' '+curr+'&nbsp;<input type="hidden" name="sub_principal_permonth_'+inx+'" id="sub_principal_permonth_'+inx+'" value="'+respone[i].principle_after+'" /></td>';
 						    tem += '<td>&nbsp;'+dojo.number.format(respone[i].total_interest_after)+' '+curr+'&nbsp;<input type="hidden" name="sub_interest_'+inx+'" id="sub_interest_'+inx+'" value="'+respone[i].total_interest_after+'" /></td>';
@@ -848,7 +848,7 @@ function calculateTotal(index){
 			          	var service_charge = parseFloat($('#sub_service_charge_'+arrays[i]).val());
 			          	var total_sub_penelize=0;
 			          	
-			          	last_payment_date= $('#last_date_payment_'+arrays[i]).val();
+			          	last_payment_date= $('#last_paydate_'+arrays[i]).val();
 			          	if(last_payment_date=="null" || last_payment_date==null || last_payment_date=="" ){
 							pay_date= new Date($('#date_payment_'+arrays[i]).val());
 						}else{
