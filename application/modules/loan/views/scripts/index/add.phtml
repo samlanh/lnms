@@ -291,6 +291,7 @@ require(["dojo/ready"], function(ready){
 		if(member==-1){
 			showPopupclient();
 		}else{
+			getLoanLevel(member);
 			dijit.byId('customer_code').attr('value',member);
 		}
 }
@@ -490,10 +491,12 @@ function getClientInfo(type){
 		customer_code= dijit.byId('member').get('value');
 		dijit.byId('customer_code').attr('value',customer_code);
 	}
-	getLoanLevel(customer_code);
+	
 }
 var getloan_level = '<?php echo $this->url(array('module'=>'loan','controller'=>'index','action'=>'get-loanlevel')); ?>';
 function getLoanLevel(client_id){
+	   if(client_id==''){
+		   return false;}
 		dojo.xhrPost({
 	    url: getloan_level,	
 	    content : { 
@@ -761,7 +764,7 @@ function addPreviewLoan(){
 			load: function(data) {
 				document.getElementsByClassName("overlay")[0].style.display="none";
 				temp='';	fund_title=0;thead='';fund_title=0;
-				 		temp='<table class="collape tablesorter" style="font-size:13px;" id="table" width="100%">'
+				 		temp='<table class="collape tablesorter" style="font-size:13px; width:1000px !important; " id="table">'
 						temp+='<tr style="background:#ccc;"><th><?php echo $tr->translate("NUM");?></th>';
 						temp+='<th><?php echo $tr->translate("ថ្ងៃបង់ប្រាក់");?></th>';
 						temp+='<th><?php echo $tr->translate("ប្រាក់ដើមគ្រា");?></th>';

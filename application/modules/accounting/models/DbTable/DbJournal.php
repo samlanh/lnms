@@ -6,6 +6,79 @@ class Accounting_Model_DbTable_DbJournal extends Zend_Db_Table_Abstract
 		$session_user=new Zend_Session_Namespace('auth');
 		return $session_user->user_id;
 	}
+	function addnewJournal($data){
+		$arr = array(
+				'branch_id'=>$data['branch_id'],
+				'receipt_number'=>$data['invoice'],
+				'journal_code'=>$data['journal_code'],
+				'currency_id'=>$data['currency_type'],
+				'debit'=>$data['debit'],
+				'credit'=>$data['credit'],
+				'date'=>$data['add_date'],
+				'create_date'=>date('Y-m-d'),
+				'note'=>$data['note'],
+				'user_id'=>$this->getUserId(),
+				'from_location'=>0,
+				'is_direct'=>1,
+			); 
+		$id =  $this->insert($arr);
+		$ids = explode(',', $data['record_row']) ;
+		$this->_name='ln_journal_detail';
+		foreach($ids as $i){
+			//$increase = ($increase==1)?'+':'-';
+			 $arr = array(
+			 	'jur_id'=>$id,
+				'branch_id'=>$data['branch_id'],
+				'account_id'=>$data['account_id'.$i],
+				'currency_type'=>$data['currency_type'],
+				'debit'=>$data['debit_'.$i],
+				'credit'=>$data['credit_'.$i],
+				'note'=>$data['note'.$i],
+			 	'is_increase'=>'',
+			); 
+		    $this->insert($arr);
+		}
+		
+	}
+	function upDateJournal($data){
+		$arr = array(
+				'branch_id'=>$data['branch_id'],
+				'receipt_number'=>$data['invoice'],
+				'journal_code'=>$data['journal_code'],
+				'currency_id'=>$data['currency_type'],
+				'debit'=>$data['debit'],
+				'credit'=>$data['credit'],
+				'date'=>$data['add_date'],
+				'create_date'=>date('Y-m-d'),
+				'note'=>$data['note'],
+				'user_id'=>$this->getUserId(),
+				'from_location'=>0,
+				'is_direct'=>1,
+		);
+		$where = " id =".$data['id'];
+		$this->update($arr, $where);
+		
+		$this->_name='ln_journal_detail';
+		$where = " jur_id =".$data['id'];
+		$this->delete($where);
+		
+		$ids = explode(',', $data['record_row']) ;
+		foreach($ids as $i){
+			//$increase = ($increase==1)?'+':'-';
+			$arr = array(
+					'jur_id'=>$data['id'],
+					'branch_id'=>$data['branch_id'],
+					'account_id'=>$data['account_id'.$i],
+					'currency_type'=>$data['currency_type'],
+					'debit'=>$data['debit_'.$i],
+					'credit'=>$data['credit_'.$i],
+					'note'=>$data['note'.$i],
+					'is_increase'=>'',
+			);
+			$this->insert($arr);
+		}
+	
+	}
 	function addTransactionJournal($data){
 				
 		$arr =array(
@@ -92,6 +165,12 @@ class Accounting_Model_DbTable_DbJournal extends Zend_Db_Table_Abstract
 			return $row;
 		}
 	}
+	function getParrentIdByAccountId($account_id){
+		$db=$this->getAdapter();
+		$sql = "SELECT parent_id FROM `ln_account_name` WHERE id=$account_id LIMIT 1";
+		return $db->fetchOne($sql);
+		
+	}
 	function getAllParrentAccount($opt = null,$type=3){
 		$db=$this->getAdapter();
 		$sql = "SELECT id,account_code,CONCAT(account_name_en,'-',account_name_kh,'-',account_code) AS name FROM `ln_account_name` WHERE STATUS =1 AND
@@ -130,4 +209,5 @@ class Accounting_Model_DbTable_DbJournal extends Zend_Db_Table_Abstract
 		$sql = " SELECT prefix FROM `ln_branch` WHERE br_id = $branch_id  LIMIT 1";
 		return $db->fetchOne($sql);
 	}
+	
 }

@@ -1,7 +1,9 @@
 <?php
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
 $frm = $this->frm_fixedasset;
+$baseurl =  Zend_Controller_Front::getInstance()->getBaseUrl();
 ?>
+<script src="<?php echo $baseurl;?>/js/help.js"></script>
 <style>	
 .fullside {
 	width: 100%;
@@ -82,8 +84,10 @@ $frm = $this->frm_fixedasset;
 </table>
 </form>
 <script type="text/javascript">
+dojo.require("dijit/form/DateTextBox");
 dojo.require("dojo.data.ItemFileWriteStore"); 
-dojo.require("dojo.NodeList-manipulate");
+dojo.require("dijit/form/CheckBox");
+dojo.require("dijit/form/NumberTextBox");
 
 var account_store  = getDataStorefromJSON('id','name',[]);
 require(["dojo/ready"], function(ready){

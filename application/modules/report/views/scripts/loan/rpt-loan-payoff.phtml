@@ -22,15 +22,16 @@ $frm = $this->frm_search;
    	</tr>
 </table>
 </form>
-<br/><br/><br/><br/><br/>
+<br/>
 <div style="width:100%; margin:0 auto;">
 <div style=" width:28cm;min-height:22cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.5cm">
 <div id="divPrint">
 <style>
 .style{
-	line-height: 20px;font-size: 11px !important;
+	line-height: 20px;font-size: 10px !important;
 	font-family: 'Khmer OS Battambang';
 }
+table tr td ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold;}
 </style>
 <table width="100%">
 	<tr>
@@ -39,10 +40,11 @@ $frm = $this->frm_search;
             	<tr>
                 	<td width="20%"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px"></td>
                 	<td width="60%" valign="top">
-                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><label><?php echo $tr->translate("BRAND_TITLE");?></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><label></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("REPORT_LOAN_PAYOFF");?></h2>
-                	<h2 style="text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></h2>
+                	   <ul>
+                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("BRAND_TITLE");?></li>
+                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'"><?php echo $tr->translate("REPORT_LOAN_PAYOFF");?></li>
+                			<li style="text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></li>
+                		</ul>
                 	</td>
                     <td width="20%"></td>
                 </tr> 
@@ -55,9 +57,7 @@ $frm = $this->frm_search;
 									<br /><?php echo $tr->translate("TEL_COMPANY");?>
                 				</td>
                 				<td width="65%"></td>
-                				
                 			</tr>
-			               
 		                </table>
 		              </td>
 		           </tr>   
@@ -67,7 +67,7 @@ $frm = $this->frm_search;
     
     <tr>
     	<td>
-            <table id="exportExcel" width="100%" border="1" style="border-collapse:collapse; border:1px solid #000;" cellspacing="0">
+            <table id="exportExcel" width="100%" border="1" style="border-collapse:collapse; border:1px solid #000; white-space: nowrap;" cellspacing="0">
                 <tr class="style" bgcolor="#ccc" align="center" style="font-weight:bold; line-height: 14px; padding:3px 0px; ">
                     <th rowspan="2"><?php echo $tr->translate("NUM");?></th>
                     <th rowspan="2"><?php echo $tr->translate("BRANCH_NAME");?></th>

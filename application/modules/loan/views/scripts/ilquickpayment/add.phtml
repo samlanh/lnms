@@ -103,9 +103,9 @@
 						<tr>
 							<td><?php //echo $tr->translate("ថ្ងៃទទួលប្រាក់");?></td>
 							<td><?php echo $frm->getElement('date_input');?></td>
-							<td><?php echo $tr->translate("ប្រាក់ត្រូវបង់សរុប")?></td>
+							<td style="color:red;"><?php echo $tr->translate("ប្រាក់ត្រូវបង់សរុប")?></td>
 							<td><?php echo $frm->getElement('total_payment');?><input type="hidden" dojoType="dijit.form.TextBox" name="oldTotalPay" id="oldTotalPay" /></td>
-							<td><?php echo $tr->translate("ប្រាក់ទទួលបាន")?></td>
+							<td style="color:red;"><?php echo $tr->translate("ប្រាក់ទទួលបាន")?></td>
 							<td><?php echo $frm->getElement('amount_receive');?></td>
 							
 						</tr>

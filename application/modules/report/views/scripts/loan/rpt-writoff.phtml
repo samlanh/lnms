@@ -33,6 +33,7 @@ dojo.require("dijit.form.DateTextBox");
 	line-height: 20px;font-size: 11px !important;
 	font-family: 'Khmer OS Battambang';
 }
+table tr td ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold;}
 th{padding: 5px;}
 </style>
 <table width="100%" >
@@ -42,11 +43,12 @@ th{padding: 5px;}
             	<tr>
                 	<td width="20%"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px"></td>
                 	<td width="60%" valign="top">
-                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><label><?php echo $tr->translate("BRAND_TITLE");?></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><label></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("REPORT_LOAN_WRITE_OFF");?></h2>
-                	<h2 style="text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></h2>
-                 </td>
+                	    <ul>
+                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("BRAND_TITLE");?></li>
+                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'"><?php echo $tr->translate("REPORT_LOAN_WRITE_OFF");?></li>
+                			<li style="text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></li>
+                		</ul>
+                    </td>
                     <td width="20%"></td>
                 </tr> 
                 <tr>
@@ -70,8 +72,8 @@ th{padding: 5px;}
     
     <tr>
     	<td>
-            <table id="exportExcel" width="100%" border="1" style="border-collapse:collapse; border:1px solid #000;" cellspacing="0">
-                <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 14px; font-size:11px; padding:10px 0px; ">
+            <table id="exportExcel" width="100%" border="1" style="border-collapse:collapse; border:1px solid #000; white-space: nowrap;" cellspacing="0">
+                <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 14px; font-size:10px; padding:10px 0px; ">
                     <th ><?php echo $tr->translate("NUM");?></th>
                     <th ><?php echo $tr->translate("BRANCH_NAME");?></th>
                     <th ><?php echo $tr->translate("LOAN_NO");?></th>
@@ -79,19 +81,19 @@ th{padding: 5px;}
 							<?php echo $tr->translate("CLIENT_NUM");?> 
 						<!--</text></svg> -->
 					</th> 
-                    <th style="font-size: 12px;"><?php echo $tr->translate("CUSTOMER_NAME");?></th>
-                    <th style="font-size: 12px;"><?php echo $tr->translate("LOAN_AMOUNT");?></th> 
-                    <th style="font-size: 12px;"><?php echo $tr->translate("INTEREST_RATE");?></th>
-                    <th style="font-size: 12px;"><?php echo $tr->translate("LOAN_PERIOD");?></th>
+                    <th style="font-size: 10px;"><?php echo $tr->translate("CUSTOMER_NAME");?></th>
+                    <th style="font-size: 10px;"><?php echo $tr->translate("LOAN_AMOUNT");?></th> 
+                    <th style="font-size: 10px;"><?php echo $tr->translate("INTEREST_RATE");?></th>
+                    <th style="font-size: 10px;"><?php echo $tr->translate("LOAN_PERIOD");?></th>
                     <th>&nbsp;<?php echo $tr->translate("RELEASED_DATE");?>&nbsp;</th>
                     <th>&nbsp;<?php echo $tr->translate("LIFE_LOAN");?>&nbsp;</th>
-                    <th style="font-size: 12px;"><?php echo $tr->translate("LOAN_OUTSTADING_BALANCE");?></th> 
-                    <th style="font-size: 12px;"><?php echo $tr->translate("TOTAL_INTEREST");?></th> 
-                    <th style="font-size: 12px;"><?php echo $tr->translate("INTEREST_RECEIVEABLE");?></th>
-                    <th style="font-size: 12px;"><?php echo $tr->translate("TOTAL_AMOUNT_PAYMENT");?></th>
-                    <th style="font-size: 12px;"><?php echo $tr->translate("FOR_LOAN_TYPE");?></th>
-                    <th style="font-size: 12px;"><?php echo $tr->translate("LATE_DAY");?></th>
-                    <th style="font-size: 12px;"><?php echo $tr->translate("STATUS");?></th>
+                    <th style="font-size: 10px;"><?php echo $tr->translate("LOAN_OUTSTADING_BALANCE");?></th> 
+                    <th style="font-size: 10px;"><?php echo $tr->translate("TOTAL_INTEREST");?></th> 
+                    <th style="font-size: 10px;"><?php echo $tr->translate("INTEREST_RECEIVEABLE");?></th>
+                    <th style="font-size: 10px;"><?php echo $tr->translate("TOTAL_AMOUNT_PAYMENT");?></th>
+                    <th style="font-size: 10px;"><?php echo $tr->translate("FOR_LOAN_TYPE");?></th>
+                    <th style="font-size: 10px;"><?php echo $tr->translate("LATE_DAY");?></th>
+                    <th style="font-size: 10px;"><?php echo $tr->translate("STATUS");?></th>
                 </tr>
                 <?php $amt_r1 = 0;$amt_r2 = 0;
                 	  $amt_d1 = 0;$amt_d2 = 0;

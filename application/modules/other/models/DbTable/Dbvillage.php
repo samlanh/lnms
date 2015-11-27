@@ -11,6 +11,7 @@ class Other_Model_DbTable_DbVillage extends Zend_Db_Table_Abstract
     }
 	public function addVillage($_data){
 		$_arr=array(
+				'code'	  => $_data['code'],
 				'commune_id'	  => $_data['commune_name'],
 				'village_name'	  => $_data['village_name'],
 				'village_namekh'	  => $_data['village_namekh'],
@@ -44,7 +45,7 @@ class Other_Model_DbTable_DbVillage extends Zend_Db_Table_Abstract
 	}
 	public function getVillageById($id){
 		$db = $this->getAdapter();
-		$sql=" SELECT v.vill_id,v.commune_id,v.village_name,v.village_namekh,v.displayby,v.modify_date,
+		$sql=" SELECT v.vill_id,v.code,v.commune_id,v.village_name,v.village_namekh,v.displayby,v.modify_date,
 					v.status,v.user_id,d.dis_id,d.pro_id FROM 
 			   `ln_village` AS v,ln_commune AS c,ln_district AS d
 			   WHERE v.commune_id=c.com_id AND v.vill_id AND c.district_id=d.dis_id AND

@@ -24,7 +24,13 @@ class Group_Model_DbTable_DbClient extends Zend_Db_Table_Abstract
 		}
 		
 		try{
-		$client_code = $this->getClientCode($_data['branch_id']);
+		
+		if(!empty($_data['id'])){
+			$client_code=$_data['client_no'];
+		}else{
+			$client_code = $this->getClientCode($_data['branch_id']);
+		}
+		
 		$_arr=array(
 				'is_group'	  => $_data['is_group'],
 				//'parent_id'	  =>$parent,

@@ -3,8 +3,7 @@ $client = $this->client;
 $filter = $this->form_filter;
 $dayin_khmer = $this->day_inkhmer;
 $tr = Application_Form_FrmLanguages::getCurrentlanguage();
-$url_barcode = $this->url(array("module"=>"loan","controller"=>"ilpayment","action"=>"generate-barcode","loan_code"=>$client['loan_number']),null,true);											
-												
+$url_barcode = $this->url(array("module"=>"loan","controller"=>"ilpayment","action"=>"generate-barcode","loan_code"=>$client['loan_number']),null,true);																							
 ?>
 <title><?php echo $tr->translate('REPORT WEEK');?></title>
 <style>
@@ -29,22 +28,22 @@ td p{ margin-top:0px !important;}
 	    	<td align="center">
 	        	<table width="100%" style="font-family:khmer;margin:0 auto;padding:0px; border:none;">
 	            	<tr>
-	                	<td><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px">
-	                		<p style="font-family: 'Khmer OS Battambang'; font-size:9px;border-bottom: 1px solid #000; margin-top:-4px; line-height:15px;"><?php //echo $client['branch_name'];?> 	<?php echo $this->data['brand_adress'];?>
+	                	<td width="30%" style="border-bottom: 1px solid #000;"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px">
+	                		<p style="font-family: 'Khmer OS Battambang'; font-size:9px;margin-top:4px; line-height:15px;"><?php //echo $client['branch_name'];?> 	<?php echo $this->data['brand_adress'];?>
 								<br /><?php echo $this->data['phone_brand'];?></p>
 	                	</td>
 	                	<td width="47%" valign="top">
-	                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><label><?php echo $tr->translate("BRAND_TITLE");?><?php //echo $this->data['brand_title'];?></label></h2>
-	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><label><?php echo $client['branch_name'];?></label></h2>
-	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php //echo $tr->translate('rpt-paymentschedule');?> <?php echo ($client['loan_type']==1)?$tr->translate('RPT_ILLOAN'):$tr->translate('RPT_GROULOAN') ;?></h2></td>
-	                    <td width="25%"><img src="<?php echo $url_barcode;?>" /></td>
+	                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer OS Muol'"><label><?php echo $tr->translate("BRAND_TITLE");?><?php //echo $this->data['brand_title'];?></label></h2>
+	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><label><?php echo $client['branch_name'];?></label></h2>
+	                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><?php //echo $tr->translate('rpt-paymentschedule');?> <?php echo ($client['loan_type']==1)?$tr->translate('RPT_ILLOAN'):$tr->translate('RPT_GROULOAN') ;?></h2></td>
+	                    <td ><img src="<?php echo $url_barcode;?>" /></td>
 	                </tr>
 	                <?php $db = new Application_Model_DbTable_DbGlobal();
 	                	  $row = $db->getClientByType(null,$client['client_id'],1);
 	                ?> 
 	                <tr>
 	                	<td colspan="3">
-	                		<table width="100%">
+	                		<table width="100%" style="margin-top:10px;">
 			                	<tr class='style'>
 				                   <td width="35%">
 				                	    <p><b><?php echo $tr->translate('CUSTOMER_NAME');?></b>: <?php echo ($client['displayclient']==1)? $client['client_name_kh']: $client['client_name_en'] ;?> </p>
@@ -61,7 +60,7 @@ td p{ margin-top:0px !important;}
 				                    </td>
 				                    <td valign="top">
 				     	              <p><?php echo $tr->translate("TEL");?>  : <?php echo $client['tel'];?></p>   
-				                      <p><?php echo $tr->translate("INTEREST");?> : <?php echo $client['interest_rate']?> %</p>
+				                      <p><?php //echo $tr->translate("INTEREST")." : ".$client['interest_rate']." %"?> </p>
 				                      <p><?php echo $tr->translate("FIRST_PAYMENT");?> : <?php echo date('d-m-Y',strtotime($client['first_payment'])); ?></p>
 				                    </td>
 				                </tr>
@@ -124,16 +123,16 @@ td p{ margin-top:0px !important;}
 	            </table>
 	            <table width="100%" cellpadding="3">
 	            	<tr class="font_bold" style="height:25px;">
-	            		<td align="center" valign="bottom"><?php echo $tr->translate('ACCOUNTING_SIGN');?></td>
+	            		<td align="center" valign="bottom" style="font-family:'Khmer OS Muol'"><?php echo $tr->translate('ACCOUNTING_SIGN');?></td>
 	            		<td align="center" valign="bottom"></td> 
-	            		<td align="center" valign="bottom"><?php echo $tr->translate('BORROWER');?></td>
+	            		<td align="center" valign="bottom" style="font-family:'Khmer OS Muol'"><?php echo $tr->translate('BORROWER');?></td>
 	            	</tr>
 	            	<tr class="font_bold">
-	            		<td align="center" height="80px" valign="bottom"><?php //echo $client['user_name'];?></td>
+	            		<td align="center" height="80px" valign="bottom"><?php echo $client['user_name'];?></td>
 	            		<td align="center"  valign="bottom">
 	            			<?php //echo ($client['displayby']==1)?$client['co_khname']:$client['co_enname'] ;?></td>
 	            		<td align="center" height="75px" valign="bottom">
-	            			<?php //echo ($client['displayclient']==1)? $client['client_name_kh']: $client['client_name_en'] ;?></td>
+	            			<?php echo ($client['displayclient']==1)? $client['client_name_kh']: $client['client_name_en'] ;?></td>
 	            	</tr>
 	            </table>
 	    	</td>

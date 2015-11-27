@@ -205,7 +205,8 @@ class Loan_Model_DbTable_DbLoanGroup extends Zend_Db_Table_Abstract
     				'is_renew'=>0,
     				'loan_type'=>2,
     				'collect_typeterm'=>$data['collect_termtype'],
-    				'for_loantype'=>$data['loan_type']
+    				'for_loantype'=>$data['loan_type'],
+    				'user_id'=>$this->getUserId()
     		);
     		
     		$g_id = $this->insert($datagroup);//add group loan
@@ -575,7 +576,8 @@ class Loan_Model_DbTable_DbLoanGroup extends Zend_Db_Table_Abstract
     				'holiday'=>$data['every_payamount'],
     				'is_renew'=>0,
     				'loan_type'=>2,
-    				'collect_typeterm'=>$data['collect_termtype']
+    				'collect_typeterm'=>$data['collect_termtype'],
+    				'user_id'=>$this->getUserId()
     		);
     		
     		

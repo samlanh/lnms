@@ -11,7 +11,8 @@ class Report_Model_DbTable_DbloanCollect extends Zend_Db_Table_Abstract
     	$db=$this->getAdapter();
     	$start_date = $search['start_date'];
    		$end_date = $search['end_date'];
-    	$sql = "SELECT * FROM v_newloancolect WHERE 1";
+    	$sql = "SELECT *,(SELECT symbol FROM `ln_currency` WHERE id=v_newloancolect.currency_type) AS currencyname
+    	 FROM v_newloancolect WHERE 1 ";
     	$where ='';
     	if(!empty($search['start_date']) or !empty($search['end_date'])){
     		$where.=" AND date_payment BETWEEN '$start_date' AND '$end_date'";
@@ -37,7 +38,8 @@ class Report_Model_DbTable_DbloanCollect extends Zend_Db_Table_Abstract
     		$s_where[] = " amount_day LIKE '%{$s_search}%'";
     		$where .=' AND '.implode(' OR ',$s_where).'';
     	}
-    	return $db->fetchAll($sql.$where);
+    	$order=" ORDER BY date_payment DESC";
+    	return $db->fetchAll($sql.$where.$order);
     	
     }
 	public function latepayment($search=null){

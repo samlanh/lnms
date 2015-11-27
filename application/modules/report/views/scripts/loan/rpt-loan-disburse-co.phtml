@@ -27,9 +27,11 @@ dojo.require("dijit.form.DateTextBox");
 	line-height: 20px;font-size: 10px !important;
 	font-family: 'Khmer OS Battambang';
 }
+ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold; list-style-type: none;}
+td ul li{list-style: none; }
 </style>
 <div style="clear: both;"></div>
-<div style=" width:28cm;min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.2cm;">
+<div id="exportExcel" style=" width:28cm;min-height:28cm; margin:0 auto; border: 1px dotted #ccc; padding:0px 0.2cm;">
 <div id="divPrint" style="width: 100%;">
 <table style="font-family: 'Khmer OS Content'; width:100%;">
 	<tr>
@@ -38,10 +40,11 @@ dojo.require("dijit.form.DateTextBox");
             	<tr>
                 	<td width="20%"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px"></td>
                 	<td width="60%" valign="top">
-                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer OS Muol'"><label><?php echo $tr->translate("BRAND_TITLE");?></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><label></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer OS Muol'"><?php echo $tr->translate("LOAN_DISBURSE_BY_CO");?></h2>
-                    <h2 style="text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></h2>
+                		<ul>
+                			<li style="list-style:none; text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("BRAND_TITLE");?></li>
+                			<li style="list-style:none;text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("LOAN_DISBURSE_BY_CO");?></li>
+                			<li style="list-style:none;text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></li>
+                		</ul>
                     </td>
                     <td width="20%"></td>
                 </tr> 
@@ -63,8 +66,7 @@ dojo.require("dijit.form.DateTextBox");
     </tr>
     <tr>
     	<td>
-            <table id="exportExcel" border="1"​ style="border-collapse:collapse;border:1px solid #000; font-size:11px;" width="100%" cellspacing="0">
-                <div>
+            <table border="1"​ style="border-collapse:collapse;border:1px solid #000; font-size:10px;" width="100%" cellspacing="0">
                    <?php  
                     $amt_r = 0;$amt_d = 0;$amt_b = 0; $amn_r = 0;$amn_d = 0;$amn_b = 0;
                     $co_id='';$other_fee_r=0; $other_fee_b=0; $other_fee_d=0;$total_r=0;$total_b=0;$total_d=0;
@@ -85,9 +87,9 @@ dojo.require("dijit.form.DateTextBox");
                 ?>
                 <?php if($key>0){?>
                 <tr>
-                	<td class="style" colspan="10">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</td>
+                	<td style="background: #8494B5;" class="style" colspan="10">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</td>
                 </tr>
-	            <tr bgcolor="#ccc" class="style" align="center" style="floafont-weight:bold; line-height: 14px; font-size:12px; padding:5px 0px;">
+	            <tr bgcolor="#ccc" class="style" align="center" style="floafont-weight:bold; line-height: 14px; font-size:10px; padding:5px 0px;">
 	                    <td style="padding:5px 0px;" colspan="2">&nbsp;​<?php echo $tr->translate("CURRENT_TYPE");?>&nbsp;</td>
 	                    <td style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL_AMOUNT");?>&nbsp;</td>
 	                    <td style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL_FEE");?>&nbsp;</td>
@@ -117,7 +119,7 @@ dojo.require("dijit.form.DateTextBox");
                 </tr>
                 </table>
                     <br />
-                <table border="1"​ style="border-collapse:collapse;border:1px solid #000; font-size:11px;" width="100%" cellspacing="0">
+                <table border="1"​ style="border-collapse:collapse;border:1px solid #000; font-size:10px;" width="100%" cellspacing="0">
                 
                 <?php } 
                 $amt_r = 0;$amt_d = 0;$amt_b = 0; $amn_r = 0;$amn_d = 0;$amn_b = 0;
@@ -127,7 +129,7 @@ dojo.require("dijit.form.DateTextBox");
                 <tr>
                 	<td colspan="15" class="style" style="background:#8494B5;">&nbsp;<span style="text-align:center;"><?php //echo $tr->translate("CO_NAME");?> </span><?php  echo $row['co_code'].' , '.$row['co_name'].' - '.$row['co_name_en'].' '//.($row['sex']=1?'ភេទ ប្រុស':'ភេទ  ស្រី'); ?></td>
                 </tr>
-                 <tr bgcolor="#ccc" align="center" class="style" style="font-weight:bold; line-height: 18px; font-size:8px;white-space: pre-wrap;">
+                 <tr bgcolor="#ccc" align="center" class="style" style="font-weight:bold; line-height: 18px; font-size:10px;white-space:nowrap;">
                    <th>&nbsp;<?php echo $tr->translate("NUM");?>&nbsp;</th>
                    <th>&nbsp;<?php echo $tr->translate("BRANCH_NAME");?>&nbsp;</th>
                    <th>&nbsp;<?php echo $tr->translate("LOAN_NO");?>&nbsp;</th>
@@ -135,7 +137,6 @@ dojo.require("dijit.form.DateTextBox");
                    <th>&nbsp;<?php echo $tr->translate("CUSTOMER_NAME");?>&nbsp;</th>
                    <th>&nbsp;<?php echo $tr->translate("LOAN_AMOUNT");?>&nbsp;</th>
                    <th>&nbsp;<?php echo $tr->translate("INTEREST_RATE");?>&nbsp;</th>
-                   <th>&nbsp;<?php echo $tr->translate("LOAN_PERIOD");?>&nbsp;</th>
                    <th>&nbsp;<?php echo $tr->translate("AMIN_FEE");?>&nbsp;</th>
                    <th>&nbsp;<?php echo $tr->translate("OTHER_FEE");?>&nbsp;</th>
                    <th>&nbsp;<?php echo $tr->translate("LOAN_PERIOD");?>&nbsp;</th>
@@ -174,7 +175,6 @@ dojo.require("dijit.form.DateTextBox");
 						<td align="left">&nbsp;<?php echo $row['client_name']; ?>&nbsp;</td>
 						<td style="white-space:nowrap; text-align: right;">&nbsp;<?php echo number_format($row['total_capital'],2).' '.$row['currency_type']; ?>&nbsp;</td>
 						<td >&nbsp;<?php echo $row['interest_rate']; ?>&nbsp;</td>
-						<td >&nbsp;<?php echo $row['total_duration'].$row['pay_term']; ?>&nbsp;</td>
 						<td style="white-space:nowrap; text-align: right;">&nbsp;<?php echo number_format($row['admin_fee'],2).' '.$row['currency_type']?>&nbsp;</td>
 						<td style="white-space:nowrap; text-align: right;">&nbsp;<?php echo number_format($row['other_fee'],2).' '.$row['currency_type']?>&nbsp;</td>
 						<td>&nbsp;<?php echo $row['total_duration'].$row['name_en'];?>&nbsp;</td>
@@ -185,49 +185,45 @@ dojo.require("dijit.form.DateTextBox");
 						
 					</tr>
 				<?php } //echo $a;?>
-            <br />
             	 <tr>
-                	<td  style="padding:5px 0px;" colspan="8">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</td>
+                	<td  style="background: #8494B5;" colspan="10">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</td>
                 </tr>
                   <tr bgcolor="#ccc" class="style" style="font-weight:bold;font-weight:bold; line-height: 24px; text-align: center;" >
 	                    <th style="padding:5px 0px;" colspan="2">&nbsp;​<?php echo $tr->translate("CURRENT_TYPE");?>&nbsp;</th>
 	                    <th style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL_AMOUNT");?>&nbsp;</th>
 	                    <th style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL_FEE");?>&nbsp;</th>
 	                    <th style="padding:5px 0px;"colspan="2">&nbsp;<?php echo $tr->translate("OTHER_FEE");?>&nbsp;</th>
-	                    <!--<th style="padding:5px 0px;" colspan="2">&nbsp;<?php //echo $tr->translate("TOTAL");?>&nbsp;</th>-->
+	                    <th style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</th>
 	                </tr>
                  <tr class="style" style=" font-weight:bold;line-height: 24px; font-size:10px;font-family: 'Khmer OS Content';">
                     <td colspan="2">&nbsp;<?php echo $tr->translate("DOLLAR");?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amt_d,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amn_d,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($other_fee_d,2);?>&nbsp;</td>
-					<!--<td colspan="2">&nbsp;<?php //echo number_format($total_d,2);?>&nbsp;</td> -->
+					<td colspan="2">&nbsp;<?php echo number_format($total_d,2);?>&nbsp;</td> 
                 </tr>
                  <tr class="style" style="font-weight:bold; line-height: 24px; font-size:10px;font-family: 'Khmer OS Content';">
                     <td colspan="2">&nbsp;<?php echo $tr->translate("REILS");?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amt_r,2);?>&nbsp;</td>
                     <td colspan="2">&nbsp;<?php echo number_format($amn_r,2);?>&nbsp;</td>
                   	<td colspan="2">&nbsp;<?php echo number_format($other_fee_r,2);?>&nbsp;</td>
-                  	<!--<td colspan="2">&nbsp;<?php //echo number_format($other_fee_r,2);?>&nbsp;</td>-->
+                  	<td colspan="2">&nbsp;<?php echo number_format($other_fee_r,2);?>&nbsp;</td>
                 </tr>
                  <tr class="style" style=" font-weight:bold;line-height: 24px; font-size:10px;font-family: 'Khmer OS Content';">
-                    <td colspan="2">&nbsp;<?php echo $tr->translate("BATH");?>&nbsp;</td>
-                    <td colspan="2">&nbsp;<?php echo number_format($amt_b,2);?>&nbsp;</td>
+                   <td colspan="2">&nbsp;<?php echo $tr->translate("BATH");?>&nbsp;</td>
+                   <td colspan="2">&nbsp;<?php echo number_format($amt_b,2);?>&nbsp;</td>
                    <td colspan="2">&nbsp;<?php echo number_format($amn_b,2);?>&nbsp;</td>
                    <td colspan="2">&nbsp;<?php echo number_format($other_fee_b,2);?>&nbsp;</td>
-                   <!-- <td colspan="2">&nbsp;<?php //echo number_format($total_b,2);?>&nbsp;</td> -->
+                   <td colspan="2">&nbsp;<?php echo number_format($total_b,2);?>&nbsp;</td> 
                 </tr>
               </table>
-              <br />
-             <div style="border:1px solid #000; "></div>
-             <br />
+             <div style="border:1px dashed #000;margin:10px 0px; "><strong>Total Only Loan Disbursed</strong></div>
     	</td>
     </tr>
      	<tr><td>
               <table border="1"​ style="border-collapse:collapse;border:1px solid #000; font-size:10px;" width="100%" cellspacing="0">
               		 <tr bgcolor="#ccc" class="style" style="font-weight:bold; line-height: 24px; text-align: center; font-size:10px; " >
 	                    <td  style="padding:5px 0px;" colspan="2">&nbsp;​<?php echo $tr->translate("CURRENT_TYPE");?>&nbsp;</td>
-	                    
 	                    <td  style="padding:5px 0px;" colspan="2">&nbsp;<?php echo $tr->translate("TOTAL");?>&nbsp;</td>
 	                </tr>
 	                <tr class="style" style="font-weight:bold; line-height: 24px; font-size:10px;">

@@ -16,10 +16,9 @@ class Loan_Model_DbTable_DbLoanILPayment extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$sql = "SELECT lcrm.`id`,
     				(SELECT b.`branch_namekh` FROM `ln_branch` AS b WHERE b.`br_id`=lcrm.`branch_id`) AS branch,
-					lcrm.`receipt_no`,
     				(SELECT c.`loan_number` FROM `ln_client_receipt_money_detail` AS c WHERE c.`crm_id` = lcrm.`id` LIMIT 1) AS loan_number,
-					
 					(SELECT c.`name_kh` FROM `ln_client` AS c WHERE c.`client_id`=lcrm.`group_id`) AS team_group ,
+					lcrm.`receipt_no`,
 					lcrm.`total_principal_permonth`,
 					lcrm.`total_interest`,
 					lcrm.`penalize_amount`,
@@ -28,13 +27,12 @@ class Loan_Model_DbTable_DbLoanILPayment extends Zend_Db_Table_Abstract
 					lcrmd.`date_payment`,
 					lcrm.`date_input`,
 				    (SELECT co.`co_khname` FROM `ln_co` AS co WHERE co.`co_id`=lcrm.`co_id`) AS co_name
-    				
 				FROM `ln_client_receipt_money` AS lcrm,`ln_client_receipt_money_detail` AS lcrmd WHERE lcrm.is_group=0 AND lcrm.id=lcrmd.`crm_id`";
     	$where ='';
     	if(!empty($search['advance_search'])){
     		//print_r($search);
     		$s_where = array();
-    		$s_search = $search['advance_search'];
+    		$s_search = addslashes(trim($search['advance_search']));
     		$s_where[] = "lcrm.`loan_number` LIKE '%{$s_search}%'";
     		$s_where[] = " lcrm.`receipt_no` LIKE '%{$s_search}%'";
     		
@@ -1012,12 +1010,15 @@ public function addILPayment($data){
 			WHERE lf.`is_completed` = 0 
 			  AND lf.`member_id` = lm.`member_id` 
 			  AND lm.`status` = 1 
+			  AND lg.`status` = 1 
+			  AND lf.status = 1
 			  AND lm.`is_completed` = 0
 			  AND lm.`group_id`=lg.`g_id`
-			  AND lg.`co_id`=$co_id
+			  AND lm.`is_reschedule` !=1
+			  AND lf.`collect_by` = $co_id
 			  AND lm.`currency_type`=$cu_id
 			  AND lf.`date_payment`<='$date'
-			  AND lf.status = 1
+			  
 			  ";
 
    		$order = " GROUP BY lm.`group_id`,lf.`date_payment`";

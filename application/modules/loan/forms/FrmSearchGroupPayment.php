@@ -53,7 +53,8 @@ Class Loan_Form_FrmSearchGroupPayment extends Zend_Dojo_Form {
 		$_coid = new Zend_Dojo_Form_Element_FilteringSelect('co_id');
 		$_coid->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
-				'onchange'=>'popupCheckCO();'
+				'onchange'=>'popupCheckCO();',
+				'class'=>'fullside'
 		));
 		$options = $dbs->getAllCOName(1);
 		$_coid->setMultiOptions($options);

@@ -38,10 +38,6 @@ class Other_VillageController extends Zend_Controller_Action {
 		$frm = $frm->FrmAddVillage();
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_village= $frm;
-		
-// 		$db= new Application_Model_DbTable_DbGlobal();
-// 		$this->view->district = $db->getAllDistricts();
-// 		$this->view->commune_name = $db->getCommune();
 		$this->view->result = $search;
 	}
 	public function addAction(){
@@ -66,9 +62,9 @@ class Other_VillageController extends Zend_Controller_Action {
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_village = $frm;
 		
-// 		$db= new Application_Model_DbTable_DbGlobal();
-// 		$this->view->district = $db->getAllDistricts();
-// 		$this->view->commune_name = $db->getCommune();
+		$dbpop = new Application_Form_FrmPopupGlobal();
+		$this->view->frm_popup_comm = $dbpop->frmPopupCommune();
+		$this->view->frm_popup_district = $dbpop->frmPopupDistrict();
 	}
 	public function editAction(){
 		$db = new Other_Model_DbTable_Dbvillage();
@@ -94,9 +90,9 @@ class Other_VillageController extends Zend_Controller_Action {
 		Application_Model_Decorator::removeAllDecorator($frm);
 		$this->view->frm_village = $frm;
 		
-		$db= new Application_Model_DbTable_DbGlobal();
-		$this->view->district = $db->getAllDistricts();
-		$this->view->commune_name = $db->getCommune();
+		$dbpop = new Application_Form_FrmPopupGlobal();
+		$this->view->frm_popup_comm = $dbpop->frmPopupCommune();
+		$this->view->frm_popup_district = $dbpop->frmPopupDistrict();
 		
 	}
 	public function addNewvillageAction(){

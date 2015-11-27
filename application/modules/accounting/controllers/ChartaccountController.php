@@ -34,10 +34,6 @@ public function indexAction()
 			Application_Form_FrmMessage::message("Application Error"); 
 			Application_Model_DbTable_DbUserLog::writeMessageError($e->getMessage());
 		}
-		$fm = new Application_Form_FrmAdvanceSearch();
-		$frm = $fm->AdvanceSearch();
-		Application_Model_Decorator::removeAllDecorator($frm);
-		$this->view->frm_search = $frm;
 		
 		$fms = new Accounting_Form_FrmChartaccount();
 		$frms = $fms->FrmChartaccount();

@@ -30,6 +30,12 @@ class Loan_Model_DbTable_DbLoanILtest extends Zend_Db_Table_Abstract
     	$db = $this->getAdapter();
     	$db->beginTransaction();
     	try{
+    		$sql=" TRUNCATE TABLE ln_test_loan_group ";
+    		$db->query($sql);
+    		$sql = "TRUNCATE TABLE ln_test_loan_member";
+    		$db->query($sql);
+    		$sql="TRUNCATE TABLE ln_test_loanmember_funddetail";
+    		$db->query($sql);
     		
     		$datagroup = array(
     				'group_id'=>$data['member'],
@@ -153,9 +159,9 @@ class Loan_Model_DbTable_DbLoanILtest extends Zend_Db_Table_Abstract
     		
     				}else{
     					$next_payment = $data['first_payment'];
+    					$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
     					$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
-    					//     						$interest_paymonth = $data['total_amount']*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($amount_day/$day_perterm);
     				}
     			}elseif($payment_method==2){//baloon
     				$pri_permonth=0;
@@ -170,6 +176,7 @@ class Loan_Model_DbTable_DbLoanILtest extends Zend_Db_Table_Abstract
     					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
     				}else{
     					$next_payment = $data['first_payment'];
+    					$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
     				}
     				$interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
@@ -187,6 +194,7 @@ class Loan_Model_DbTable_DbLoanILtest extends Zend_Db_Table_Abstract
     					$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
     				}else{
     					$next_payment = $data['first_payment'];
+    					$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     				}
     				$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
     				$interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
@@ -201,6 +209,7 @@ class Loan_Model_DbTable_DbLoanILtest extends Zend_Db_Table_Abstract
     						
     				}else{
     					$next_payment = $data['first_payment'];
+    					$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     				}
     				$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
     				$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
@@ -234,6 +243,7 @@ class Loan_Model_DbTable_DbLoanILtest extends Zend_Db_Table_Abstract
     				}else{
     					$pri_permonth = 0;//check if get pri first too much change;
     					$next_payment = $data['first_payment'];
+    					$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
     					$interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
     				}
@@ -263,7 +273,7 @@ class Loan_Model_DbTable_DbLoanILtest extends Zend_Db_Table_Abstract
     					$post_fiexed = $total_loan_amount/$term_install-$fixed_principal;
     					$total_payment_first = $this->round_up_currency($curr_type,$post_fiexed*$term_install);
     					$pri_permonth = $fixed_principal+$total_payment_first;
-    					
+    					$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
     					$interest_paymonth = $this->round_up_currency($curr_type,$loan_amount*($irr_interest));
     					$pri_permonth = ($fixed_principal+$total_payment_first)-$interest_paymonth;
@@ -304,7 +314,8 @@ class Loan_Model_DbTable_DbLoanILtest extends Zend_Db_Table_Abstract
     		}
     		if(($amount_borrow_term)%($amount_fund_term)!=0){///end for record odd number only
     			$start_date = $next_payment;//$dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount']);
-    			$amount_day = $amount_day = $dbtable->CountDayByDate($start_date,$data['date_line']);
+    			$next_payment = $dbtable->checkFirstHoliday($data['date_line'],$data['every_payamount']);
+    			$amount_day = $amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
     			if($payment_method==1){
     				$pri_permonth = $remain_principal-$pri_permonth; // $pri_permonth*($amount_day/$amount_fund_term);//check it if khmer currency
     				$interest_paymonth = $pri_permonth*($data['interest_rate']/100/$borrow_term)*$amount_day;

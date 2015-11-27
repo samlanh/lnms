@@ -63,7 +63,7 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       	}
       	if(!empty($search['adv_search'])){
       		$s_where = array();
-      		$s_search = trim($search['adv_search']);
+      		$s_search = addslashes(trim($search['adv_search']));
       		$s_where[] = " branch_name LIKE '%{$s_search}%'";
       		$s_where[] = " loan_number LIKE '%{$s_search}%'";
       		$s_where[] = " client_number LIKE '%{$s_search}%'";
@@ -71,7 +71,9 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       		$s_where[] = " total_capital LIKE '%{$s_search}%'";
       		$s_where[] = " other_fee LIKE '%{$s_search}%'";
       		$s_where[] = " admin_fee LIKE '%{$s_search}%'";
-      		$s_where[] = " admin_fee LIKE '%{total_duration}%'";
+      		$s_where[] = " name_en LIKE '%{$s_search}%'";
+      		$s_where[] = " total_duration LIKE '%{$s_search}%'";
+      		
       		$s_where[] = " interest_rate LIKE '%{$s_search}%'";
       		$s_where[] = " loan_type LIKE '%{$s_search}%'";
       		$where .=' AND '.implode(' OR ',$s_where).'';
@@ -192,7 +194,7 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
 // 				WHERE v.`member_id` = vl.`member_id` 
 // 				 ";
 		$sql="SELECT 
-				  CONCAT(co.`co_code`,',',co.`co_khname`,'-',co.`co_firstname`,' ',co.`co_lastname`) AS co_name ,
+				  CONCAT(`co_firstname`,' ',co.`co_lastname`) AS co_name ,
 				  b.branch_namekh,
 				  co.`co_id`,
 				  lm.`loan_number`,
@@ -231,16 +233,19 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
 				  AND lg.`g_id` = lm.`group_id` 
 				  AND lm.`member_id` = f.`member_id` 
 				  AND lg.`status` = 1 
+				  AND lm.`status` = 1 
+				  AND f.`status`=1
 				  AND co.`co_id` = lg.`co_id` 
 				  AND c.`client_id` = lm.`client_id` 
 				  AND b.`br_id`=f.`branch_id`
-				  AND f.`status`=1 ";
+				  AND lm.is_reschedule!=1 ";
       	$where='';
       	if(!empty($search['adv_search'])){
-      		//print_r($search);
-      		$s_where = array();
-      		$s_search = $search['adv_search'];
+      		$s_search = addslashes(trim($search['adv_search']));
       		$s_where[] = " b.branch_namekh LIKE '%{$s_search}%'";
+      		$s_where[] = "  lm.`currency_type` LIKE '%{$s_search}%'";
+      		$s_where[] = " lm.loan_number LIKE '%{$s_search}%'";
+      		$s_where[] = " c.client_number LIKE '%{$s_search}%'";
       		$s_where[] = " c.name_kh LIKE '%{$s_search}%'";
       		$s_where[] = " f.principle_after LIKE '%{$s_search}%'";
       		$s_where[] = " f.principal_permonth LIKE '%{$s_search}%'";
@@ -248,18 +253,17 @@ class Report_Model_DbTable_DbLoan extends Zend_Db_Table_Abstract
       		$s_where[] = " f.total_payment_after LIKE '%{$s_search}%'";
       		$where .=' AND ('.implode(' OR ',$s_where).')';
       	}
-//       	if(($search['status']>-1)){
-//     		$where.=" AND vl.status =".$search['status'];
-//     	}   	 
+      	if(($search['status']>-1)){
+    		$where.=" AND lg.status =".$search['status'];
+    	}   	 
       	if(!empty($search['end_date'])){
-			$where.=" AND f.date_payment < '$end_date'";
+			$where.=" AND f.date_payment <= '$end_date'";
 		}
       	if($search['branch_id']>0){
       		$where.=" AND f.`branch_id` = ".$search['branch_id'];
       	}
       	//$order = " ORDER BY currency_type ,date_payment ASC ";
-//        	echo $sql.$where;
-$group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` ASC";
+        $group_by = " GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` ASC";
       	return $db->fetchAll($sql.$where.$group_by);
       }
       public function getALLLoandateline(){
@@ -341,14 +345,14 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       		$s_where[] = " co_name LIKE '%{$s_search}%'";
       		$s_where[] = " total_principal_permonth LIKE '%{$s_search}%'";
       		$s_where[] = " total_interest LIKE '%{$s_search}%'";
-      		$s_where[] = " amount_payment LIKE '%{$s_search}%'";
+      		//$s_where[] = " amount_payment LIKE '%{$s_search}%'";
       		$s_where[] = " penalize_amount LIKE '%{$s_search}%'";
       		$s_where[] = " service_charge LIKE '%{$s_search}%'";      		
       		$s_where[] = " receipt_no LIKE '%{$s_search}%'";
       		$s_where[] = " receipt_no LIKE '%{$s_search}%'";
       		$where .=' AND '.implode(' OR ',$s_where).'';
       	}
-      	$order=" ORDER BY date_input DESC ";
+      	$order=" ORDER BY date_input DESC,id DESC ";
       	//echo $sql.$where.$order;
       	return $db->fetchAll($sql.$where.$order);
       }
@@ -621,11 +625,13 @@ $group_by = "GROUP BY lm.`group_id`,f.`date_payment` ORDER BY f.`date_payment` A
       	$where= " AND ".$from_date." AND ".$to_date;
       	
       	$db = $this->getAdapter();
-      	$sql = "SELECT *,SUM(total_capital) AS total_capital ,SUM(principle_permonth) AS principle_permonth
-      	 ,SUM(total_interest) AS total_interest  FROM `v_getexpectincome` WHERE 1";
+      	$sql = "SELECT *,SUM(total_capital) AS total_capital ,
+      					SUM(principle_permonth) AS principle_permonth
+      	 			   ,SUM(total_interest) AS total_interest  
+      	                FROM `v_getexpectincome` WHERE 1";
       	if(!empty($search['advance_search'])){
       		$s_where = array();
-      		$s_search = trim($search['advance_search']);
+      		$s_search = addslashes(trim($search['advance_search']));
       		
       		$s_where[] = " branch_name LIKE '%{$s_search}%'";
       		$s_where[] = " loan_number LIKE '%{$s_search}%'";

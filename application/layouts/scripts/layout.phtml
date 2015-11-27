@@ -19,16 +19,14 @@
 	<script>dojoConfig = {parseOnLoad: true}</script>
 	    <script>
 			require(["dijit/form/Form","dijit/form/FilteringSelect","dijit/form/Button"]);
-
       </script>
 <?php }?>
-	<link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>js/dojo-1.6.1/dijit/themes/<?php echo $them_style."/".$them_style?>.css" />
-	
 	<link rel="stylesheet" href="<?php echo $base_url;?>css/template.css"/>
 	<link href="<?php echo $base_url;?>cssmenu/template.css" media="screen" rel="stylesheet" type="text/css">
 	<!-- table  -->
 	<?php //if($action=='index'){ ?>
 	<?php if($module!='home'){?>
+	    <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>js/dojo-1.6.1/dijit/themes/<?php echo $them_style."/".$them_style?>.css" />
         <script type="text/javascript"  src="<?php echo $this->baseUrl();?>/js/jquery-1.7.2.min.js"></script>
        <?php //if($action=='index'){?>
 	<script type="text/javascript" src="<?php echo $this->baseUrl();?>/js/jquery.tablesorter.js"> </script>

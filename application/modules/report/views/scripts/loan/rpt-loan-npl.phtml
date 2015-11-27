@@ -32,6 +32,7 @@ dojo.require("dijit.form.DateTextBox");
 	line-height: 20px;font-size: 9px !important;
 	font-family: 'Khmer OS Battambang';
 }
+table tr td ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold;}
 th{padding: 5px;}
 </style>
 <table width="100%" >
@@ -41,11 +42,12 @@ th{padding: 5px;}
             	<tr>
                 	<td width="20%"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px"></td>
                 	<td width="60%" valign="top">
-                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><label><?php echo $tr->translate("BRAND_TITLE");?></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><label></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("REPORT_NPL");?></h2>
-                	<h2 style="text-align:center; font-size:13px;"><?php echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></h2>
-                 </td>
+                	    <ul>
+                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("BRAND_TITLE");?></li>
+                			<li style="text-align:center; font-size:14px; font-family:'Khmer MEF2'"><?php echo $tr->translate("REPORT_NPL");?></li>
+                			<li style="text-align:center; font-size:13px;"><?php echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></li>
+                		</ul> 
+                	</td>
                     <td width="20%"></td>
                 </tr> 
                 <tr>
@@ -67,7 +69,7 @@ th{padding: 5px;}
     
     <tr>
     	<td id="exportExcel">
-            <table width="100%" border="1" style="border-collapse:collapse; border:1px solid #000;" cellspacing="0">
+            <table width="100%" border="1" style="border-collapse:collapse; border:1px solid #000; white-space: nowrap;" cellspacing="0">
                 <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 18px; font-size:11px; padding:10px 0px; ">
                     <td ><?php echo $tr->translate("NUM");?></td>
                     <td ><?php echo $tr->translate("BRANCH_NAME");?></th>

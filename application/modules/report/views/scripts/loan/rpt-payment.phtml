@@ -30,25 +30,26 @@ $frm = $this->frm_search;
 	line-height: 20px;font-size: 10px !important;
 	font-family: 'Khmer OS Battambang';
 }
-th{padding: 5px;}
+table tr td ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold;}
 </style>
 <table width="100%">
 	<tr>
-    	<td align="center">
-        	<table width="100%" style="font-family: 'Khmer OS Battambang';" style="margin:0; padding:0;border:none;">
+    	<td align="center" valign="top">
+        	<table width="100%" style="font-family: 'Khmer OS Battambang';"style="margin:0;padding:0;">
             	<tr>
-                	<td width="20%"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px"></td>
+                	<td width="20%"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="80px"></td>
                 	<td width="60%" valign="top">
-                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><label><?php echo $tr->translate("BRAND_TITLE");?></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><label></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_CLIENT_PAYMENT");?></h2>
-                	<h2 style="text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></h2>
+                		<ul>
+                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("BRAND_TITLE");?></li>
+                			<li style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_CLIENT_PAYMENT");?></li>
+                			<li style="text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></li>
+                		</ul>
                    </td>
                     <td width="20%"></td>
                 </tr> 
                 <tr>
                 	<td colspan="3">
-                		<table width="100%">
+                		<table width="100%" cellpadding="0" cellspacing="0">
                 			<tr class='style'>
                 				<td class="style" style="font-size: 7px;">
                 					<?php echo $tr->translate("ADDRESS_COMPANY");?>
@@ -65,7 +66,7 @@ th{padding: 5px;}
     <tr>
     	<td>
             <table id="exportExcel" width="100%" border="1" style="border-collapse:collapse; border:1px solid #000; " cellspacing="0">
-	                <tr bgcolor="#ccc" class="style" align="center" style="padding:2px 0;height: 20px;">
+	                <tr bgcolor="#ccc" class="style" align="center" style="padding:0px 2px;white-space: nowrap;">
 	                    <th rowspan="2"><?php echo $tr->translate("NUM");?></th>
 	                    <th rowspan="2"><?php echo $tr->translate("BRANCH_NAME");?></th>
 	                    <th rowspan="2"><?php echo $tr->translate("LOAN_NO");?></th>	  
@@ -76,11 +77,10 @@ th{padding: 5px;}
 	                    <th rowspan="2" style="white-space:nowrap; border-right:3px double black; "><?php echo $tr->translate("PAY_DATE");?></th>
 	                    <th rowspan="2"><?php echo $tr->translate("INPUT_DATE");?></th>
 	                    <th rowspan="2"><?php echo $tr->translate("RECIEPT_NO");?></th>
-	                    <!-- <th rowspan="2"><?php //echo $tr->translate("PAYMENTED");?></th> -->
-	                    <!--<th><?php //echo $tr->translate("RETURN_AMOUNT");?></th>-->
-	                    <th rowspan="2"><?php echo $tr->translate("BALANCE");?></th>
+	                    <!--<th rowspan="2"><?php echo $tr->translate("PAYMENTED");?></th>
+	                    <th rowspan="2"><?php //echo $tr->translate("BALANCE");?></th>-->
 	                </tr>
-	                <tr class="style">
+	                <tr class="style" style="white-space: nowrap;">
 	                	<th><?php echo $tr->translate("PRINCIPLE");?></th>                   
 	                    <th><?php echo $tr->translate("INTEREST");?></th>
 	                    <th><?php echo $tr->translate("PENALIZE AMOUNT");?></th>
@@ -176,7 +176,7 @@ th{padding: 5px;}
 							$total_b=$amn_b1+$amn_b2+$amn_b3+$amn_b5;
 		               }
                ?>
-                <tr class="style" style="font-family: 'Khmer OS Content';">
+                <tr class="style" style="font-family: 'Khmer OS Content'; white-space:nowrap; ">
                		<td style="text-align: center;">&nbsp;<?php echo $i++; ?>&nbsp;</td>
                		<td>&nbsp;<?php echo $rs["branch_name"];?>&nbsp;</td>
                		<td>&nbsp;<?php echo $rs["loan_number"];?>&nbsp;</td>
@@ -192,9 +192,8 @@ th{padding: 5px;}
                		<td style="white-space:nowrap; border-right:3px double black; ">&nbsp;<?php echo date("d-M-Y",strtotime($rs["date_payment"]));?>&nbsp;</td>
                		<td style="white-space:nowrap; ">&nbsp;<?php echo date("d-M-Y",strtotime($rs["date_input"]));?>&nbsp;</td>
                		<td>&nbsp;<?php echo $rs["receipt_no"];?>&nbsp;</td>
-               		<!--<td style="font:bolder 11px Arial;">&nbsp;<?php //echo number_format($rs["recieve_amount"],2).' '.$rs['currency_typeshow'];?>&nbsp;</td>-->
-               		<!--<td>&nbsp;<?php //echo number_format($rs["return_amount"],2);?>&nbsp;</td>-->
-               		<td style="font:bolder 11px Arial;">&nbsp;<?php $balance=$rs["recieve_amount"]-$rs["total_payment"]; if($balance<0){echo '('.abs($balance).')';}else {echo $balance=0;};echo $rs['currency_typeshow'];?>&nbsp;</td>
+               		<!--<td style="font:bolder 11px Arial;">&nbsp;<?php //echo number_format($rs["recieve_amount"],2).' '.$rs['currency_typeshow'];?>&nbsp;</td>
+               		<td style="font:bolder 11px Arial;">&nbsp;<?php //$balance=($rs["recieve_amount"]-$rs["recieve_amount"])-$rs["total_payment"]; if($balance<0){echo '('.abs($balance).')';}else {echo $balance=0;};echo $rs['currency_typeshow'];?>&nbsp;</td>-->
                 </tr>
                 <?php }?>
             </table>

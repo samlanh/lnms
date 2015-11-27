@@ -27,13 +27,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 	public function getLoanNumberByBranch($type){
 		$db = $this->getAdapter();
 		if($type==1){
-			$sql="SELECT m.`loan_number` AS id,m.`loan_number` AS `name`,g.`branch_id` FROM `ln_loan_member` AS m,`ln_loan_group` AS g WHERE m.`group_id`= g.`g_id` AND m.`is_completed`=0 AND g.`loan_type`=1";
+			$sql="SELECT m.`loan_number` AS id,m.`loan_number` AS `name`,g.`branch_id` FROM `ln_loan_member` AS m,`ln_loan_group` AS g WHERE m.`group_id`= g.`g_id` AND m.`is_completed`=0 AND g.`loan_type`=1 AND m.status=1 AND g.status=1 AND m.is_reschedule!=1 ";
 			return $db->fetchAll($sql);
 		}else{
-			$sql="SELECT m.`loan_number` AS id,m.`loan_number` AS `name`,g.`branch_id` FROM `ln_loan_member` AS m,`ln_loan_group` AS g WHERE m.`group_id`= g.`g_id` AND m.`is_completed`=0 AND g.`loan_type`=2 GROUP BY m.`loan_number` ";
+			$sql="SELECT m.`loan_number` AS id,m.`loan_number` AS `name`,g.`branch_id` FROM `ln_loan_member` AS m,`ln_loan_group` AS g WHERE m.`group_id`= g.`g_id` AND m.`is_completed`=0 AND g.`loan_type`=2 AND m.status=1 AND g.status=1 AND m.is_reschedule!=1 GROUP BY m.`loan_number` ";
 			return $db->fetchAll($sql);
 		}
-		
 	}
 	public function getGlobalDb($sql)
   	{
@@ -319,10 +318,10 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
    	$where=' AND is_group = 1';
    }
    	$sql = " SELECT client_id,name_en,client_number,
-   				(SELECT village_name FROM `ln_village` WHERE vill_id = village_id  LIMIT 1) AS village_name,
-				(SELECT commune_name FROM `ln_commune` WHERE com_id = com_id  LIMIT 1) AS commune_name,
-				(SELECT district_name FROM `ln_district` AS ds WHERE dis_id = ds.dis_id  LIMIT 1) AS district_name,
-				(SELECT province_en_name FROM `ln_province` WHERE province_id= pro_id  LIMIT 1) AS province_en_name
+   				(SELECT `ln_village`.`village_name` FROM `ln_village` WHERE (`ln_village`.`vill_id` = `ln_client`.`village_id`)) AS `village_name`,
+				(SELECT `c`.`commune_name` FROM `ln_commune` `c` WHERE (`c`.`com_id` = `ln_client`.`com_id`) LIMIT 1) AS `commune_name`,
+				(SELECT `d`.`district_name` FROM `ln_district` `d` WHERE (`d`.`dis_id` = `ln_client`.`dis_id`) LIMIT 1) AS `district_name`,
+				(SELECT province_en_name FROM `ln_province` WHERE province_id= ln_client.pro_id  LIMIT 1) AS province_en_name
 
    	FROM $this->_name WHERE status=1 AND name_en!='' ";
    	$db = $this->getAdapter();
@@ -708,8 +707,12 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
  for($i=0;$i<$amount_amount;$i++){
 		if($default_day>28){
 			$next_payment = date("Y-m-d", strtotime("$next_payment $str_next"));
-			$next_payment = $this->checkEndOfMonth($default_day,$next_payment , $str_next);
-// 			echo $next_payment;exit();
+		   if($str_next!='+1 month'){
+				$default_day='d';
+				$next_payment = date("Y-m-$default_day", strtotime("$next_payment $str_next"));
+			}else{
+				$next_payment = $this->checkEndOfMonth($default_day,$next_payment , $str_next);
+			}
 		}else{
 			if($str_next!='+1 month'){
 				$default_day='d';
@@ -727,6 +730,28 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
 //   		echo $next_payment;exit();
   		return $next_payment;
   	}
+  	
+  }
+  function checkDefaultDate($str_next,$next_payment,$amount_amount,$holiday_status=null,$first_payment=null){
+	  $next_payment =  date("Y-m-d", strtotime("$next_payment $str_next"));
+	  return $next_payment;
+  }
+	  
+  function checkFirstHoliday($next_payment,$holiday_status){
+//   	print_r($this->checkHolidayExist($next_payment,$holiday_status));
+  	if($holiday_status==3){
+  		return $next_payment;//if normal day
+  	}else{
+  		while($next_payment!=$this->checkHolidayExist($next_payment,$holiday_status)){
+  			$next_payment = $this->checkHolidayExist($next_payment,$holiday_status);
+  		}
+  		return $next_payment;
+  	}
+  	
+  	
+//   	$str_option = 'next day';
+//   	$d->modify($str_option);
+//   	$date_next =  $d->format( 'Y-m-d' );
   	
   }
   function checkEndOfMonth($default_day,$next_payment,$str_next){//default = 31 ,
@@ -758,7 +783,6 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	$db = $this->getAdapter();
   	$sql="SELECT start_date FROM `ln_holiday` WHERE start_date='".$date_next."'";
   	$rs =  $db->fetchRow($sql);
-  	
   	$db = new Setting_Model_DbTable_DbLabel();
   	$array = $db->getAllSystemSetting();
   	if($rs){
@@ -771,27 +795,28 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   			return  $d->format( 'Y-m-d' );
   		}
   		$d->modify($str_option); //here check for holiday option //can next day,next week,next month
-  		$date_next =  $d->format( 'Y-m-d' );
-//   		return $date_next;
+  		$date_next =  $d->format( 'Y-m-d');
+  		
   		
   		$d = new DateTime($date_next);
   		$day_work = date("D",strtotime($date_next));
-  		
-  		if($day_work=='Sat' OR $day_work=='Sun' ){
+  		if($day_work=='Sat' OR $day_work=='Sun' ){//if 
   			if(($day_work=='Sat' AND $array['work_saturday']==1) OR ($day_work=='Sun' AND $array['work_sunday']==1)){//sat working
   				return $date_next;
   			}else if($day_work=='Sat' AND $array['work_saturday']==0){//sat not working
   				if($holiday_option==1){//after 
-  					$str_next = '+2 day';
+  					$str_next = '+2 day';//why
+  				}else if($holiday_option==2){
+  					$str_next = '+1 day';
+  				
   				}else{//before
   					$str_next = '-1 day';//thu
   				}
-  				
   				$d->modify($str_next); //here check for holiday option //can next day,next week,next month
   				$date_next =  $d->format( 'Y-m-d' );
   				return $date_next;
   			}else{//sun not working continue to monday // but not check if mon day not working
-  				if($holiday_option==1){//after
+  				if($holiday_option==2){//after
   					$str_next = '+1 day';
   				}else{//before
   					$str_next = '-1 day';//thu
@@ -803,7 +828,6 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   		}else{
   			return $date_next;
   		}
-  		
   	}
   	else{
   		$d = new DateTime($date_next);
@@ -828,8 +852,9 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	}
   }
   public function CountDayByDate($start,$end){
-  	$db = new Application_Model_DbTable_DbGlobal();
-  	return ($db->countDaysByDate($start,$end));
+  	//$db = new Application_Model_DbTable_DbGlobal();
+	$date = $this->countDaysByDate($start,$end);
+  	return $date;
   }
   public function CurruncyTypeOption(){
   	$db = $this->getAdapter();

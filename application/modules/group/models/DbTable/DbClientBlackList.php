@@ -12,7 +12,8 @@ class Group_Model_DbTable_DbClientBlackList extends Zend_Db_Table_Abstract
     			'reasonblack_list'=>$data['problem'],
     			'status_blacklist'=>$data['status'],
     			);
-    	$where=" client_id= ".$data['client_name'];
+    	$where=" client_id = ".$data['client_name'];
+    	echo $where;exit();
     	$this->update($arr, $where);
     }
     function updatClientBlackList($data){
@@ -84,7 +85,9 @@ class Group_Model_DbTable_DbClientBlackList extends Zend_Db_Table_Abstract
     	if(!empty($search['branch_id'])){
     		$where.= " AND branch_id = ".$search['branch_id'];
     	}
+    	
     	$order = " ORDER BY id DESC ";
+    	echo $sql.$where.$order;
     	return $db->fetchAll($sql.$where.$order);
     }
     public function getBlackListById($id){

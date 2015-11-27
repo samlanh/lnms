@@ -153,11 +153,10 @@ dojo.require("dijit.Dialog");
 							<td colspan="6" align="center">
 							<input type="reset" label="<?php echo $tr->translate('CLEAR');?>" dojoType="dijit.form.Button" 
 								 iconClass="dijitIconClear" /> 
+							 <input type="submit" value="SAVE_CLOSE" label="<?php echo $tr->translate('SAVECLOSE');?>" id="save_close" dojoType="dijit.form.Button" name="save_close"
+								 iconClass="dijitEditorIcon dijitEditorIconSave" /> 
 							<input type="submit" value="SAVE_NEW" label="<?php echo $tr->translate('SAVENEW');?>" id="save_new" dojoType="dijit.form.Button" name="save_new"
 								 iconClass="dijitEditorIcon dijitEditorIconSave"/> 
-							 
-						    <input type="submit" value="SAVE_CLOSE" label="<?php echo $tr->translate('SAVECLOSE');?>" id="save_close" dojoType="dijit.form.Button" name="save_close"
-								 iconClass="dijitEditorIcon dijitEditorIconSave" /> 
 							</td>
 						</tr>
 					</table>	
@@ -478,7 +477,6 @@ function showPopupdistrict(){
 	}
 }
 var district_url = '<?php echo $this->url(array('module'=>'group','controller'=>'index','action'=>'insert-district'));?>';
-
 function addNewDistrict(){
 	if(dijit.byId('frm_district').validate()) {
 		dojo.xhrPost({

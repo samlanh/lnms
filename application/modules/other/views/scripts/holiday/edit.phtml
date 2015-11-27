@@ -67,20 +67,12 @@ function CalculateDate(){
 	amount_day = dijit.byId('amount_day').get('value');
 	
 	if(isNaN(amount_day)){
-		//alert('សូមបញ្ចលចំនួនរយៈពេល​ !');
 		dijit.byId('amount_day').focus();
 	}else{
 		start_date = dijit.byId("start_date").value;
 		var a = new Date(start_date);
-		/*if(pay_type==1){
-			mm = a.getMonth()+amount_month+1;
-		}else{*/
-			//a.setDate(a.getDate() + (amount_day)); 
-			var mm = a.getMonth() + 1;
-			
-		//}
-			//alert(a.getDate()+parseInt(amount_day));
-		var dd = a.getDate()+parseInt(amount_day);
+		var mm = a.getMonth() + 1;
+		var dd = a.getDate()+parseInt(amount_day)-1;
 		 if(dd<10){
 			 dd = "0"+dd;
 		}

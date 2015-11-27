@@ -2,6 +2,7 @@
 	$tr = Application_Form_FrmLanguages::getCurrentlanguage();
 	echo $this->headTitle($tr->translate('VIEW_CLIENT'));
 	$rs = $this->client_list;
+	$base_url = Application_Form_FrmMessage::getUrl("/");
 ?>	
 <style>
 .border-cover {
@@ -28,7 +29,7 @@
 					<div id="divPrint" style="width: 100%;">
 					
 					<table cellspacing="10" class='fullside' style="font-size:12px;font-family: 'Kh Battambang','Khmer Battambang',Arial,Helvetica,sans-serif;border: 1px dotted #ccc; padding:0px 0.5cm">
-					<tr><td><img width="70px" src="<?php echo $this->baseUrl().'/images/'.(empty($rs['photo_name'])?"no-profile.gif":$rs['photo_name']);?>" /></td></tr>
+					<tr><td><img width="80px" src="<?php echo $base_url.'images/'.(empty($rs['photo_name'])?"no-profile.png":$rs['photo_name']);?>" /></td></tr>
 						<tr>
 							
 							<td><?php echo $tr->translate("BRANCH_NAME");?>*</td>

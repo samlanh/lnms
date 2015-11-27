@@ -40,7 +40,7 @@ th{padding: 5px;}
                 	<td width="60%" valign="top">
                 	<h2 style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><label><?php echo $tr->translate("BRAND_TITLE");?></label></h2>
                 	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><label></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("GANERAL_JURNAL");?></h2>
+                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("RPT_TRIALBALANCE");?></h2>
                 	<h2 style="text-align:center; font-size:13px;"><?php echo date("d-M-Y",strtotime($this->list_end_date['start_date'])).' '.$tr->translate('TO').' ';echo date("D-d-M-Y",strtotime($this->list_end_date['end_date']));?></h2>
                 	</td>
                     <td width="20%"></td>
@@ -68,15 +68,12 @@ th{padding: 5px;}
                  <tr bgcolor="#ccc" class="style" align="center" style="floafont-weight:bold; line-height: 14px; font-size:14px; padding:5px 0px; ">
                     <th>&nbsp;<?php echo $tr->translate("NUM");?>&nbsp;</th>
                     <th><?php echo $tr->translate("BRANCH_NAME");?></th>
-                    <th><?php echo $tr->translate("Date");?></th>
                     <th><?php echo $tr->translate("Account Name");?></th>
-                    <th><?php echo $tr->translate("Jurnal Ref");?></th>
-                    <th><?php echo $tr->translate("Note");?></th>
                     <th><?php echo $tr->translate("Debit");?></th>
                     <th><?php echo $tr->translate("Credit");?></th>
                  </tr>
                 <tr>
-                	<td colspan="8"  style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("CURRENCY");?></td>
+                	<td colspan="5"  style="border:1px solid #000;">&nbsp;<?php echo $tr->translate("CURRENCY");?></td>
                 </tr>
                <?php 
                $num=0;
@@ -114,30 +111,13 @@ th{padding: 5px;}
 				    <?php $debit = intval($row['debit']); $credit = intval($row['credit']);?>
 					<td <?php if($jurnal_id==$row['jur_id']){echo "style='border-top: 1px solid #fff !important;'";} ?>>&nbsp;<?php if($jurnal_id!=$row['jur_id']) { echo $num+1; $num++;}?>&nbsp;</td>
 					<td <?php if($jurnal_id==$row['jur_id']){echo "style='border-top: 1px solid #fff !important;'";} ?>>&nbsp;<?php if($jurnal_id!=$row['jur_id']) { echo $row['branch_name']; } ?>&nbsp;</td>
-					<td <?php if($jurnal_id==$row['jur_id']){echo "style='border-top:1px solid #fff !important;'";} ?>>&nbsp;<?php if($jurnal_id!=$row['jur_id']) { echo date("d-m-Y",strtotime($row['date'])); }?>&nbsp;</td>
 					<td <?php if($jurnal_id==$row['jur_id']){echo "style='border-top: 1px solid #fff !important;'";} ?>><span <?php if(!empty($credit)){echo"style='padding-left:25px;';";}?>></span>&nbsp;<?php echo $row['accountname'];?>&nbsp;</td>
-					<td <?php if($jurnal_id==$row['jur_id']){echo "style='border-top: 1px solid #fff !important;'";} ?>>&nbsp;<?php if($jurnal_id!=$row['jur_id']) {  echo $row['journal_code'];}?>&nbsp;</td>
-					<td <?php if($jurnal_id==$row['jur_id']){echo "style='border-top: 1px solid #fff !important;'";} ?>>&nbsp;<?php echo $row['note'];?>&nbsp;</td>
 					<td <?php if($jurnal_id==$row['jur_id']){echo "style='border-top: 1px solid #fff !important;'";} ?> align="right"><span style="line-height:15px;">&nbsp;<?php echo empty($debit)?'':number_format($row['debit'],2); ?></span>&nbsp;</td>	
 					<td <?php if($jurnal_id==$row['jur_id']){echo "style='border-top: 1px solid #fff !important;'";} ?>>&nbsp;<?php echo empty($credit)?'':number_format($row['credit'],2); //$row['currency_type']; ?>&nbsp;</td>
 				</tr>
 				
 				<?php $jurnal_id = $row['jur_id']; }?>
-				<tr height="35">
-                	<td colspan="6">&nbsp;<?php echo $tr->translate("DOLLAR");?></td>
-                	<td align="center" style="font-weight: bolder;"><span style="border-bottom: 4px double #000; padding-top: -5px;width:150px;" ><strong><?php echo number_format($dtotal_dollar,2);?></strong></span></td>
-                	<td align="center" style="font-weight: bolder;"><span style="border-bottom: 4px double #000; padding-top: -5px;" ><strong><?php echo number_format($ctotal_dollar,2);?></strong></span></td>
-                </tr>
-                <tr height="35">
-                	<td colspan="6">&nbsp;<?php echo $tr->translate("REILS");?></td>
-                	<td align="center" style="font-weight: bolder;"><span style="border-bottom: 4px double #000; padding-top: -5px;" ><strong><?php echo number_format($dtotal_riel,2);?></strong></span></td>
-                	<td align="center" style="font-weight: bolder;"><span style="border-bottom: 4px double #000; padding-top: -5px;" ><strong><?php echo number_format($ctotal_riel,2);?></strong></span></td>
-                </tr>
-                <tr height="35">
-                	<td colspan="6">&nbsp;<?php echo $tr->translate("BATH");?></td>
-                	<td align="center" style="font-weight: bolder;"><span style="border-bottom: 4px double #000; padding-top: -5px;" ><strong><?php echo number_format($dtotal_bath,2);?></strong></span></td>
-                	<td align="center" style="font-weight: bolder;"><span style="border-bottom: 4px double #000; padding-top: -5px;" ><strong><?php echo number_format($ctotal_bath,2);?></strong></span></td>
-                </tr>
+				
             </table>
               <table align="center" width="100%">
 				   <tr style="font-size: 11px;">

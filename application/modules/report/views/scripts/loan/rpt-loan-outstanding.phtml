@@ -28,6 +28,7 @@ dojo.require("dijit.form.DateTextBox");
 	line-height: 20px;font-size: 10px !important;
 	font-family: 'Khmer OS Battambang';
 }
+table tr td ul li{text-align: center;list-style: none;line-height: 25px; font-weight: bold;}
 th{padding: 5px;}
 </style>
 <table style="font-family: 'Khmer OS Content'; width:100%;">
@@ -37,11 +38,11 @@ th{padding: 5px;}
             	<tr>
                 	<td width="20%"><img src="<?php echo $this->baseUrl();?>/images/logo.jpg" height="85px"></td>
                 	<td width="60%" valign="top">
-                	<h2 style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><label><?php echo $tr->translate("BRAND_TITLE");?></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><label></label></h2>
-                	<h2 style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("LOAN_OUTSTADING") ;?></h2>
-                	<h2 style="text-align:center; font-size:13px;"><?php echo date('D-d-m-Y',strtotime($this->fordate));?></h2>
-                	</td>
+                	    <ul>
+                			<li style="text-align:center; font-size:16px; font-family:'Khmer MEF2'"><?php echo $tr->translate("BRAND_TITLE");?></li>
+                			<li style="text-align:center; font-size:13px; font-family:'Khmer MEF2'"><?php echo $tr->translate("LOAN_OUTSTADING");?></li>
+                			<li style="text-align:center; font-size:13px;"><?php echo date('D-d-m-Y',strtotime($this->fordate));?></li>
+                		</ul></td>
                     <td width="20%"></td>
                 </tr> 
                 <tr>
@@ -65,23 +66,23 @@ th{padding: 5px;}
     </tr>
     <tr>
     	<td>
-            <table id="exportExcel" border="1"​ style="border-collapse:collapse;border:1px solid #000; font-size:10px;" width="100%" cellspacing="0">
-                 <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 14px; padding: 5px 0px;background:#ccc;">
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("NUM");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("BRANCH_NAME");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("LOAN_NO");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("CLIENT_NUM");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("CUSTOMER_NAME");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("CO_NAME");?>&nbsp;</th>
-                    <th style="padding:5px 0px;"> &nbsp;<?php echo $tr->translate("RELEASE_DATE");?>&nbsp;</th>
+            <table id="exportExcel" border="1"​ style="border-collapse:collapse;border:1px solid #000; font-size:10px; white-space: nowrap;" width="100%" cellspacing="0">
+                 <tr bgcolor="#ccc" class="style" align="center" style="font-weight:bold; line-height: 14px; padding: 2px 0px;background:#ccc;">
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("NUM");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("BRANCH_NAME");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("LOAN_NO");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("CLIENT_NUM");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("CUSTOMER_NAME");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("CO_NAME");?>&nbsp;</th>
+                    <th style="padding:2px 0px;"> &nbsp;<?php echo $tr->translate("RELEASE_DATE");?>&nbsp;</th>
                     <th>&nbsp;<?php echo $tr->translate("LIFE_LOAN");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("LOAN_AMOUNT");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("LOAN_PERIOD");?>&nbsp;</th>
-                    <th style="padding:5px 0px;font-size: 8px;">&nbsp;<?php echo $tr->translate("LOAN_TYPE");?>&nbsp;</th>
-                    <th style="padding:5px 0px;font-size: 8px;"><?php echo $tr->translate("FOR_LOAN_TYPE");?></th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("LOAN_RETURN_TO_CLIENT");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("PERCENTAGE");?>&nbsp;</th>
-                    <th style="padding:5px 0px;">&nbsp;<?php echo $tr->translate("NOT_TO_REPAY");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("LOAN_AMOUNT");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("LOAN_PERIOD");?>&nbsp;</th>
+                    <th style="padding:2px 0px;font-size: 8px;">&nbsp;<?php echo $tr->translate("LOAN_TYPE");?>&nbsp;</th>
+                    <th style="padding:2px 0px;font-size: 8px;"><?php echo $tr->translate("FOR_LOAN_TYPE");?></th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("LOAN_RETURN_TO_CLIENT");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("PERCENTAGE");?>&nbsp;</th>
+                    <th style="padding:2px 0px;">&nbsp;<?php echo $tr->translate("NOT_TO_REPAY");?>&nbsp;</th>
                 </tr>
                <?php 
                $amt_r = 0;$amt_d = 0;$amt_b = 0; $amn_r = 0;$amn_d = 0;$amn_b = 0;$result_b=0;$result_r=0;$result_d=0;
@@ -131,11 +132,11 @@ th{padding: 5px;}
             <br />
              <table border="1"​ style="border-collapse:collapse;border:1px solid #000; font-size:11px;" width="100%" cellspacing="0">
                  <tr bgcolor="#ccc" class="style" style="font-weight:bold; line-height: 24px; text-align: center; font-size:11px;">
-                    <td style="padding:5px 0px;"><?php echo $tr->translate("CURRENT_TYPE");?></td>
-                    <td style="padding:5px 0px;"><?php echo $tr->translate("LOAN_AMOUNT");?></td>
-                    <td style="padding:5px 0px;"><?php echo $tr->translate("LOAN_RETURN_TO_CLIENT");?></td>
-                    <td style="padding:5px 0px;"><?php echo $tr->translate("PERCENTAGE");?></td>
-                    <td style="padding:5px 0px;"><?php echo $tr->translate("NOT_TO_REPAY");?></td>
+                    <td style="padding:2px 0px;"><?php echo $tr->translate("CURRENT_TYPE");?></td>
+                    <td style="padding:2px 0px;"><?php echo $tr->translate("LOAN_AMOUNT");?></td>
+                    <td style="padding:2px 0px;"><?php echo $tr->translate("LOAN_RETURN_TO_CLIENT");?></td>
+                    <td style="padding:2px 0px;"><?php echo $tr->translate("PERCENTAGE");?></td>
+                    <td style="padding:2px 0px;"><?php echo $tr->translate("NOT_TO_REPAY");?></td>
                 </tr>
                  <tr class="style" style=" line-height: 24px; font-size:11px;">
                     <td>&nbsp;<?php echo $tr->translate("DOLLAR");?></td>

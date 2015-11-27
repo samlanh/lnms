@@ -23,7 +23,7 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 		$_title->setAttribs(array(
 				'dojoType'=>$this->tvalidate,
 				'onkeyup'=>'this.submit()',
-				'placeholder'=>$this->tr->translate("SEARCH_ACCOUN NAME")
+				'placeholder'=>$this->tr->translate("ADVANCE_SEARCH")
 		));
 		$_title->setValue($request->getParam("adv_search"));
 		
@@ -73,6 +73,14 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 		$None_operation->setMultiOptions($opt);
 		$None_operation->setValue(1);
 		
+		$_btn_search = new Zend_Dojo_Form_Element_SubmitButton('btn_search');
+		$_btn_search->setAttribs(array(
+				'dojoType'=>'dijit.form.Button',
+				'iconclass'=>'dijitIconSearch',
+				'label'=>'Search'
+		
+		));
+		
 // 		$parent = new Zend_Dojo_Form_Element_FilteringSelect('parent');
 // 		$parent->setAttribs(array(
 // 				'dojoType'=>'dijit.form.FilteringSelect',
@@ -116,8 +124,20 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 				'class'=>'fullside',
 				'required'=>true
 		));
-		$opt=array(1=>'Active',2=>'Deactive');
+		$opt = array(
+				-1=>$this->tr->translate("ALL"),
+				1=>$this->tr->translate("ACTIVE"),
+				0=>$this->tr->translate("DACTIVE"));
 		$Status->setMultiOptions($opt);
+		
+		$_status=  new Zend_Dojo_Form_Element_FilteringSelect('status');
+		$_status->setAttribs(array('dojoType'=>$this->filter));
+		$_status_opt = array(
+				-1=>$this->tr->translate("ALL"),
+				1=>$this->tr->translate("ACTIVE"),
+				0=>$this->tr->translate("DACTIVE"));
+		$_status->setMultiOptions($_status_opt);
+		$_status->setValue($request->getParam("status"));
 		
 		
 		$Balance = new Zend_Dojo_Form_Element_NumberTextBox('Balance');
@@ -145,7 +165,7 @@ Class Accounting_Form_FrmChartaccount extends Zend_Dojo_Form {
 				
 		}
 
-		$this->addElements(array($_title,$_id,$account_No,$None_operation,$parents,$account_Type,$account_Name,$account_Nameen,$Category,$Date,$Status,$Balance));
+		$this->addElements(array($_btn_search,$_title,$_id,$account_No,$None_operation,$parents,$account_Type,$account_Name,$account_Nameen,$Category,$Date,$Status,$Balance));
 		return $this;
 		
 	}	

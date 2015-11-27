@@ -224,8 +224,7 @@ class Loan_Model_DbTable_DbBadloan extends Zend_Db_Table_Abstract
     	$sql="SELECT  (SELECT lf.total_principal FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS total_principal,
     	              (SELECT lf.total_interest FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS total_interest ,
     	              (SELECT lf.date_payment FROM `ln_loanmember_funddetail` AS lf WHERE lf. member_id= l.member_id AND status=1 AND lf.is_completed=0 LIMIT 1)  AS date_payment
-       ,l.currency_type FROM `ln_loan_member` AS l WHERE l.client_id=$id AND status=1 AND l.is_completed=0
-       ";
+       ,l.currency_type FROM `ln_loan_member` AS l WHERE l.client_id=$id AND status=1 AND l.is_completed=0 LIMIT 1";
     	return $db->fetchRow($sql);
     }
     public function getLoanedit($id){

@@ -172,9 +172,9 @@
 						<tr>
 							<td><?php echo $tr->translate("COLLECT_DATE");?></td>
 							<td><?php echo $frm->getElement('collect_date');?></td>
-							<td><?php echo $tr->translate("TOTAL_AMOUNT_PAYMENT")?></td>
+							<td style="color:red;"><?php echo $tr->translate("TOTAL_AMOUNT_PAYMENT")?></td>
 							<td><?php echo $frm->getElement('total_payment');?><input type="hidden" dojoType="dijit.form.TextBox" name="oldTotalPay" id="oldTotalPay" /></td>
-							<td><?php echo $tr->translate("TOTAL_RECIEPT")?></td>
+							<td style="color:red;"><?php echo $tr->translate("TOTAL_RECIEPT")?></td>
 							<td><?php echo $frm->getElement('amount_receive');?></td>
 						</tr>
 						<tr>

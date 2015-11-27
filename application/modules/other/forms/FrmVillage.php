@@ -52,6 +52,11 @@ Class Other_Form_FrmVillage extends Zend_Dojo_Form {
 				'required'=>'true','missingMessage'=>'Invalid Module!','class'=>'fullside'
 		));
 		
+		$code = new Zend_Dojo_Form_Element_ValidationTextBox('code');
+		$code->setAttribs(array('dojoType'=>'dijit.form.TextBox',
+				'missingMessage'=>'Invalid Module!','class'=>'fullside'
+		));
+		
 		$_db = new Application_Model_DbTable_DbGlobal();
 		
 // 		$rows_provice = $_db->getCommune();
@@ -160,13 +165,13 @@ Class Other_Form_FrmVillage extends Zend_Dojo_Form {
 			$village_namekh->setValue($data['village_namekh']);
 			$_display->setValue($data['displayby']);
 			$_province->setValue($data['pro_id']);
-// 			$district_name->setValue($data['dis_id']);
+			$code->setValue($data['code']);
 // 			$commune_name->setValue($data['commune_id']);
 			$_status->setValue($data['status']);
 			
 			
 		}
-		$this->addElements(array($_fromdate,$_todate,$_btn_search,$_status_search,$_title,$id,$village_name,$_province, $_status,$village_namekh,$_display));
+		$this->addElements(array($code,$_fromdate,$_todate,$_btn_search,$_status_search,$_title,$id,$village_name,$_province, $_status,$village_namekh,$_display));
 		return $this;
 		
 	}

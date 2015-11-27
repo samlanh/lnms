@@ -36,6 +36,8 @@ dojo.ready(function(){
 			onChange: function() {
 	        }
 		}, "commune_name");
+		filterDistrict();
+		filterCommune();
 });
 url_getdistrict = '<?php echo $this->url(array('module'=>'other','controller'=>'district','action'=>'get-district'));?>';
 function filterDistrict(){
@@ -51,6 +53,7 @@ function filterDistrict(){
 		load: function(data) {	
 			district_store  = getDataStorefromJSON('id','name', data);		
 		    dijit.byId('district_name').set('store', district_store);
+		    dijit.byId('district_name').attr('value','<?php echo $this->result['district_name'];?>');
 		},
 		error: function(err) {
 			alert(err);
@@ -71,6 +74,7 @@ function filterCommune(){
 		load: function(data) {	
 			commune_store  = getDataStorefromJSON('id','name', data);		
 		    dijit.byId('commune_name').set('store', commune_store);
+		    dijit.byId('commune_name').attr('value','<?php echo $this->result['commune_name'];?>');
 		},
 		error: function(err) {
 			alert(err);

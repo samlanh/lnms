@@ -47,35 +47,37 @@ Class Group_Form_FrmClientBlackList extends Zend_Dojo_Form {
 		$branch->setAttribs(array(
 				'dojoType'=>'dijit.form.FilteringSelect',
 				'class'=>'fullside',
+				'Onchange'=>'filterClient();'
 		));
 		$rows = $db->getAllBranchName();
-		$options='';
+		$options=array(''=>'---Select Branch---');
 		if(!empty($rows))foreach($rows AS $row){
 			$options[$row['br_id']]=$row['branch_namekh'];
 		}
 		$branch->setMultiOptions($options);
+		$branch->setValue($request->getParam('branch'));
 		
 		
 		
-		$client_code = new Zend_Dojo_Form_Element_FilteringSelect('client_code');
-		$client_code->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'class'=>'fullside',
-				'required' =>'true',
-				'onchange'=>'getmemberIdGroup();'
-		));
-		$group_opt = $db ->getGroupCodeById(1,0,1);//code,individual,option
-		$client_code->setMultiOptions($group_opt);
+// 		$client_code = new Zend_Dojo_Form_Element_FilteringSelect('client_code');
+// 		$client_code->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'class'=>'fullside',
+// 				'required' =>'true',
+// 				'onchange'=>'getmemberIdGroup();'
+// 		));
+// 		$group_opt = $db ->getGroupCodeById(1,0,1);//code,individual,option
+// 		$client_code->setMultiOptions($group_opt);
 		
-		$client_name = new Zend_Dojo_Form_Element_FilteringSelect('client_name');
-		$client_name->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'class'=>'fullside',
-				'required' =>'true',
-				'onchange'=>'checkMember()'
-		));
-		$options = $db->getGroupCodeById(2,0,1);
-		$client_name->setMultiOptions($options);
+// 		$client_name = new Zend_Dojo_Form_Element_FilteringSelect('client_name');
+// 		$client_name->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'class'=>'fullside',
+// 				'required' =>'true',
+// 				'onchange'=>'checkMember()'
+// 		));
+// 		$options = $db->getGroupCodeById(2,0,1);
+// 		$client_name->setMultiOptions($options);
 		
 		$problem=new Zend_Dojo_Form_Element_ValidationTextBox('problem');
 		$problem->setAttribs(array(
@@ -120,32 +122,32 @@ Class Group_Form_FrmClientBlackList extends Zend_Dojo_Form {
 		}
 		$to_date->setValue($_date);
 		
-		$_branch_id = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
-		$_branch_id->setAttribs(array(
-				'dojoType'=>'dijit.form.FilteringSelect',
-				'class'=>'fullside',
-				'required' =>'true'
-		));
-		$rows = $db->getAllBranchName();
-		$options=array(''=>"------Select Branch Name------");
-		if(!empty($rows))
-			foreach($rows AS $row){
-			$options[$row['br_id']]=$row['branch_namekh'];
-		}
-		$_branch_id->setMultiOptions($options);
-		$_branch_id->setValue($request->getParam('branch_id'));
+// 		$_branch_id = new Zend_Dojo_Form_Element_FilteringSelect('branch_id');
+// 		$_branch_id->setAttribs(array(
+// 				'dojoType'=>'dijit.form.FilteringSelect',
+// 				'class'=>'fullside',
+// 				'required' =>'true'
+// 		));
+// 		$rows = $db->getAllBranchName();
+// 		$options=array(''=>"------Select Branch Name------");
+// 		if(!empty($rows))
+// 			foreach($rows AS $row){
+// 			$options[$row['br_id']]=$row['branch_namekh'];
+// 		}
+// 		$_branch_id->setMultiOptions($options);
+// 		$_branch_id->setValue($request->getParam('branch_id'));
 	
 		$_id = new Zend_Form_Element_Hidden('id');
 		if($data!=null){
 			$branch->setValue($data['branch_id']);
-			$client_code->setValue($data['client_id']);
-			$client_name->setValue($data['client_id']);
+// 			$client_code->setValue($data['client_id']);
+// 			$client_name->setValue($data['client_id']);
 			$problem->setValue($data['reasonblack_list']);
 			$date->setValue($data['date_blacklist']);
 			$status->setValue($data['status_blacklist']);
 			$_id->setValue($data['client_id']);
 		}
-		$this->addElements(array($_branch_id,$from_date,$to_date,$_id,$_title,$_status,$_btn_search,$branch,$client_code,$client_name,$problem,$date,$status));
+		$this->addElements(array($from_date,$to_date,$_id,$_title,$_status,$_btn_search,$branch,$problem,$date,$status));
 				
 		return $this;
 		
