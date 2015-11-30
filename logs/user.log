@@ -1,6 +1,8 @@
-﻿[2015-09-11 08:49:14] user name=>channy module=>loancontroller name=>:il-payment action =>edit error name=>SQLSTATE[42000]: Syntax error or access violation: 1064 Erreur de syntaxe près de 'FROM
-				  `ln_client_receipt_money_detail` AS lc ,
-				 `ln_client_receipt_mone' à la ligne 13
-[2015-09-29 13:39:49] [user]:channy [module]:rsvacl [controller]:usertype [action]:edit [id]:1
-[2015-09-29 13:52:40] [user]:channy [module]:rsvacl [controller]:useraccess [action]:update-status [id]:1
-[2015-09-29 13:52:42] [user]:channy [module]:rsvacl [controller]:useraccess [action]:update-status [id]:1
+﻿[2015-11-21 15:35:23] user name=>channy module=>accountingcontroller name=>:generaljurnal action =>index error name=>SQLSTATE[42S02]: Base table or view not found: 1146 Table 'db_loan.ln_accountname_detail' doesn't exist
+[2015-11-21 15:50:28] user name=>channy module=>accountingcontroller name=>:generaljurnal action =>index error name=>SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE journal_code!=''' at line 2
+[2015-11-21 15:52:07] user name=>channy module=>accountingcontroller name=>:generaljurnal action =>index error name=>SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE journal_code!=''' at line 2
+[2015-11-21 15:54:57] user name=>channy module=>accountingcontroller name=>:generaljurnal action =>index error name=>SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'j.journal_code,j.receipt_number,
+		j.currency_id,j.debit,j.credit,j.status,j.use' at line 3
+[2015-11-21 16:00:33] user name=>channy module=>accountingcontroller name=>:generaljurnal action =>index error name=>SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(SELECT name_en FROM `ln_view` WHERE TYPE=3 AND key_code=j.status LIMIT 1) statu' at line 6
+[2015-11-22 22:37:42] user name=>channy module=>accountingcontroller name=>:generaljurnal action =>edit error name=>SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ln_journal_detail' in 'where clause'
+[2015-11-22 22:38:36] user name=>channy module=>accountingcontroller name=>:generaljurnal action =>edit error name=>SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ln_journal_detail' in 'where clause'

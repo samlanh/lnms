@@ -224,4 +224,7 @@ class Report_GroupMemberController extends Zend_Controller_Action {
     	$this->view->frm_search = $frm;
     	$this->view->list_end_date =$search;
  	}
+ 	function calleteralLetterAction(){
+ 		
+ 	}
 }

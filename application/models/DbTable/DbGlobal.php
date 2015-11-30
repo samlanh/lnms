@@ -733,8 +733,24 @@ class Application_Model_DbTable_DbGlobal extends Zend_Db_Table_Abstract
   	
   }
   function checkDefaultDate($str_next,$next_payment,$amount_amount,$holiday_status=null,$first_payment=null){
-	  $next_payment =  date("Y-m-d", strtotime("$next_payment $str_next"));
-	  return $next_payment;
+  	$default_day = Date("d",strtotime($first_payment));
+  	for($i=0;$i<$amount_amount;$i++){
+  		if($default_day>28){
+  			$next_payment = date("Y-m-d", strtotime("$next_payment $str_next"));
+  			if($str_next!='+1 month'){
+  				$default_day='d';
+  				$next_payment = date("Y-m-$default_day", strtotime("$next_payment $str_next"));
+  			}else{
+  				$next_payment = $this->checkEndOfMonth($default_day,$next_payment , $str_next);
+  			}
+  		}else{
+  			if($str_next!='+1 month'){
+  				$default_day='d';
+  			}
+  			$next_payment = date("Y-m-$default_day", strtotime("$next_payment $str_next"));
+  		}
+  	}
+  		return $next_payment;
   }
 	  
   function checkFirstHoliday($next_payment,$holiday_status){

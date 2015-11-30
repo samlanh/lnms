@@ -776,9 +776,10 @@ function addPreviewLoan(){
 				for(i=0;i<data.length;i++){
 			        r++;
 					    temp+='<tr><td align="center">'+r+'</td>';
-						//var myDate = new Date(data[i].date_payment);
+						var myDate = new Date(data[i].date_payment);
+						d = new Date(data[i].date_name);
 						//dateString=((myDate.getMonth() + 1) + "-" + myDate.getDate() + "-" + myDate.getFullYear());
-						temp+='<td>'+data[i].date_payments+'</td>';
+						temp+='<td>'+getDayName(d.getDay())+'-'+data[i].date_payments+'</td>';
 						temp+='<td>'+dojo.number.format(data[i].total_principal,2)+'</td>';
 						temp+='<td>'+dojo.number.format(data[i].principal_permonth,2)+'</td>';
 						temp+='<td>'+dojo.number.format(data[i].total_interest,2)+'</td>';
@@ -791,10 +792,22 @@ function addPreviewLoan(){
 				dijit.byId("frm_client").show();
 			},
 			error: function(err) {
+			document.getElementsByClassName("overlay")[0].style.display="none";
 			alert("You can not preview this loan number!");
 			}
 	   });
 	}
+}
+function getDayName(day){
+	 var weekday = new Array(7);
+	    weekday[0] = "អាទិត្យ";
+	    weekday[1] = "ច័ន្ទ";
+	    weekday[2] = "អង្គារ";
+	    weekday[3] = "ពុធ";
+	    weekday[4] = "ព្រហ";
+	    weekday[5] = "សុក្រ";
+	    weekday[6] = "សៅរ៍";
+	    return weekday[day];
 }
 function hideDialog() {		
 	dijit.byId("frm_client").hide();

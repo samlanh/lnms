@@ -264,7 +264,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     			$remain_principal = $data['total_amount'];
     			$next_payment = $data['first_payment'];
     			$start_date = $data['release_date'];//loan release;
-//     			$next_payment = $start_date;
+    			$from_date =  $data['release_date'];
 				
     			
     			$old_remain_principal = 0;
@@ -327,13 +327,13 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
     						
 							//$next_payment = $dbtable->checkDefaultDate($str_next, $defaultnext_payment, $data['amount_collect']);
-							$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+							$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
  
     						$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
     					}else{
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     						$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
     					}
     				}elseif($payment_method==2){//baloon
@@ -346,11 +346,11 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     					if($i!=1){
     						$start_date = $next_payment;
     						$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					}else{
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					}
     					$interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
 //     					$interest_paymonth = $data['total_amount']*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($amount_day/$day_perterm);
@@ -369,7 +369,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     					}
-    					    $amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    					    $amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					    $interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
 //     					    $interest_paymonth = $data['total_amount']*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($day_perterm/$day_perterm);
     						
@@ -384,7 +384,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     					}
-    					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    					$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
     					$interest_paymonth = $this->round_up_currency($curr_type, $interest_paymonth);
     					$pri_permonth = $data['amount_collect_pricipal']-$interest_paymonth;
@@ -410,14 +410,14 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     							}
     							$start_date = $next_payment;
     							$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
-    							$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    							$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     							$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
 //     							$interest_paymonth = ($remain_principal*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($day_perterm/$day_perterm));
     					}else{
     						$pri_permonth = 0;//check if get pri first too much change;
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     						$interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
 //     						$interest_paymonth = ($data['total_amount']*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($day_perterm/$day_perterm));
     					}
@@ -425,7 +425,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     					if($i!=1){
     						$remain_principal = $remain_principal-$pri_permonth;
     						$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     						$interest_paymonth = $this->round_up_currency($curr_type,$remain_principal*$irr_interest);
     						$fixed_principal = round($total_loan_amount/$term_install,0, PHP_ROUND_HALF_DOWN);
     						$pri_permonth = $fixed_principal-$interest_paymonth;
@@ -445,7 +445,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						$pri_permonth = $fixed_principal+$total_payment_first;
     						
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     						$interest_paymonth = $this->round_up_currency($curr_type,$loan_amount*($irr_interest));
     						$pri_permonth = ($fixed_principal+$total_payment_first)-$interest_paymonth;
     					}	   
@@ -480,9 +480,12 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     					$old_pri_permonth = 0;
     					$old_interest_paymonth = 0;
     					$old_amount_day = 0;
-    					
+	    				
+    					$from_date=$next_payment;
+	     				if($i!=1){
+	    					$next_payment = $dbtable->checkDefaultDate($str_next, $start_date, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
+	     				}
     				}else{
-    					
     					//if(){ the old record;
     						
     					//}
@@ -494,17 +497,15 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     			if(($amount_borrow_term)%($amount_fund_term)!=0){///end for record odd number only
     				$start_date = $next_payment;//$dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount']);
     				$next_payment = $dbtable->checkFirstHoliday($data['date_line'],$data['every_payamount']);
-    				$amount_day = $amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    				$amount_day = $amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     				if($payment_method==1){
     					$pri_permonth = $remain_principal-$pri_permonth; // $pri_permonth*($amount_day/$amount_fund_term);//check it if khmer currency
     					$interest_paymonth = $pri_permonth*($data['interest_rate']/100/$borrow_term)*$amount_day;
-//     					$interest_paymonth = ($pri_permonth*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($amount_day/$day_perterm));
     					$interest_paymonth = $this->round_up_currency($curr_type,$interest_paymonth);
     				}elseif($payment_method==2){
     					$pri_permonth = $this->round_up_currency($curr_type, $pri_permonth);
     					$remain_principal = $pri_permonth;//$remain_principal-$pri_permonth;//OSប្រាក់ដើមគ្រា
     					$interest_paymonth = $pri_permonth*($data['interest_rate']/100/$borrow_term)*$amount_day;
-//     					$interest_paymonth = ($data['total_amount']*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($amount_day/$day_perterm));
     					$interest_paymonth = $this->round_up_currency($curr_type,$interest_paymonth);
     				}elseif($payment_method==3){
     					$pri_permonth = $remain_principal-$pri_permonth;
@@ -536,7 +537,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						'total_interest_after'=>$interest_paymonth,//good
     						'total_payment'=>$interest_paymonth+$pri_permonth,//good
     						'total_payment_after'=>$old_pri_permonth+$old_interest_paymonth,//good
-    						'date_payment'=>$data['date_line'],//good
+    						'date_payment'=>$next_payment,//good
     						'is_completed'=>0,
     						'branch_id'=>$data['branch_id'],
     						'status'=>1,
@@ -659,6 +660,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     		$remain_principal = $data['total_amount'];
     		$next_payment = $data['first_payment'];
     		$start_date = $data['release_date'];//loan release;
+    		$from_date = $data['release_date'];
     		 
     		$old_remain_principal = 0;
     		$old_pri_permonth = 0;
@@ -713,13 +715,13 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     					}
     					$start_date = $next_payment;
     					$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
-    					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    					$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
     				
     				}else{
     					$next_payment = $data['first_payment'];
     					$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
-    					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    					$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
     				}
     			}elseif($payment_method==2){//baloon
@@ -732,11 +734,11 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     					if($i!=1){
     						$start_date = $next_payment;
     						$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					}else{
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					}
     					$interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
     					
@@ -754,7 +756,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     					}
-    					    $amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    					    $amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					    $interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
     						
     				}elseif($payment_method==4){//fixed payment full last period yes
@@ -766,7 +768,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
     					}
-    					$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    					$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     					$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
     					$interest_paymonth = $this->round_up_currency($curr_type, $interest_paymonth);
     					$pri_permonth = $data['amount_collect_pricipal']-$interest_paymonth;
@@ -792,14 +794,14 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     							}
     							$start_date = $next_payment;
     							$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
-    							$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    							$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     							$interest_paymonth = $remain_principal*($data['interest_rate']/100/$borrow_term)*$amount_day;
 //     							$interest_paymonth = ($remain_principal*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($day_perterm/$day_perterm));
     					}else{
     						$pri_permonth = 0;//check if get pri first too much change;
     						$next_payment = $data['first_payment'];
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     						$interest_paymonth = $data['total_amount']*($data['interest_rate']/100/$borrow_term)*$amount_day;
 //     						$interest_paymonth = ($data['total_amount']*((($amount_fund_term*$data['interest_rate'])/$borrow_term)/100)*($day_perterm/$day_perterm));
     					}
@@ -807,7 +809,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     					if($i!=1){
     						$remain_principal = $remain_principal-$pri_permonth;
     						$next_payment = $dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     						$interest_paymonth = $this->round_up_currency($curr_type,$remain_principal*$irr_interest);
     						$fixed_principal = round($total_loan_amount/$term_install,0, PHP_ROUND_HALF_DOWN);
     						$pri_permonth = $fixed_principal-$interest_paymonth;
@@ -827,7 +829,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     						$pri_permonth = $fixed_principal+$total_payment_first;
     						
     						$next_payment = $dbtable->checkFirstHoliday($next_payment,$data['every_payamount']);
-    						$amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    						$amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     						$interest_paymonth = $this->round_up_currency($curr_type,$loan_amount*($irr_interest));
     						$pri_permonth = ($fixed_principal+$total_payment_first)-$interest_paymonth;
     					}	   	   
@@ -863,6 +865,10 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     				$old_pri_permonth = 0;
     				$old_interest_paymonth = 0;
     				$old_amount_day = 0;
+    				$from_date=$next_payment;
+    				if($i!=1){
+    					$next_payment = $dbtable->checkDefaultDate($str_next, $start_date, $data['amount_collect'],$data['every_payamount'],$data['first_payment']);
+    				}
     					
     			}else{
     				
@@ -872,7 +878,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     		if(($amount_borrow_term)%($amount_fund_term)!=0){///end for record odd number only
     			$start_date = $next_payment;//$dbtable->getNextPayment($str_next, $next_payment, $data['amount_collect'],$data['every_payamount']);
     			$next_payment = $dbtable->checkFirstHoliday($data['date_line'],$data['every_payamount']);
-    			$amount_day = $amount_day = $dbtable->CountDayByDate($start_date,$next_payment);
+    			$amount_day = $amount_day = $dbtable->CountDayByDate($from_date,$next_payment);
     			if($payment_method==1){
     				$pri_permonth = $remain_principal-$pri_permonth; // $pri_permonth*($amount_day/$amount_fund_term);//check it if khmer currency
     				$interest_paymonth = $pri_permonth*($data['interest_rate']/100/$borrow_term)*$amount_day;
@@ -908,7 +914,7 @@ class Loan_Model_DbTable_DbLoanIL extends Zend_Db_Table_Abstract
     					'total_interest_after'=>$interest_paymonth,//good
     					'total_payment'=>$old_pri_permonth+$old_interest_paymonth,//good
     					'total_payment_after'=>$old_pri_permonth+$old_interest_paymonth,//good
-    					'date_payment'=>$data['date_line'],//good
+    					'date_payment'=>$next_payment,//good
     					'is_completed'=>0,
     					'branch_id'=>$data['branch_id'],
     					'status'=>1,
