@@ -59,9 +59,10 @@ class Loan_Model_DbTable_DbLoanILPayment extends Zend_Db_Table_Abstract
     	}
     	
     	//$where='';
+    	$group_by = " GROUP BY lcrmd.crm_id";
     	$order = " ORDER BY receipt_no DESC";
     	//echo $sql.$where.$order;
-    	return $db->fetchAll($sql.$where.$order);
+    	return $db->fetchAll($sql.$where.$group_by.$order);
     }
     public function getAllQuickIndividuleLoan($search){
     	$start_date = $search['start_date'];
@@ -881,6 +882,7 @@ public function addILPayment($data){
    					  AND lm.`client_id`=lc.`client_id`
    					  AND lg.`loan_type`=1
    					   AND lf.`status`=1
+   					   AND lm.is_reschedule !=1
    					  AND $where";
    
    		}
