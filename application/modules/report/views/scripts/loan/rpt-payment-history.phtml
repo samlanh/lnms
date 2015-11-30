@@ -108,27 +108,27 @@ th{padding: 5px;}
 	                <?php }?>
                 
                 <?php //if(!empty($this->loantotalcollect_list)) foreach ($this->loantotalcollect_list as $index => $rs){ ?>
-                <?php $balance=$rs["total_payment"]-($rs["recieve_amount"]-$rs["return_amount"]);//$rs["total_payment"];?>
+                <?php $balance=number_format($rs["payment"],2)-(number_format($rs["recieve_amount"],2)-number_format($rs["return_amount"],2));//$rs["total_payment"];?>
                  <?php 
 		               if($rs['currency_type']==1){
-		               		$principle_r = $principle_r+$rs['total_principal_permonth'];
-		               		$interst_r = $interst_r+$rs['total_interest'];
-		               		$penalize_r = $penalize_r+$rs['penalize_amount'];
-		               		$service_charge_r = $service_charge_r+$rs['service_charge'];
+		               		$principle_r = $principle_r+$rs['principle_amount'];
+		               		$interst_r = $interst_r+$rs['interest'];
+		               		$penalize_r = $penalize_r+$rs['penelize'];
+		               		$service_charge_r = $service_charge_r+$rs['service'];
 		               		$balane_r=$balane_r+$balance;
 		               		
 		               }elseif($rs['currency_type']==2){
-							$principle_d = $principle_d+$rs['total_principal_permonth'];
-							$interst_d = $interst_d+$rs['total_interest'];
-							$penalize_d = $penalize_d+$rs['penalize_amount'];
-							$service_charge_d = $service_charge_d+$rs['service_charge'];
+							$principle_d = $principle_d+$rs['principle_amount'];
+							$interst_d = $interst_d+$rs['interest'];
+							$penalize_d = $penalize_d+$rs['penelize'];
+							$service_charge_d = $service_charge_d+$rs['service'];
 							$balane_d=$balane_d+$balance;
 							
 		               }else{
-		               		$principle_b = $principle_b+$rs['total_principal_permonth'];
-							$interst_b = $interst_b+$rs['total_interest'];
-							$penalize_b = $penalize_b+$rs['penalize_amount'];
-							$service_charge_b = $service_charge_b+$rs['service_charge'];
+		               		$principle_b = $principle_b+$rs['principle_amount'];
+							$interst_b = $interst_b+$rs['interest'];
+							$penalize_b = $penalize_b+$rs['penelize'];
+							$service_charge_b = $service_charge_b+$rs['service'];
 							$balane_b=$balane_b+$balance;
 						
 		               }
@@ -138,11 +138,11 @@ th{padding: 5px;}
                 <tr class="style" style="font-family: 'Khmer OS Content';white-space: nowrap;">
                		<td style="text-align: center;">&nbsp;<?php echo $i++; ?>&nbsp;</td>
                		<td>&nbsp;&nbsp;<?php echo $rs["branch_name"];?></td>
-               		<td>&nbsp;&nbsp;<?php echo number_format( $rs["total_principal_permonth"],2).' '.$rs['currency_typeshow'];?></td>               		
-               		<td>&nbsp;&nbsp;<?php echo number_format($rs["total_interest"],2).' '.$rs['currency_typeshow'];?></td>
-               		<td>&nbsp;&nbsp;<?php echo number_format($rs["penalize_amount"],2).' '.$rs['currency_typeshow'];?></td>
-               		<td>&nbsp;&nbsp;<?php echo number_format($rs["service_charge"],2).' '.$rs['currency_typeshow'];?></td>
-               		<td>&nbsp;&nbsp;<?php echo number_format($rs["total_payment"],2);?>
+               		<td>&nbsp;&nbsp;<?php echo number_format( $rs["principle_amount"],2).' '.$rs['currency_typeshow'];?></td>               		
+               		<td>&nbsp;&nbsp;<?php echo number_format($rs["interest"],2).' '.$rs['currency_typeshow'];?></td>
+               		<td>&nbsp;&nbsp;<?php echo number_format($rs["penelize"],2).' '.$rs['currency_typeshow'];?></td>
+               		<td>&nbsp;&nbsp;<?php echo number_format($rs["service"],2).' '.$rs['currency_typeshow'];?></td>
+               		<td>&nbsp;&nbsp;<?php echo number_format($rs["payment"],2);?>
                		<td>&nbsp;&nbsp;<?php echo date('d-m-Y',strtotime($rs["date_payment"]));?></td>
                		<td>&nbsp;&nbsp;<?php echo $rs["receipt_no"];?></td>
                		<td>&nbsp;&nbsp;<?php echo number_format(($rs["recieve_amount"]-$rs["return_amount"]),2);?></td>
